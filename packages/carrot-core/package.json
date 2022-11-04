@@ -1,0 +1,11 @@
+{
+  "name": "@carrot/core",
+  "version": "0.1.0",
+  "description": "> TODO: description",
+  "dependencies": {
+    "styled-reset": "^4.4.2"
+  },
+  "scripts": {
+    "test": "react-scripts test"
+  }
+}

@@ -1,1 +1,1 @@
-# carrot-frontend
+# curly-clone
