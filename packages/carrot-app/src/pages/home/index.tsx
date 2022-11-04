@@ -3,7 +3,7 @@ import NavBar from "../../components/navBar";
 const Home = () => {
   return (
     <>
-      <div>Hi</div>
+      <div>Hi HOME</div>
       <NavBar pageType='HOME' />
     </>
   )
