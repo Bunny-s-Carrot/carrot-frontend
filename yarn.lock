@@ -1079,7 +1079,7 @@
   "resolved" "https://registry.npmjs.org/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz"
   "version" "0.2.3"
 
-"@carrot/app@file:C:\\Users\\InJ\\Desktop\\StudyProgram\\carrot-frontend\\packages\\carrot-app":
+"@carrot/app@file:C:\\Users\\Park\\OneDrive\\바탕 화면\\당근 git\\carrot-frontend\\packages\\carrot-app":
   "resolved" "file:packages/carrot-app"
   "version" "0.1.0"
   dependencies:
@@ -1101,7 +1101,7 @@
     "typescript" "^4.8.4"
     "web-vitals" "^2.1.4"
 
-"@carrot/core@*", "@carrot/core@file:C:\\Users\\InJ\\Desktop\\StudyProgram\\carrot-frontend\\packages\\carrot-core":
+"@carrot/core@*", "@carrot/core@file:C:\\Users\\Park\\OneDrive\\바탕 화면\\당근 git\\carrot-frontend\\packages\\carrot-core":
   "resolved" "file:packages/carrot-core"
   "version" "0.1.0"
   dependencies:
@@ -2939,6 +2939,11 @@
   dependencies:
     "@types/node" "*"
 
+"@types/history@^4.7.11":
+  "integrity" "sha512-qjDJRrmvBMiTx+jyLxvLfJU7UznFuokDv4f3WRuriHKERccVpFU+8XMQUAbDzoiJCsmexxRExQeMwwCdamSKDA=="
+  "resolved" "https://registry.npmjs.org/@types/history/-/history-4.7.11.tgz"
+  "version" "4.7.11"
+
 "@types/hoist-non-react-statics@*":
   "integrity" "sha512-iMIqiko6ooLrTh1joXodJK5X9xeEALT1kM5G3ZLhD3hszxBdIEd5C75U834D9mLcINgD4OyZf5uQXjkuYydWvA=="
   "resolved" "https://registry.npmjs.org/@types/hoist-non-react-statics/-/hoist-non-react-statics-3.3.1.tgz"
@@ -3063,6 +3068,23 @@
 "@types/react-dom@^18.0.0", "@types/react-dom@^18.0.6":
   "version" "18.0.6"
   dependencies:
+    "@types/react" "*"
+
+"@types/react-router-dom@^5.3.3":
+  "integrity" "sha512-kpqnYK4wcdm5UaWI3fLcELopqLrHgLqNsdpHauzlQktfkHL3npOSwtj1Uz9oKBAzs7lFtVkV8j83voAz2D8fhw=="
+  "resolved" "https://registry.npmjs.org/@types/react-router-dom/-/react-router-dom-5.3.3.tgz"
+  "version" "5.3.3"
+  dependencies:
+    "@types/history" "^4.7.11"
+    "@types/react" "*"
+    "@types/react-router" "*"
+
+"@types/react-router@*":
+  "integrity" "sha512-Fv/5kb2STAEMT3wHzdKQK2z8xKq38EDIGVrutYLmQVVLe+4orDFquU52hQrULnEHinMKv9FSA6lf9+uNT1ITtA=="
+  "resolved" "https://registry.npmjs.org/@types/react-router/-/react-router-5.1.19.tgz"
+  "version" "5.1.19"
+  dependencies:
+    "@types/history" "^4.7.11"
     "@types/react" "*"
 
 "@types/react@*", "@types/react@^18.0.21":

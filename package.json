@@ -1,6 +1,7 @@
 {
   "private": true,
   "dependencies": {
+    "@types/react-router-dom": "^5.3.3",
     "@types/styled-components": "^5.1.26",
     "cross-env": "^7.0.3",
     "env-cmd": "^10.1.0",
