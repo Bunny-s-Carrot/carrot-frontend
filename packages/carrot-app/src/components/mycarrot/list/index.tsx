@@ -5,7 +5,7 @@ const listdata = [
 {
     title: '나의 거래',
     list : [{
-        name : '판매내역',
+        name : '판매내역123',
         icon : heart
     },
     {
