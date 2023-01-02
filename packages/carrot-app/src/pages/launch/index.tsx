@@ -1,13 +1,16 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import Button from '@carrot/core/atoms/button'
 import theme from '@carrot/core/style/theme';
+import Logo from '@carrot/core/assets/img/logo.png'
 
 const LaunchPage = () => {
+  const navigate = useNavigate();
   return (
     <Container>
       <Welcome>
         <LogoWrapper>
-          <img src='https://cdn139.imgdb.in/kDne.png' alt='로고 이미지'/>
+          <img src={Logo} alt='로고 이미지'/>
         </LogoWrapper>
         <p>당신 근처의 당근마켓</p>
         <p>
@@ -18,7 +21,7 @@ const LaunchPage = () => {
       <AuthArea>
         <StartButton
         type='CARROT'
-        onClick={() => {}}
+        onClick={() => navigate('/auth/login')}
         >
           시작하기
         </StartButton>
@@ -51,7 +54,6 @@ const Welcome = styled.div`
   gap: 1.6rem;
   text-align: center;
   ${theme.typography.body3};
-  font-size: 1.6rem;
   p:first-of-type {
     ${theme.typography.heading3};
   }

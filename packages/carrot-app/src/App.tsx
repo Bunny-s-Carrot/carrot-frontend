@@ -6,6 +6,7 @@ import Locationpage from "./pages/chat/location";
 import ChatPage from "./pages/chat";
 import MyCarrotPage from "./pages/myCarrot";
 import LaunchPage from "./pages/launch";
+import LoginPage from "./pages/logIn";
 
 const App = () => (
   <Routes>
@@ -15,6 +16,7 @@ const App = () => (
     <Route path="/location" element={<Locationpage />} />
     <Route path="/chat" element={<ChatPage />} />
     <Route path="/mycarrot" element={<MyCarrotPage />} />
+    <Route path="/auth/login" element={<LoginPage />} />
   </Routes>
 );
 

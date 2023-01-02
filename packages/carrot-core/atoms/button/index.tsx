@@ -52,7 +52,7 @@ function Button ({type, className, onClick, children, disabled}: Props) {
 export default Button;
 
 const PrimaryButtonWrapper = styled.button`
-  max-height: 5.2rem;
+  height: 4.2rem;
   text-align: center;
   outline: none;
   border: none;
