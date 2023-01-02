@@ -1,8 +1,9 @@
 import { css } from 'styled-components';
 
 const colors = {
-  yellow: 'F2FF59',
+  yellow: '#F2FF59',
   tomato: '#FF6347',
+  carrot: '#FF8B3A',
   red: '#F22D50',
   blue: '#5E5AFF',
   grey90: '#323232',

@@ -33,7 +33,7 @@ body{
     padding:0;
     overflow: hidden;
     overscroll-behavior:contain;
-    .App { 
+    #App { 
         width:100vw;
         height:calc(var(--vh, 1vh) * 100);
     }
