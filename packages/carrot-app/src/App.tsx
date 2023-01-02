@@ -5,9 +5,11 @@ import NeighborhoodPage from "./pages/neighborhood";
 import Locationpage from "./pages/chat/location";
 import ChatPage from "./pages/chat";
 import MyCarrotPage from "./pages/myCarrot";
+import LaunchPage from "./pages/launch";
 
 const App = () => (
   <Routes>
+    <Route path="/" element={<LaunchPage />} />
     <Route path="/home" element={<HomePage />} />
     <Route path="/neighborhood" element={<NeighborhoodPage />} />
     <Route path="/location" element={<Locationpage />} />

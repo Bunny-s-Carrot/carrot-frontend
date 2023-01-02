@@ -7,7 +7,7 @@ import GlobalStyle from "@carrot/core/style/globalStyle";
 import { BrowserRouter } from "react-router-dom";
 
 const root = ReactDOM.createRoot(
-  document.getElementById("root") as HTMLElement
+  document.getElementById("App") as HTMLElement
 );
 root.render(
   <React.StrictMode>
