@@ -42,19 +42,19 @@ const typography = {
     font-weight: normal;
   `,
   body2: css`
-    font-size: 1.6rem;
+    font-size: 1.8rem;
     line-height: 2.4rem;
     font-weight: normal;
   `,
   body3: css`
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     line-height: 2.4rem;
     font-weight: normal;
   `,
   body4: css`
     font-size: 1.4rem;
     line-height: 2.4rem;
-    font-weight: bold;
+    font-weight: normal;
   `,
   caption1: css`
     font-size: 1.2rem;

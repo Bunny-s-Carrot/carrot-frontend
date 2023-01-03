@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 import iconSetting from '@carrot/core/assets/icon/mycarrot/Settings.svg';
-import iconProfile from '@carrot/core/assets/icon/mycarrot/Portrait.svg';
 
 const Profile = () => {
 
@@ -10,10 +9,10 @@ const Profile = () => {
                 <Setting src={iconSetting}></Setting>
             </Topbar>
             <Prof>
-                <Prof_r>
+                <ProfR>
                     <Profimg src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg" alt="" />
                     닉네임
-                </Prof_r>
+                </ProfR>
                 <Btn>프로필 보기</Btn>
             </Prof>
         </Contain>
@@ -50,7 +49,7 @@ padding: 0 15px;
 }
 `
 
-const Prof_r = styled.span`
+const ProfR = styled.span`
 display: flex;
 align-items: center;
 font-size: 20px;

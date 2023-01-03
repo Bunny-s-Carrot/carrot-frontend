@@ -6,7 +6,7 @@ type ButtonType = 'CARROT' | 'WHITE' | 'GREY';
 
 interface ButtonProps {
     className?: string;
-    onClick: () => void;
+    onClick: (e?: any) => void;
     children: ReactNode;
     disabled?: boolean;
 }
@@ -31,7 +31,7 @@ function Button ({type, className, onClick, children, disabled}: Props) {
             <WhiteButton
                 disabled={disabled}
                 className={className}
-                onClick={() => onClick()}
+                onClick={(e) => onClick(e)}
             >
                 {children}
             </WhiteButton>
@@ -52,7 +52,7 @@ function Button ({type, className, onClick, children, disabled}: Props) {
 export default Button;
 
 const PrimaryButtonWrapper = styled.button`
-  max-height: 5.2rem;
+  height: 4.2rem;
   text-align: center;
   outline: none;
   border: none;
