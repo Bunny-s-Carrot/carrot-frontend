@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-const popularListData = [];
+
 
 const PopularPost = () => {
   return <PopularContainer>popularList</PopularContainer>;

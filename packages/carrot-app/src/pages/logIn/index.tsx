@@ -5,11 +5,28 @@ import HeaderTemplate from "../../templates/headerTemplate";
 import Button from "@carrot/core/atoms/button";
 import TextInput from "@carrot/core/atoms/input/textInput";
 import { useNavigate } from "react-router-dom";
+import { useMutation } from "@tanstack/react-query";
+import { login } from "../../api/auth";
 
 const LoginPage = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const navigate = useNavigate();
+
+  const loginMutate = useMutation(login, {
+    onSuccess: ({ data }) => {
+      console.log(data);
+      localStorage.setItem('jwt', data.token)
+    }
+  });
+
+  const handleLogin = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email !== '' && password !== '') {
+      loginMutate.mutate({ email, password })
+    }
+  }
+
   return (
     <HeaderTemplate onClickBack={() => navigate('/')}>
       <Container>
@@ -29,7 +46,7 @@ const LoginPage = () => {
           />
           <LoginButton
             type='WHITE'
-            onClick={() => {}}
+            onClick={(e) => handleLogin(e)}
             disabled={email.length === 0 || password.length === 0}>로그인</LoginButton>
         </InputForm>
         <ForgotPassword>
@@ -51,7 +68,7 @@ const TextHeader = styled.p`
   display: block;
   ${theme.typography.heading3};
 `
-const InputForm = styled.form`
+const InputForm = styled.div`
   margin: 2rem auto;
   display: flex;
   flex-direction: column;

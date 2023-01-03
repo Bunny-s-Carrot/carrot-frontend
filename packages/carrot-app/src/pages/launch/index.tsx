@@ -21,12 +21,12 @@ const LaunchPage = () => {
       <AuthArea>
         <StartButton
         type='CARROT'
-        onClick={() => navigate('/auth/login')}
+        onClick={() => {}}
         >
           시작하기
         </StartButton>
         <LoginSession>
-          이미 계정이 있나요? <span>로그인</span>
+          이미 계정이 있나요? <span onClick={() => navigate('/auth/login')}>로그인</span>
         </LoginSession>
       </AuthArea>
       
