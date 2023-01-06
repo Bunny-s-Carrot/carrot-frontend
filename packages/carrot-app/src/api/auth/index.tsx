@@ -1,4 +1,4 @@
-import api from "../../infra/api";
+import { api } from "../../infra/api";
 
 type SignupData = {
   email: string;
@@ -27,7 +27,7 @@ const login = async ({email, password}: LoginData) => {
     email,
     password,
   });
-  console.log(response);
+
   return response;
 }
 

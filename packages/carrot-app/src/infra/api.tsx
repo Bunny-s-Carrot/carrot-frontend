@@ -4,4 +4,8 @@ const api = axios.create({
   baseURL: process.env.REACT_APP_API_URL
 });
 
-export default api;
+const kakaoDApi = axios.create({
+  baseURL: "https://dapi.kakao.com"
+})
+
+export { api, kakaoDApi };
