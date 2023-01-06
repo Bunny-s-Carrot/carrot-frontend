@@ -20,8 +20,8 @@ const LaunchPage = () => {
       </Welcome>
       <AuthArea>
         <StartButton
-        type='CARROT'
-        onClick={() => {}}
+        buttonType='CARROT'
+        onClick={() => {navigate('/auth/findlocation')}}
         >
           시작하기
         </StartButton>

@@ -12,11 +12,11 @@ interface ButtonProps {
 }
 
 interface Props extends ButtonProps {
-    type: ButtonType;
+    buttonType: ButtonType;
 }
 
-function Button ({type, className, onClick, children, disabled}: Props) {
-    if (type === 'CARROT') {
+function Button ({buttonType, className, onClick, children, disabled}: Props) {
+    if (buttonType === 'CARROT') {
         return (
             <CarrotButton
                 disabled={disabled}
@@ -26,7 +26,7 @@ function Button ({type, className, onClick, children, disabled}: Props) {
                 {children}
             </CarrotButton>
         )
-    } else if (type === 'WHITE') {
+    } else if (buttonType === 'WHITE') {
         return (
             <WhiteButton
                 disabled={disabled}
@@ -36,7 +36,7 @@ function Button ({type, className, onClick, children, disabled}: Props) {
                 {children}
             </WhiteButton>
         )
-    } else if (type === 'GREY') {
+    } else if (buttonType === 'GREY') {
         return (
             <GreyButton
                 disabled={disabled}
