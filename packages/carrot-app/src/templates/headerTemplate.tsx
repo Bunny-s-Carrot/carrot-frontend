@@ -1,11 +1,12 @@
 import { PropsWithChildren, ReactNode } from 'react'
 import styled, { css } from 'styled-components';
 import theme from '@carrot/core/style/theme';
-import backIcon from '@carrot/core/assets/icon/back_arrow.svg';
 
 interface HeaderTemplateProps extends PropsWithChildren {
+  className?: string;
   title?: string;
-  onClickBack?: () => void;
+  leftContent?: ReactNode;
+  onClickLeft?: () => void;
   rightContent?: ReactNode;
   onClickRight?: () => void;
   disableUnderline?: boolean;
@@ -13,12 +14,11 @@ interface HeaderTemplateProps extends PropsWithChildren {
 
 const HeaderTemplate = (props: HeaderTemplateProps) => {
   return (
-    <Wrapper>
+    <Wrapper className={props.className}>
       <Title disableUnderline={props.disableUnderline}>
-        <TitleTextButtonWrapper>
-          <BackButton src={backIcon} onClick={props.onClickBack} />
-          <TitleText>{props.title}</TitleText>
-        </TitleTextButtonWrapper>
+        <LeftContent onClick={props.onClickLeft}>
+          {[props.leftContent]}
+        </LeftContent>
         <RightContent onClick={props.onClickRight}>
           {props.rightContent}
         </RightContent>
@@ -41,9 +41,10 @@ const Wrapper = styled.div`
 const Title = styled.div<{ disableUnderline?: boolean }>`
   height: 6rem;
   width: 100%;
+  padding: 0 1.6rem;
   display: flex;
   align-items: center;
-  justiry-content: space-between;
+  justify-content: space-between;
   border-bottom: 0.1rem solid ${theme.colors.grey30};
   ${(props) => 
     props.disableUnderline === true &&
@@ -51,16 +52,10 @@ const Title = styled.div<{ disableUnderline?: boolean }>`
       border-bottom: none;
     `}
 `
-const TitleTextButtonWrapper = styled.div`
+const LeftContent = styled.div`
   display: flex;
 `
-const TitleText = styled.p`
-  margin: auto 0;
-  ${theme.typography.heading4};
-`
-const BackButton = styled.img`
-    margin: auto 1.6rem;
-`
+
 const Content = styled.div`
     overflow: scroll;
     width: 100%;
@@ -68,5 +63,4 @@ const Content = styled.div`
     ${theme.option.hiddenScroll};
 `
 const RightContent = styled.div`
-  margin: auto 3.2rem;
 `

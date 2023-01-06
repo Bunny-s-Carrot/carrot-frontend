@@ -7,6 +7,7 @@ import TextInput from "@carrot/core/atoms/input/textInput";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { login } from "../../api/auth";
+import backIcon from '@carrot/core/assets/icon/back_arrow.svg';
 
 const LoginPage = () => {
   const [email, setEmail] = React.useState('');
@@ -28,7 +29,10 @@ const LoginPage = () => {
   }
 
   return (
-    <HeaderTemplate onClickBack={() => navigate('/')}>
+    <HeaderTemplate 
+      onClickLeft={() => navigate('/')}
+      leftContent={<img src={backIcon} />}
+    >
       <Container>
         <TextHeader>로그인 정보를 입력해주세요.</TextHeader>
         <InputForm>
