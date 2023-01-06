@@ -45,7 +45,7 @@ const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <LoginButton
-            type='WHITE'
+            buttonType='WHITE'
             onClick={(e) => handleLogin(e)}
             disabled={email.length === 0 || password.length === 0}>로그인</LoginButton>
         </InputForm>

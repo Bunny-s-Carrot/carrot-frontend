@@ -14,6 +14,7 @@ interface TextInputProps {
   className?: string
   isMultiLine?: boolean
 }
+
 function TextInput(props: TextInputProps) {
   if (props.isMultiLine) {
     return (
