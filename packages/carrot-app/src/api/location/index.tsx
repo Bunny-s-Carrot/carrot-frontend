@@ -1,8 +1,15 @@
 import { api } from "../../infra/api";
+import { LocationDataType } from "./locationDto";
 
 const getLocationList = async () => {
-  const { data } = await api.get('/location');
-  return data;
+  try{
+    const { data } = await api.get<{ payload: LocationDataType[] }>(
+      '/location');
+    return data;
+  } catch (e: any) {
+    throw Error(e);
+  }
+  
 }
 
 export { getLocationList };

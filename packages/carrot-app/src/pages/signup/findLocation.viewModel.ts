@@ -1,12 +1,14 @@
 
 import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
 import { getLocalInfo } from "../../api/kakao/local";
 
 
 const useFindLocationViewModel = () => {
 
-  const [localData, setLocalData] = useState({})
+  const [localData, setLocalData] = useState({});
+  const [locationHCode, setLocationHCode] = useState('');
+  const [locationName, setLocationName] = useState('');
+
   const getLocation = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -33,11 +35,13 @@ const useFindLocationViewModel = () => {
     }
   }
 
-  
-
   return {
+    locationHCode,
+    locationName,
     localData,
     getLocation,
+    setLocationHCode,
+    setLocationName,
   }
 }
 

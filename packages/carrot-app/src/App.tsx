@@ -8,6 +8,7 @@ import ChatPage from "./pages/chat";
 import MyCarrotPage from "./pages/myCarrot";
 import LaunchPage from "./pages/launch";
 import LoginPage from "./pages/logIn";
+import SignupPage from "./pages/signup";
 import FindLocationPage from "./pages/signup/findLocation";
 
 const App = () => {
@@ -23,6 +24,7 @@ const App = () => {
         <Route path="/mycarrot" element={<MyCarrotPage />} />
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/findlocation" element={<FindLocationPage />} />
+        <Route path="/auth/signup" element={<SignupPage />} />
       </Routes>
     </QueryClientProvider>
     

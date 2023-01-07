@@ -4,7 +4,7 @@ type SignupData = {
   email: string;
   password: string;
   name: string;
-  location: string;
+  locationHCode: string;
 }
 
 type LoginData = {
@@ -12,12 +12,12 @@ type LoginData = {
   password: string;
 }
 
-const signup = async ({ email, password, name, location }: SignupData) => {
+const signup = async ({ email, password, name, locationHCode }: SignupData) => {
   const { data } = await api.post('/auth/signup', {
     email,
     password,
     name,
-    location,
+    locationHCode,
   })
   return data;
 };
@@ -30,5 +30,12 @@ const login = async ({email, password}: LoginData) => {
 
   return response;
 }
+
+const authApi = {
+  signup,
+  login,
+}
+
+export default authApi;
 
 export { signup, login }
