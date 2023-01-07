@@ -17,7 +17,7 @@ const HeaderTemplate = (props: HeaderTemplateProps) => {
     <Wrapper className={props.className}>
       <Title disableUnderline={props.disableUnderline}>
         <LeftContent onClick={props.onClickLeft}>
-          {[props.leftContent]}
+          {props.leftContent}
         </LeftContent>
         <RightContent onClick={props.onClickRight}>
           {props.rightContent}

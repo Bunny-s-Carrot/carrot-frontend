@@ -1,18 +1,17 @@
-import NavBar from "../../components/navBar";
-import PopularPost from "../../components/neighborhood/popularpost";
-import Post from "../../components/neighborhood/post";
-import TopicBar from "../../components/neighborhood/topicbar";
-import backIcon from '@carrot/core/assets/icon/back_arrow.svg';
+import styled from 'styled-components';
+import theme from '@carrot/core/style/theme';
 import HeaderTemplate from '../../templates/headerTemplate';
+import TopicBar from "../../components/neighborhood/topicbar";
+import NavBar from "../../components/navBar";
+import backIcon from '@carrot/core/assets/icon/back_arrow.svg';
 import searchIcon from '@carrot/core/assets/icon/search.svg';
 import profileIcon from '@carrot/core/assets/icon/profile.svg';
 import notiIcon from '@carrot/core/assets/icon/notification.svg';
-import styled from 'styled-components';
-import theme from '@carrot/core/style/theme';
+
 
 const Neighborhood = () => {
 
-  const LeftContent = (
+  let LeftContent = (
     <Locationdiv>
       <p>연희동</p>
       <img className= 'down' src={backIcon} />
@@ -33,6 +32,7 @@ const Neighborhood = () => {
         leftContent={LeftContent}
         rightContent={RightContent}
       />
+      <TopicBar />
       <NavBar pageType="NEIGHBORHOOD" />
     </div>
   );
@@ -49,7 +49,7 @@ const StyledHeaderTemplate = styled(HeaderTemplate)`
   img {
     width: 4rem;
     height: 4rem;
-    margin: 4px;
+    margin: 3px;
     padding: 8px;
   }
 
@@ -73,6 +73,7 @@ const StyledHeaderTemplate = styled(HeaderTemplate)`
 
 const Locationdiv = styled.div`
 padding: 0.3rem;
+font-weight: 700;
 display: flex;
 align-items: center;
 
