@@ -15,15 +15,15 @@ const Neighborhood = () => {
   const LeftContent = (
     <Locationdiv>
       <p>연희동</p>
-      <img className= 'down' src={backIcon} />
+      <img className='down' src={backIcon} alt='backIcon' />
     </Locationdiv>
   )
 
   const RightContent = (
     <Icondiv>
-      <img src={searchIcon} />
-      <img src={profileIcon} />
-      <img src={notiIcon} />
+      <img src={searchIcon} alt='searchIcon' />
+      <img src={profileIcon} alt='profileIcon' />
+      <img src={notiIcon} alt='notiIcon' />
     </Icondiv>
   )
 

@@ -1,23 +1,32 @@
-import React from "react";
+import {useState, useContext} from "react";
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
 import HeaderTemplate from "../../templates/headerTemplate";
 import Button from "@carrot/core/atoms/button";
 import TextInput from "@carrot/core/atoms/input/textInput";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../../api/auth";
+import authApi from "../../api/auth";
+import AuthContext from "../../contexts/auth/authProvider";
 import backIcon from '@carrot/core/assets/icon/back_arrow.svg';
 
 const LoginPage = () => {
-  const [email, setEmail] = React.useState('');
-  const [password, setPassword] = React.useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || '/home';
 
-  const loginMutate = useMutation(login, {
+  const loginMutate = useMutation(authApi.login, {
     onSuccess: ({ data }) => {
-      console.log(data);
-      localStorage.setItem('jwt', data.token)
+      const token = {
+        token: data?.token
+      }
+      setAuth(token);
+      setEmail('');
+      setPassword('');
+      navigate(from, { replace: true });
     }
   });
 
@@ -31,7 +40,7 @@ const LoginPage = () => {
   return (
     <HeaderTemplate 
       onClickLeft={() => navigate('/')}
-      leftContent={<img src={backIcon} />}
+      leftContent={<img src={backIcon} alt='backIcon' />}
     >
       <Container>
         <TextHeader>로그인 정보를 입력해주세요.</TextHeader>

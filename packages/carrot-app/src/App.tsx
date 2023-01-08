@@ -10,18 +10,26 @@ import LaunchPage from "./pages/launch";
 import LoginPage from "./pages/logIn";
 import SignupPage from "./pages/signup";
 import FindLocationPage from "./pages/signup/findLocation";
+import PersistLogin from "./components/auth/persistLogin";
+// import RequireAuth from "./components/auth/requireAuth";
 
 const App = () => {
   const queryClient = new QueryClient();
   return (
     <QueryClientProvider client={queryClient}>
       <Routes>
-        <Route path="/" element={<LaunchPage />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="/neighborhood" element={<NeighborhoodPage />} />
-        <Route path="/location" element={<Locationpage />} />
-        <Route path="/chat" element={<ChatPage />} />
-        <Route path="/mycarrot" element={<MyCarrotPage />} />
+   
+        <Route element={<PersistLogin />}>
+        {/* <Route element={<RequireAuth />}> */}
+          <Route path="/" element={<LaunchPage />} />
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/neighborhood" element={<NeighborhoodPage />} />
+          <Route path="/location" element={<Locationpage />} />
+          <Route path="/chat" element={<ChatPage />} />
+          <Route path="/mycarrot" element={<MyCarrotPage />} />
+        {/* </Route> */}
+        </Route>
+        
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/auth/findlocation" element={<FindLocationPage />} />
         <Route path="/auth/signup" element={<SignupPage />} />

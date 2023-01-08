@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import HeaderTemplate from '../../templates/headerTemplate';
@@ -18,11 +18,11 @@ const SignupPage = () => {
   useEffect(() => {
     signupViewModel.setLocationHCode(location.state.hCode);
     signupViewModel.setLocationName(location.state.name);
-  }, [])
+  }, [location.state.hCode, location.state.name, signupViewModel])
 
   return (
     <HeaderTemplate
-      leftContent={<img src={backIcon} />}
+      leftContent={<img src={backIcon} alt='backIcon'/>}
       onClickLeft={() => navigate(-1)}  
     >
       <Container>

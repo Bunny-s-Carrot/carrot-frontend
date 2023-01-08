@@ -1,11 +1,18 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import Button from '@carrot/core/atoms/button'
 import theme from '@carrot/core/style/theme';
 import Logo from '@carrot/core/assets/img/logo.png'
+import useJwtDecode from '../../infra/auth/useJwtDecode';
 
 const LaunchPage = () => {
   const navigate = useNavigate();
+  const { isSigned } = useJwtDecode();
+  useEffect(() => {
+    if (isSigned()) navigate('/home');
+  }, [navigate, isSigned])
+
   return (
     <Container>
       <Welcome>
