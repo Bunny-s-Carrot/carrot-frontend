@@ -1,4 +1,4 @@
-import { ChangeEventHandler } from 'react';
+import { ChangeEventHandler, ReactNode } from 'react';
 import styled from 'styled-components';
 import theme from '../../style/theme';
 
