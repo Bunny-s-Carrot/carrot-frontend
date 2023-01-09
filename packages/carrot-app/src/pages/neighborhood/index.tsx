@@ -2,6 +2,7 @@ import styled from 'styled-components';
 import theme from '@carrot/core/style/theme';
 import HeaderTemplate from '../../templates/headerTemplate';
 import TopicBar from "../../components/neighborhood/topicbar";
+import Post from '../../components/neighborhood/post'
 import NavBar from "../../components/navBar";
 import backIcon from '@carrot/core/assets/icon/back_arrow.svg';
 import searchIcon from '@carrot/core/assets/icon/search.svg';
@@ -33,6 +34,7 @@ const Neighborhood = () => {
         rightContent={RightContent}
       />
       <TopicBar />
+      <Post />
       <NavBar pageType="NEIGHBORHOOD" />
     </div>
   );
