@@ -82,7 +82,7 @@ export default TopicBar;
 
 
 const TopicContainer = styled.div`
-  height: 60px;
+  height: 62px;
   border-bottom: 1px solid ${theme.colors.grey30};
   display: flex;
   align-items: center;
