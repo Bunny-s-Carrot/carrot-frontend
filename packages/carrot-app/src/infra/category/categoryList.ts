@@ -1,4 +1,4 @@
-export const categoryList = (categoryNumber: number | undefined) => {
+export const categoryList = (categoryNumber: number) => {
   switch (categoryNumber) {
     case 1001: return '인기매물';
     case 1002: return '디지털기기';
