@@ -81,7 +81,6 @@ const typography = {
 const option = {
   hiddenScroll: css`
     -ms-overflow-style: none;
-    scrollbar-width: none;
     ::-webkit-scrollbar {
       display: none;
     }

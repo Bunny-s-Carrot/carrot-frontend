@@ -1,11 +1,20 @@
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components'
 import Button from '@carrot/core/atoms/button'
 import theme from '@carrot/core/style/theme';
 import Logo from '@carrot/core/assets/img/logo.png'
+// import useJwtDecode from '../../infra/auth/useJwtDecode';
+import { useAuth } from '../../contexts/auth/authProvider';
 
 const LaunchPage = () => {
   const navigate = useNavigate();
+  // const { isSigned } = useJwtDecode();
+  const { auth } = useAuth();
+  useEffect(() => {
+    if (auth?.token) navigate('/home');
+  }, [navigate, auth?.token])
+
   return (
     <Container>
       <Welcome>

@@ -3,16 +3,17 @@ import theme from '../../style/theme'
 import { ChangeEventHandler, KeyboardEventHandler } from 'react'
 
 interface TextInputProps {
-  value?: string
-  inputType?: string
-  placeholder: string
-  onChange?: ChangeEventHandler<HTMLInputElement>
-  onChangeValue?: (value: string) => void
-  onFocus?: () => void
-  disabled?: boolean
-  onKeyup?: KeyboardEventHandler
-  className?: string
-  isMultiLine?: boolean
+  value?: string;
+  inputType?: string;
+  placeholder: string;
+  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onChangeValue?: (value: string) => void;
+  onFocus?: () => void;
+  disabled?: boolean;
+  onKeyup?: KeyboardEventHandler;
+  className?: string;
+  isMultiLine?: boolean;
+  required?: boolean;
 }
 
 function TextInput(props: TextInputProps) {
@@ -31,7 +32,7 @@ function TextInput(props: TextInputProps) {
           onChange={(e) => {
             props.onChangeValue && props.onChangeValue(e.target.value)
           }}
-          required
+          required={props.required}
           onFocus={props.onFocus}
           onKeyUp={props.onKeyup}
           disabled={props.disabled}
@@ -53,7 +54,7 @@ function TextInput(props: TextInputProps) {
         type={props.inputType || 'text'}
         placeholder={props.placeholder}
         onChange={props.onChange as ChangeEventHandler<HTMLInputElement>}
-        required
+        required={props.required}
         onFocus={props.onFocus}
         onKeyUp={props.onKeyup}
         disabled={props.disabled}
