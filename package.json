@@ -20,7 +20,7 @@
     "packages/*"
   ],
   "scripts": {
-    "app/start": "lerna exec yarn start --scope @carrot/app",
-    "app/build": "lerna exec yarn build --scope @carrot/app"
+    "start/app": "lerna exec yarn start --scope @carrot/app",
+    "build/app": "lerna exec yarn build --scope @carrot/app"
   }
 }

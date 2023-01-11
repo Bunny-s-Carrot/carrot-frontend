@@ -22,7 +22,7 @@ const FindLocationPage = () => {
 
     return data.payload.filter(
       (value) => 
-        value.name.includes(inputValue)
+        value.full_name.includes(inputValue)
     );
   }
 
@@ -63,10 +63,10 @@ const FindLocationPage = () => {
                 key={index}
                 onClick={() => {
                   navigate('/auth/signup', 
-                  { state: { hCode: item.h_code, name: item.name } })
+                  { state: { id: item.location_id, name: item.full_name } })
                 }}
               >
-                <span>{item.name}</span>
+                <span>{item.full_name}</span>
               </li>
               ))}
             </ul>
