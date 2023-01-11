@@ -4,7 +4,7 @@ import styled from "styled-components";
 
 import NavBar from "../../components/navBar";
 import HeaderTemplate from "../../templates/headerTemplate";
-import Product from "../../components/product";
+import Product from "../../components/product/productList";
 
 import backIcon from '@carrot/core/assets/icon/back_arrow.svg';
 import searchIcon from '@carrot/core/assets/icon/search.svg';
@@ -49,10 +49,10 @@ const Home = () => {
               title={item.title}
               price={item.price}
               created_at={item.created_at}
-              wanted_location={item.lowest_sect_name}
+              seller_location={item.lowest_sect_name}
               heart={item.heart}
               chat={item.chat}
-              onClick={() => navigate(`/product/${item.product_id}`)}
+              onClick={() => navigate(`/product/${item.product_id}`, { state: {locationName: item.lowest_sect_name} })}
             />
           ))}
           

@@ -1,6 +1,7 @@
 import { PropsWithChildren, ReactNode } from 'react'
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import theme from '@carrot/core/style/theme';
+import heartIconOutline from '@carrot/core/assets/icon/heart-outline.svg'
 
 type PageType = 'HOME' | 'AROUND'
 
@@ -12,41 +13,47 @@ interface SalesTemplateProps extends PropsWithChildren {
   onClickLeft?: () => void;
   rightContent?: ReactNode;
   onClickRight?: () => void;
-  disableUnderline?: boolean;
+  bottomLeftContent?: ReactNode;
+  bottomRightContent?: ReactNode;
 }
 
 const SalesTemplate = (props: SalesTemplateProps) => {
   return (
-    <>
-    <HeaderWrapper className={props.className}>
-      <Title disableUnderline={props.disableUnderline}>
-        <LeftContent onClick={props.onClickLeft}>
-          {props.leftContent}
-        </LeftContent>
-        <RightContent onClick={props.onClickRight}>
-          {props.rightContent}
-        </RightContent>
-      </Title>
-      <Content>{props.children}</Content>
-    </HeaderWrapper>
-    {props.children}
-    <BottomWrapper>
-      hi
-    </BottomWrapper>
-    </>
+    <Container className={props.className}>
+      <HeaderWrapper>
+        <Title>
+          <LeftContent onClick={props.onClickLeft}>
+            {props.leftContent}
+          </LeftContent>
+          <RightContent onClick={props.onClickRight}>
+            {props.rightContent}
+          </RightContent>
+        </Title>
+      </HeaderWrapper>
+      <MainContent>{props.children}</MainContent>
+      <BottomWrapper>
+        <BottomLeftContent>
+          <HeartWrapper>
+            <img src={heartIconOutline} alt='heartIcon' />
+          </HeartWrapper>
+          {props.bottomLeftContent}
+        </BottomLeftContent>
+        <BottomRightContent>
+          {props.bottomRightContent}
+        </BottomRightContent>
+      </BottomWrapper>
+    </Container>
   )
 }
 
 export default SalesTemplate;
 
-const HeaderWrapper = styled.div`
+const Container = styled.div`
   width: 100%;
-  height: 100%;
-  flex-direction: column;
-  align-items: center;
-  overflow: hidden;
+  height: 100%;  
 `
-const Title = styled.div<{ disableUnderline?: boolean }>`
+const HeaderWrapper = styled.div``
+const Title = styled.div`
   height: 6rem;
   width: 100%;
   background: linear-gradient(to bottom, #999 1%, transparent);
@@ -56,12 +63,7 @@ const Title = styled.div<{ disableUnderline?: boolean }>`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  ${(props) => 
-    props.disableUnderline === true &&
-    css`
-      border-bottom: none;
-    `}
-  
+
   img {
     width: 4rem;
     height: 4rem;
@@ -79,11 +81,11 @@ const LeftContent = styled.div`
   ${theme.typography.body1};
   font-weight: bold;
 `
-const Content = styled.div`
-    overflow: scroll;
-    width: 100%;
-    height: calc(100% - 6rem);
-    ${theme.option.hiddenScroll};
+const MainContent = styled.div`
+  overflow: scroll;
+  width: 100%;
+  height: calc(100% - 7.2rem);
+  ${theme.option.hiddenScroll};
 `
 const RightContent = styled.div`
 `
@@ -93,8 +95,43 @@ const BottomWrapper = styled.div`
   background: white;
   position: absolute;
   bottom: 0;
-  padding: 1.6rem;
+  padding: 1.2rem 1.6rem;
   border-top: 1px solid ${theme.colors.grey30};
   display: flex;
   justify-content: space-between;
+
+  div{
+    position: relative;
+
+    img {
+      position: absolute;
+      top: 0.6rem;
+      width: 90%;
+      height: 90%;
+    }
+  }
+  
+`
+const BottomLeftContent = styled.div`
+  width: 100%;
+  display: flex;  
+`
+const HeartWrapper = styled.div`
+  position: relative;
+  width: 3.2rem;
+  height: 3.2rem;
+  margin-right: 3.2rem;
+
+  ::after {
+    content: '';
+    position: absolute;
+    top: 0.2rem;
+    right: -1.4rem;
+    width: 0.1rem;
+    height: 4rem;
+    background-color: ${theme.colors.grey40};
+  }
+`
+const BottomRightContent = styled.div`
+  display: flex;
 `

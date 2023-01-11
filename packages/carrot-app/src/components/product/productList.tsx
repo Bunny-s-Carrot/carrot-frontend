@@ -2,11 +2,12 @@ import theme from "@carrot/core/style/theme";
 import styled from "styled-components";
 import searchIcon from '@carrot/core/assets/icon/search.svg'
 import heartIcon from '@carrot/core/assets/icon/heart_grey.svg'
-import chatIcon from '@carrot/core/assets/icon/chat_bubble_outline_grey.svg'
+import chatIcon from '@carrot/core/assets/icon/chat-outline-grey.svg'
+import { convertDateToSimple } from "../../infra/format";
 
 interface ProductProps {
   title: string;
-  wanted_location: string;
+  seller_location: string;
   price: number;
   created_at: any;
   chat?: number;
@@ -25,7 +26,7 @@ const Product = (props: ProductProps) => {
           <span>{props.title}</span>
         </TitleWrapper>
         <LocationAndCreatedAt>
-          <span>{props.wanted_location} · {props.created_at}</span>
+          <span>{props.seller_location} · {convertDateToSimple(props.created_at)}</span>
         </LocationAndCreatedAt>
         <Price>
           <span>{props.price.toLocaleString()}원</span>

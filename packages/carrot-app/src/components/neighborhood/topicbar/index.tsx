@@ -54,6 +54,7 @@ const TopicBar = () => {
     </TopicContainer>
   );
 };
+
 export default TopicBar;
 
 const TopicContainer = styled.div`
