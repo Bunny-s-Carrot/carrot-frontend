@@ -1,15 +1,15 @@
 import styled from "styled-components";
 
-import icHome from '@carrot/core/assets/icon/home_outline.svg';
-import icHomeActive from '@carrot/core/assets/icon/home_filled.svg';
-import icNeighborhood from '@carrot/core/assets/icon/neighborhood_outline.svg';
-import icNeighborhoodActive from '@carrot/core/assets/icon/neighborhood_filled.svg';
-import icLocation from '@carrot/core/assets/icon/location_outline.svg';
-import icLocationActive from '@carrot/core/assets/icon/location_filled.svg';
-import icChatBubble from '@carrot/core/assets/icon/chat_bubble_outline.svg';
-import icChatBubbleActive from '@carrot/core/assets/icon/chat_bubble_filled.svg';
-import icMyCarrot from '@carrot/core/assets/icon/my_carrot_outline.svg';
-import icMyCarrotActive from '@carrot/core/assets/icon/my_carrot_filled.svg';
+import icHome from '@carrot/core/assets/icon/home-outline.svg';
+import icHomeActive from '@carrot/core/assets/icon/home-filled.svg';
+import icNeighborhood from '@carrot/core/assets/icon/neighborhood-outline.svg';
+import icNeighborhoodActive from '@carrot/core/assets/icon/neighborhood-filled.svg';
+import icLocation from '@carrot/core/assets/icon/location-pin-outline.svg';
+import icLocationActive from '@carrot/core/assets/icon/location-pin-filled.svg';
+import icChatBubble from '@carrot/core/assets/icon/chat-outline.svg';
+import icChatBubbleActive from '@carrot/core/assets/icon/chat-filled.svg';
+import icMyCarrot from '@carrot/core/assets/icon/myCarrot-outline.svg';
+import icMyCarrotActive from '@carrot/core/assets/icon/myCarrot-filled.svg';
 import { useNavigate } from "react-router-dom";
 
 export type NavType = 'HOME' | 'NEIGHBORHOOD' | 'AROUND' | 'CHAT' | 'MYCARROT'

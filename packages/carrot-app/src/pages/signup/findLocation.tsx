@@ -114,6 +114,7 @@ const ResultWrapper = styled.div`
   height: 100%;
   overflow-y: scroll;
   padding-bottom: 1.6rem;
+  ${theme.option.hiddenScroll};
 `
 const NoResult = styled.div`
   margin-top: 4rem;
