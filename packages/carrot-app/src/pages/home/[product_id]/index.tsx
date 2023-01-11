@@ -69,7 +69,8 @@ const ProductDetailPage = () => {
             <ContentHeader>
               <p>{productDetailViewModel.data?.product.title}</p>
               <span onClick={() => {}}>
-                {categoryList(productDetailViewModel.data?.product.classif_id)}
+                {productDetailViewModel.data?.product.classif_id && 
+                categoryList(productDetailViewModel.data?.product.classif_id)}
               </span>
               <span>
                 {' · '} 

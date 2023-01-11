@@ -1,7 +1,7 @@
 import theme from "@carrot/core/style/theme";
 import styled from "styled-components";
 import searchIcon from '@carrot/core/assets/icon/search.svg'
-import heartIcon from '@carrot/core/assets/icon/heart_grey.svg'
+import heartIcon from '@carrot/core/assets/icon/heart-grey.svg'
 import chatIcon from '@carrot/core/assets/icon/chat-outline-grey.svg'
 import { convertDateToSimple } from "../../infra/format";
 
