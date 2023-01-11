@@ -86,7 +86,6 @@ const TextInput = styled(Input)`
   input {
     ${theme.typography.body3};
   }  
-
 `
 const SubmitButton = styled(Button)`
   width: 100%;
