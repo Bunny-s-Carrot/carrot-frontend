@@ -13,6 +13,7 @@ import profileIcon from '@carrot/core/assets/icon/profile.svg';
 import notiIcon from '@carrot/core/assets/icon/notification.svg';
 
 import usePostViewModel from './post.viewModel';
+import FloatingButton from "../../components/floatingButton";
 
 const Neighborhood = () => {
   const postViewModel = usePostViewModel();
@@ -50,7 +51,7 @@ const Neighborhood = () => {
           ))}
         </PostContainer>
       </HeaderTemplate>
-      
+      <FloatingButton pageType='NEIGHBORHOOD'/>
       <NavBar pageType="NEIGHBORHOOD" />
     </>
   );

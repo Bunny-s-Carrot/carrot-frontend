@@ -6,7 +6,7 @@ import theme from "@carrot/core/style/theme";
 import GlobalStyle from "@carrot/core/style/globalStyle";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/auth/authProvider";
-
+import { CustomProvider } from "./contexts/etc/customProvider";
 const root = ReactDOM.createRoot(
   document.getElementById("App") as HTMLElement
 );
@@ -16,7 +16,9 @@ root.render(
     <ThemeProvider theme={theme}>
       <BrowserRouter basename="/">
         <AuthProvider>
-          <App />
+          <CustomProvider>
+            <App />
+          </CustomProvider>
         </AuthProvider> 
       </BrowserRouter>
     </ThemeProvider>
