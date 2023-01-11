@@ -1,6 +1,7 @@
-import { PropsWithChildren, ReactNode } from 'react'
+import { PropsWithChildren, ReactNode, useRef } from 'react'
 import styled from 'styled-components';
 import theme from '@carrot/core/style/theme';
+import { useCustomContext } from '../contexts/etc/customProvider';
 
 interface HeaderTemplateProps extends PropsWithChildren {
   className?: string;
@@ -12,6 +13,13 @@ interface HeaderTemplateProps extends PropsWithChildren {
 }
 
 const HeaderTemplate = (props: HeaderTemplateProps) => {
+  const { setScrollTop } = useCustomContext();
+  const contentRef = useRef<any>();
+
+  const handleScroll = () => {
+    setScrollTop(contentRef.current.scrollTop);
+  }
+  
   return (
     <Wrapper className={props.className}>
       <Title>
@@ -22,7 +30,7 @@ const HeaderTemplate = (props: HeaderTemplateProps) => {
           {props.rightContent}
         </RightContent>
       </Title>
-      <Content>{props.children}</Content>
+      <Content ref={contentRef} onScroll={handleScroll}>{props.children}</Content>
     </Wrapper>
   )
 }

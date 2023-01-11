@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import styled from "styled-components";
@@ -13,12 +14,13 @@ import notiIcon from '@carrot/core/assets/icon/notification.svg';
 import theme from "@carrot/core/style/theme";
 
 import useProductViewModel from "./home.viewModel";
+import FloatingButton from "../../components/floatingButton";
+
 
 const Home = () => {
   const navigate = useNavigate();
   const productViewModel = useProductViewModel();
   const results = productViewModel.data?.payload;
-
 
   const LeftContent = (
     <LocationWrapper>
@@ -37,10 +39,10 @@ const Home = () => {
 
   return (
     <>
-    <HeaderTemplate
-      leftContent={LeftContent}
-      onClickLeft={() => navigate('')}
-      rightContent={RightContent}
+      <HeaderTemplate
+        leftContent={LeftContent}
+        onClickLeft={() => navigate('')}
+        rightContent={RightContent}
       >
         <Container>
           {results?.map((item, index) => (
@@ -55,10 +57,11 @@ const Home = () => {
               onClick={() => navigate(`/product/${item.product_id}`, { state: {locationName: item.lowest_sect_name} })}
             />
           ))}
-          
+          <div style={{ height: '1000px' }}></div>
         </Container>
-    </HeaderTemplate>
-    <NavBar pageType='HOME' />
+      </HeaderTemplate>
+      <FloatingButton pageType='HOME' />
+      <NavBar pageType='HOME' />
     </>
   )
 };
@@ -66,6 +69,7 @@ const Home = () => {
 export default Home;
 
 const Container = styled.div`
+  position: relative;
   padding: 0 1.6rem;
 `
 
