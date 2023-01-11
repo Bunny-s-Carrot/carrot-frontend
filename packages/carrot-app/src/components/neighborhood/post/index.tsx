@@ -1,110 +1,73 @@
-// 서버DB로 부터 post list를 받아와서 postListData에 저장함
-// 사용자가 페이지를 밑으로 넘기면(스크롤하면) 한번 더 데이터를 받아와 push함
-
 import styled from "styled-components";
+import theme from '@carrot/core/style/theme';
 
 //(11월 10일)우선은 테스트용으로 데이터를 받아왔다는 전제하에, postListData를 채워놓음
 const postListData = [
   {
+    title: "홍제동 주변에 아시안 마켓있나요?",
+    content: "",
     topic: "",
-    prefix: "",
-    title: "",
-    contents: "",
-    gatheringData: {
-      personNum: "3명",
-      gender: "여성",
-      age: null,
-      date: null,
-      location: "연남동",
-    },
-    writerId: "",
-    writerLocation: "",
-    time: "",
+    location: "홍제동",
+    time: "48분 전"
   },
   {
-    topic: "동네질문",
-    prefix: "Q.",
-    title:
-      "홍대 근처 주류점 다 돌았는데 산토리 위스키 없더라구요. 어디서 구할 수 있을까요..?",
-    contents: "",
-    gatheringData: {},
-    writerId: "testId",
-    writerLocation: "연희동",
-    time: "",
+    title: "1시쯤 이태원 쏭타이 가실분?",
+    content: "",
+    topic: "반짝모임",
+    location: "동교동",
+    time: "1시간 전"
   },
   {
-    topic: "동네맛집",
-    prefix: "",
-    title:
-      "홍대입구 역 근처 브로우바, 브로우바 리프트! 속눈썹 펌 샵 추천합니다 :) 홍대입구역 경의선산책거리 쪽에 있는 알앤리쉬에요:) 후기보시면 아시겠지만 원장님 짱짱 잘합니다",
-    contents: "",
-    gatheringData: {},
-    writerId: "testId2",
-    writerLocation: "연남동",
-    time: "",
+    title: "대입 준비하시는 분 계신가요?",
+    content: "",
+    topic: "",
+    location: "창천동",
+    time: "3시간 전"
   },
   {
-    topic: "같이해요",
-    prefix: "모집중",
-    title: "같이 롤드컵보실분~!",
-    contents: "같이 모여서 응원해요!! ",
-    gatheringData: {
-      personNum: "4명",
-      gender: null,
-      age: "20~30세",
-      date: "내일",
-      location: "연남동",
-    },
-    writerId: "testId3",
-    writerLocation: "연남동",
-    time: "",
-  },
+    title: "무료 타로 한번 갈께요~ 선착순1명?",
+    content: "",
+    topic: "반짝모임",
+    location: "연희동",
+    time: "5시간 전"
+  }
 ];
 
 const Post = () => {
   return (
     <PostContainer>
       {postListData.map((item, index) => (
-        <PostItem key={index} onClick={() => console.log(index)}>
-          <div>{item.topic}</div>
-          <span>
-            {item.title.length < 75
-              ? item.prefix + " " + item.title
-              : item.prefix + " " + item.title.substring(0, 70) + "...더보기"}
-          </span>
-          <span>{item.contents}</span>
+        <PostItem key={index}>
+          <div>{item.title}</div>
           <div>
-            {Object.keys(item.gatheringData).length === 0 ? (
-              ""
-            ) : (
-              <div>
-                <span>{item.gatheringData.personNum}</span>
-                <span>{item.gatheringData.gender}</span>
-                <span>{item.gatheringData.personNum}</span>
-                <span>{item.gatheringData.date}</span>
-                <span>{item.gatheringData.location}</span>
-              </div>
-            )}
-          </div>
-          <div>
-            <span>{item.writerId}</span>
-            <span>{item.writerLocation}</span>
-            <span>{item.time}</span>
+            <Sub1>{item.topic}</Sub1>
+            <Sub2>{item.location}</Sub2>
+            <Sub2>{item.time}</Sub2>
           </div>
         </PostItem>
       ))}
     </PostContainer>
   );
 };
+
+
 export default Post;
 
 const PostContainer = styled.div`
   width: 100%;
+  padding: 10px;
 `;
 
 const PostItem = styled.div`
   width: 100%;
-  border: 1px solid black;
+  border-bottom: 1px solid ${theme.colors.grey30};
   padding: 10px;
   font-size: 15px;
 `;
+
+const Sub1 = styled.span`
+color: ${theme.colors.blue}
+`
+
+const Sub2 = styled.span`
+color: ${theme.colors.grey50};`
