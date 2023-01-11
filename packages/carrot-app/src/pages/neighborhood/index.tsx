@@ -1,9 +1,14 @@
+import NavBar from "../../components/navBar";
+// import PopularPost from "../../components/neighborhood/popularpost";
+// import Post from "../../components/neighborhood/post";
+// import TopicBar from "../../components/neighborhood/topicbar";
+
 import styled from 'styled-components';
 import theme from '@carrot/core/style/theme';
 import HeaderTemplate from '../../templates/headerTemplate';
 import TopicBar from "../../components/neighborhood/topicbar";
 import Post from '../../components/neighborhood/post'
-import NavBar from "../../components/navBar";
+
 import backIcon from '@carrot/core/assets/icon/back_arrow.svg';
 import searchIcon from '@carrot/core/assets/icon/search.svg';
 import profileIcon from '@carrot/core/assets/icon/profile.svg';
@@ -28,50 +33,22 @@ const Neighborhood = () => {
   )
 
   return (
-    <div>
-      <StyledHeaderTemplate 
+    <>
+      <HeaderTemplate 
         leftContent={LeftContent}
         rightContent={RightContent}
+      >
+        여기에 JSX엘리먼트 넣으면 됩니다
+      </HeaderTemplate>
       />
       <TopicBar />
       <Post />
       <NavBar pageType="NEIGHBORHOOD" />
-    </div>
+    </>
   );
 };
 
 export default Neighborhood;
-
-
-const StyledHeaderTemplate = styled(HeaderTemplate)`
-
-  font-size: 20px;
-  align-items: center;
-
-  img {
-    width: 4rem;
-    height: 4rem;
-    margin: 3px;
-    padding: 8px;
-  }
-
-  img:hover {
-    background: ${theme.colors.grey30};
-    border-radius: 18px;
-  }
-
-  .down {
-    width: 2.7rem;
-    height: 2.7rem;
-    transform: rotate(-90deg);
-    margin: 4px 0;
-  }
-
-  .down:hover {
-    background: none;
-    cursor: pointer;
-  }
-`
 
 const Locationdiv = styled.div`
 padding: 0.3rem;

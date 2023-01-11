@@ -12,7 +12,7 @@ import icMyCarrot from '@carrot/core/assets/icon/my_carrot_outline.svg';
 import icMyCarrotActive from '@carrot/core/assets/icon/my_carrot_filled.svg';
 import { useNavigate } from "react-router-dom";
 
-export type NavType = 'HOME' | 'NEIGHBORHOOD' | 'LOCATION' | 'CHAT' | 'MYCARROT'
+export type NavType = 'HOME' | 'NEIGHBORHOOD' | 'AROUND' | 'CHAT' | 'MYCARROT'
 
 interface NavProps {
   pageType: NavType
@@ -38,7 +38,7 @@ const navListData = [
     title: '내 근처',
     icon: icLocation,
     iconActive: icLocationActive,
-    path: '/location',
+    path: '/around',
   },
   {
     type: 'CHAT',

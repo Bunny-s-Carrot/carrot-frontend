@@ -16,9 +16,9 @@ const SignupPage = () => {
 
 
   useEffect(() => {
-    signupViewModel.setLocationHCode(location.state.hCode);
+    signupViewModel.setLocationId(location.state.id);
     signupViewModel.setLocationName(location.state.name);
-  }, [location.state.hCode, location.state.name, signupViewModel])
+  }, [location.state.id, location.state.name, signupViewModel])
 
   return (
     <HeaderTemplate

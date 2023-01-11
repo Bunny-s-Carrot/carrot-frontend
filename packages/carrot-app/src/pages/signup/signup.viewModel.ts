@@ -11,15 +11,15 @@ const useSignupViewModel = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [name, setName] = useState('');
-  const [locationHCode, setLocationHCode] = useState('');
+  const [locationId, setLocationId] = useState('');
   const [locationName, setLocationName] = useState('');
 
   const signup = useMutation(authApi.signup);
 
   const handleClickSignup = () => {
-    console.log(email, password, name, locationHCode, locationName)
+
     signup.mutate(
-      {email, password, name, locationHCode},
+      {email, password, name, locationId},
       {
         onSuccess: () => {
           alert('등록 성공');
@@ -39,8 +39,8 @@ const useSignupViewModel = () => {
     setPasswordConfirm,
     name,
     setName,
-    locationHCode,
-    setLocationHCode,
+    locationId,
+    setLocationId,
     locationName,
     setLocationName,
     handleClickSignup,

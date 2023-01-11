@@ -2,7 +2,7 @@ import { privateApi } from "../api";
 import { useEffect } from 'react';
 import useRefreshToken from "./useRefreshToken";
 import { useAuth } from "../../contexts/auth/authProvider";
-import { AxiosRequestConfig } from "axios";
+// import { AxiosRequestConfig } from "axios";
 import authApi from "../../api/auth";
 
 const useApiInterceptor = () => {
@@ -12,7 +12,7 @@ const useApiInterceptor = () => {
   useEffect(() => {
 
     const requestIntercept = privateApi.interceptors.request.use(
-      (config: AxiosRequestConfig) => {
+      (config: any) => {
 
         config.headers && 
         (config.headers.Authorization = `Bearer ${auth?.token}`)

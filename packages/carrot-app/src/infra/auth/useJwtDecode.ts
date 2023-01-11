@@ -7,7 +7,7 @@ const useJwtDecode = () => {
   const { auth } = useAuth();
 
   const jwt = auth?.token ?? '';
-  const decodedJwt = jwtDecode(jwt ?? '') as JwtToken
+  const decodedJwt = jwt && jwtDecode(jwt ?? '') as JwtToken
 
   const getId = () => decodedJwt.user_id;
 

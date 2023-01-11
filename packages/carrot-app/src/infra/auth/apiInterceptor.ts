@@ -1,4 +1,4 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios from "axios";
 
 import { useAuth } from "../../contexts/auth/authProvider";
 import authApi from "../../api/auth";
@@ -13,7 +13,7 @@ const privateApi = axios.create({
 });
 
 privateApi.interceptors.request.use(
-  (config: AxiosRequestConfig) => {
+  (config: any) => {
     config.headers = config.headers ?? {};
     config.headers && 
     (config.headers.Authorization = `Bearer ${auth?.token}`)

@@ -2,7 +2,10 @@ import { PropsWithChildren, ReactNode } from 'react'
 import styled, { css } from 'styled-components';
 import theme from '@carrot/core/style/theme';
 
-interface HeaderTemplateProps extends PropsWithChildren {
+type PageType = 'HOME' | 'AROUND'
+
+interface SalesTemplateProps extends PropsWithChildren {
+  pageType: PageType;
   className?: string;
   title?: string;
   leftContent?: ReactNode;
@@ -12,9 +15,10 @@ interface HeaderTemplateProps extends PropsWithChildren {
   disableUnderline?: boolean;
 }
 
-const HeaderTemplate = (props: HeaderTemplateProps) => {
+const SalesTemplate = (props: SalesTemplateProps) => {
   return (
-    <Wrapper className={props.className}>
+    <>
+    <HeaderWrapper className={props.className}>
       <Title disableUnderline={props.disableUnderline}>
         <LeftContent onClick={props.onClickLeft}>
           {props.leftContent}
@@ -24,16 +28,20 @@ const HeaderTemplate = (props: HeaderTemplateProps) => {
         </RightContent>
       </Title>
       <Content>{props.children}</Content>
-    </Wrapper>
+    </HeaderWrapper>
+    {props.children}
+    <BottomWrapper>
+      hi
+    </BottomWrapper>
+    </>
   )
 }
 
-export default HeaderTemplate;
+export default SalesTemplate;
 
-const Wrapper = styled.div`
+const HeaderWrapper = styled.div`
   width: 100%;
   height: 100%;
-  background: white;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
@@ -41,11 +49,13 @@ const Wrapper = styled.div`
 const Title = styled.div<{ disableUnderline?: boolean }>`
   height: 6rem;
   width: 100%;
+  background: linear-gradient(to bottom, #999 1%, transparent);
+  position: absolute;
+  top: 0;
   padding: 0 1.6rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 0.1rem solid ${theme.colors.grey30};
   ${(props) => 
     props.disableUnderline === true &&
     css`
@@ -68,19 +78,6 @@ const LeftContent = styled.div`
   display: flex;
   ${theme.typography.body1};
   font-weight: bold;
-
-  .down {
-    width: 2.7rem;
-    height: 2.7rem;
-    transform: rotate(-90deg);
-    margin: 0.4rem 0;
-  }
-
-  .down:hover {
-    background: none;
-    cursor: pointer;
-  }
-
 `
 const Content = styled.div`
     overflow: scroll;
@@ -89,4 +86,15 @@ const Content = styled.div`
     ${theme.option.hiddenScroll};
 `
 const RightContent = styled.div`
+`
+const BottomWrapper = styled.div`
+  width: 100%;
+  height: 7.2rem;
+  background: white;
+  position: absolute;
+  bottom: 0;
+  padding: 1.6rem;
+  border-top: 1px solid ${theme.colors.grey30};
+  display: flex;
+  justify-content: space-between;
 `

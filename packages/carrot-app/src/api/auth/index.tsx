@@ -4,7 +4,7 @@ type SignupData = {
   email: string;
   password: string;
   name: string;
-  locationHCode: string;
+  locationId: string;
 }
 
 type LoginData = {
@@ -12,12 +12,12 @@ type LoginData = {
   password: string;
 }
 
-const signup = async ({ email, password, name, locationHCode }: SignupData) => {
+const signup = async ({ email, password, name, locationId }: SignupData) => {
   const { data } = await api.post('/auth/signup', {
     email,
     password,
     name,
-    locationHCode,
+    locationId,
   })
   return data;
 };
