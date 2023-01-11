@@ -1,7 +1,5 @@
 import NavBar from "../../components/navBar";
 // import PopularPost from "../../components/neighborhood/popularpost";
-// import Post from "../../components/neighborhood/post";
-// import TopicBar from "../../components/neighborhood/topicbar";
 
 import styled from 'styled-components';
 import theme from '@carrot/core/style/theme';
@@ -14,8 +12,11 @@ import searchIcon from '@carrot/core/assets/icon/search.svg';
 import profileIcon from '@carrot/core/assets/icon/profile.svg';
 import notiIcon from '@carrot/core/assets/icon/notification.svg';
 
+import usePostViewModel from './post.viewModel';
 
 const Neighborhood = () => {
+  const postViewModel = usePostViewModel();
+  const results = postViewModel.data?.payload;
 
   let LeftContent = (
     <Locationdiv>
@@ -38,11 +39,18 @@ const Neighborhood = () => {
         leftContent={LeftContent}
         rightContent={RightContent}
       >
-        여기에 JSX엘리먼트 넣으면 됩니다
+        <TopicBar />
+        <PostContainer>
+          {results?.map((item, index) => (
+            <Post 
+            key={index} 
+            title={item.title} 
+            created_at={item.created_at} 
+            />
+          ))}
+        </PostContainer>
       </HeaderTemplate>
-      />
-      <TopicBar />
-      <Post />
+      
       <NavBar pageType="NEIGHBORHOOD" />
     </>
   );
@@ -67,3 +75,5 @@ display: flex;
 justify-content: space-around;
 `
 
+const PostContainer = styled.div`
+`
