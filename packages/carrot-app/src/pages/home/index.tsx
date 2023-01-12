@@ -1,13 +1,11 @@
-import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import styled from "styled-components";
 
 import NavBar from "../../components/navBar";
 import HeaderTemplate from "../../templates/headerTemplate";
 import Product from "../../components/product/productList";
 
-import backIcon from '@carrot/core/assets/icon/back_arrow.svg';
+import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
 import searchIcon from '@carrot/core/assets/icon/search.svg';
 import menuIcon from '@carrot/core/assets/icon/menu.svg';
 import notiIcon from '@carrot/core/assets/icon/notification.svg';

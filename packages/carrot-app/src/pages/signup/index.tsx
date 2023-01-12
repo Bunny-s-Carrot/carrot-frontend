@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import HeaderTemplate from '../../templates/headerTemplate';
-import backIcon from '@carrot/core/assets/icon/back_arrow.svg'
+import backIcon from '@carrot/core/assets/icon/back-arrow.svg'
 import Input from '@carrot/core/atoms/input/textInput'
 import Button from '@carrot/core/atoms/button';
 import theme from '@carrot/core/style/theme';

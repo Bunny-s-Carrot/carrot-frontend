@@ -7,7 +7,7 @@ import HeaderTemplate from '../../templates/headerTemplate';
 import TopicBar from "../../components/neighborhood/topicbar";
 import Post from '../../components/neighborhood/post'
 
-import backIcon from '@carrot/core/assets/icon/back_arrow.svg';
+import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
 import searchIcon from '@carrot/core/assets/icon/search.svg';
 import profileIcon from '@carrot/core/assets/icon/profile.svg';
 import notiIcon from '@carrot/core/assets/icon/notification.svg';

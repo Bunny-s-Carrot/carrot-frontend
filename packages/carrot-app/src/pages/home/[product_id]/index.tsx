@@ -4,7 +4,7 @@ import SalesTemplate from "../../../templates/salesTemplate"
 
 import { categoryList } from "../../../infra/category/categoryList";
 
-import backIconWhite from '@carrot/core/assets/icon/back_arrow_white.svg';
+import backIconWhite from '@carrot/core/assets/icon/back-arrow-white.svg';
 import homeIconWhite from '@carrot/core/assets/icon/home-outline-white.svg';
 import logo from '@carrot/core/assets/img/logo.png'
 import useProductDetailViewModel from "./[product_id].viewModel";

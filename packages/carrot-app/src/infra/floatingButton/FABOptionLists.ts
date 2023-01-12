@@ -1,62 +1,74 @@
 const homeOption = [
   {
     emoji: '🦺',
-    content: '알바'
+    content: '알바',
+    path: '',
   },
   {
     emoji: '📗',
-    content: '과외/클래스'
+    content: '과외/클래스',
+    path: ''
   },
   {
     emoji: '🍎',
-    content: '농수산물'
+    content: '농수산물',
+    path: ''
   },
   {
     emoji: '🏠',
-    content: '부동산'
+    content: '부동산',
+    path: ''
   },
   {
     emoji: '🚗',
-    content: '중고차'
+    content: '중고차',
+    path: ''
   },
   {
     emoji: '🎁',
     content: '내 물건 팔기',
-    path: '/sell'
+    path: '/sell-product'
   },
 ];
 
 const neighborhoodOption = [
   {
     emoji: '📆',
-    content: '같이해요'
+    content: '같이해요',
+    path: ''
   },
   {
     emoji: '📒',
-    content: '동네생활'
+    content: '동네생활',
+    path: ''
   },
 ];
 
 const aroundOption = [
   {
     emoji: '🦺',
-    content: '알바 구하기'
+    content: '알바 구하기',
+    path: ''
   },
   {
     emoji: '📗',
-    content: '과외/클래스 홍보하기'
+    content: '과외/클래스 홍보하기',
+    path: ''
   },
   {
     emoji: '🍎',
-    content: '농수산물 팔기'
+    content: '농수산물 팔기',
+    path: ''
   },
   {
     emoji: '🏠',
-    content: '부동산 매물 내놓기'
+    content: '부동산 매물 내놓기',
+    path: ''
   },
   {
     emoji: '🚗',
-    content: '내 차 팔기'
+    content: '내 차 팔기',
+    path: ''
   },
 ]
 
