@@ -63,14 +63,11 @@ const Title = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-
-  img {
-    width: 4rem;
-    height: 4rem;
-    margin: 0.3rem;
-    padding: 0.8rem;
-  }
   
+  img {
+    max-height: 2.6rem;
+  }
+
   img:hover {
     background: ${theme.colors.grey30};
     border-radius: 18px;
@@ -78,6 +75,7 @@ const Title = styled.div`
 `
 const LeftContent = styled.div`
   display: flex;
+  gap: 2rem;
   ${theme.typography.body1};
   font-weight: bold;
 `

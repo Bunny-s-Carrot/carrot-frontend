@@ -14,6 +14,7 @@ interface TextInputProps {
   className?: string;
   isMultiLine?: boolean;
   required?: boolean;
+  disableBorder?: boolean;
 }
 
 function TextInput(props: TextInputProps) {
@@ -25,6 +26,7 @@ function TextInput(props: TextInputProps) {
           e.preventDefault()
           return false
         }}
+        disableBorder={props.disableBorder}
       >
         <textarea
           value={props.value}
@@ -48,6 +50,7 @@ function TextInput(props: TextInputProps) {
         e.preventDefault()
         return false
       }}
+      disableBorder={props.disableBorder}
     >
       <input
         value={props.value}
@@ -64,7 +67,7 @@ function TextInput(props: TextInputProps) {
 }
 export default TextInput
 
-const TextInputWrapper = styled.div`
+const TextInputWrapper = styled.div<{ disableBorder: boolean | undefined}>`
   width: 100%;
   position: relative;
   box-sizing: border-box;
@@ -73,19 +76,19 @@ const TextInputWrapper = styled.div`
     box-sizing: border-box;
     width: 100%;
     min-height: 4.2rem;
-    border: 0.1rem solid ${theme.colors.grey30};
+    border: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey30}`};
     border-radius: 0.8rem;
     padding: 0.8rem 1.6rem;
     outline: none;
     ::placeholder {
-      font-size: 1.6rem;
+      ${theme.typography.body3};
     }
     :focus {
-      border: 0.1rem solid ${theme.colors.grey90};
+      border: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey90}`};
       
     }
     :active {
-      border: 0.1rem solid ${theme.colors.grey90};
+      border: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey90}`};
     }
     :disabled {
       background-color: white;
@@ -99,21 +102,21 @@ const TextInputWrapper = styled.div`
     width: 100%;
     height: 15rem;
     border: none;
-    border-bottom: 0.1rem solid ${theme.colors.grey40};
+    border-bottom: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey40}`};
     padding: 0.8rem 1.6rem;
     outline: none;
     ${theme.colors.grey90};
-    ${theme.typography.body2};
+    ${theme.typography.body3};
     ::placeholder {
       color: ${theme.colors.grey50};
-      ${theme.typography.body2};
+      ${theme.typography.body3};
     }
     :focus {
-      border: 0.1rem solid ${theme.colors.grey90};
+      border: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey90}`};
       border-radius: 0.8rem;
     }
     :active {
-      border: 0.1rem solid ${theme.colors.grey90};
+      border: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey90}`};
       border-radius: 0.8rem;
     }
     :disabled {

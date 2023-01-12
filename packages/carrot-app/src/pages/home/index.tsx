@@ -28,11 +28,11 @@ const Home = () => {
   )
 
   const RightContent = (
-    <IconWrapper>
+    <>
       <img src={searchIcon} alt='searchIcon' />
       <img src={menuIcon} alt='profileIcon' />
       <img src={notiIcon} alt='notiIcon' />
-    </IconWrapper>
+    </>
   )
 
   return (
@@ -80,9 +80,4 @@ const LocationWrapper = styled.div`
     background: ${theme.colors.grey30};
     cursor: pointer;
   }
-`
-const IconWrapper = styled.div`
-  width: 100%;
-  display: flex;
-  justify-content: space-around;
 `

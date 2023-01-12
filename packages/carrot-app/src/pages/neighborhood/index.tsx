@@ -27,11 +27,11 @@ const Neighborhood = () => {
   )
 
   const RightContent = (
-    <Icondiv>
+    <>
       <img src={searchIcon} alt='searchIcon' />
       <img src={profileIcon} alt='profileIcon' />
       <img src={notiIcon} alt='notiIcon' />
-    </Icondiv>
+    </>
   )
 
   return (
@@ -70,11 +70,7 @@ align-items: center;
   cursor: pointer;
 }
 `
-const Icondiv = styled.div`
-width: 100%;
-display: flex;
-justify-content: space-around;
-`
+
 
 const PostContainer = styled.div`
 `

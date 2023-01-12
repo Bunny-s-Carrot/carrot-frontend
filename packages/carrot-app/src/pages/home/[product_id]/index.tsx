@@ -20,10 +20,10 @@ const ProductDetailPage = () => {
   const productDetailViewModel = useProductDetailViewModel();
 
   const leftContent = 
-    <LeftContentWrapper>
+    <>
       <img src={backIconWhite} alt='backIcon' />
       <img src={homeIconWhite} alt='homeIcon' />
-    </LeftContentWrapper>
+    </>
 
   const bottomLeftContent = 
     <BottomLeftContentWrapper isAbleNego={productDetailViewModel.data?.product.price_suggest === 1}>
@@ -105,15 +105,7 @@ const ProductDetailPage = () => {
 
 export default ProductDetailPage;
 
-const LeftContentWrapper = styled.div`
-  display: flex;
-  align-items: center;
 
-  img:first-of-type {
-    width: 75%;
-    height: 75%;
-  }
-`
 const BottomLeftContentWrapper = styled.div<{ isAbleNego: boolean }>`
   display: flex;
   flex-direction: column;
