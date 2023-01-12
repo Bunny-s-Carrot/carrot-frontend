@@ -1,4 +1,3 @@
-
 import styled from "styled-components";
 import Input from '@carrot/core/atoms/input/searchInput';
 import Button from '@carrot/core/atoms/button';
@@ -22,7 +21,7 @@ const FindLocationPage = () => {
 
     return data.payload.filter(
       (value) => 
-        value.full_name.includes(inputValue)
+          value.full_name?.includes(inputValue)
     );
   }
 

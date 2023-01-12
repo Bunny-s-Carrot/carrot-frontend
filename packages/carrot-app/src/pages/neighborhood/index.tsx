@@ -7,7 +7,7 @@ import HeaderTemplate from '../../templates/headerTemplate';
 import TopicBar from "../../components/neighborhood/topicbar";
 import Post from '../../components/neighborhood/post'
 
-import backIcon from '@carrot/core/assets/icon/back_arrow.svg';
+import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
 import searchIcon from '@carrot/core/assets/icon/search.svg';
 import profileIcon from '@carrot/core/assets/icon/profile.svg';
 import notiIcon from '@carrot/core/assets/icon/notification.svg';
@@ -27,11 +27,11 @@ const Neighborhood = () => {
   )
 
   const RightContent = (
-    <Icondiv>
+    <>
       <img src={searchIcon} alt='searchIcon' />
       <img src={profileIcon} alt='profileIcon' />
       <img src={notiIcon} alt='notiIcon' />
-    </Icondiv>
+    </>
   )
 
   return (
@@ -70,11 +70,7 @@ align-items: center;
   cursor: pointer;
 }
 `
-const Icondiv = styled.div`
-width: 100%;
-display: flex;
-justify-content: space-around;
-`
+
 
 const PostContainer = styled.div`
 `

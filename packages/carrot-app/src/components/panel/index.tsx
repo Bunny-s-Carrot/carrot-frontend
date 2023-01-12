@@ -1,7 +1,7 @@
 import { PropsWithChildren } from 'react'
 import styled from "styled-components";
 
-import backIcon from '@carrot/core/assets/icon/back_arrow.svg'
+import backIcon from '@carrot/core/assets/icon/back-arrow.svg'
 import theme from '@carrot/core/style/theme';
 
 type PanelType = 'REPORT' | 'WANTED_LOCATION' | 'SELLING' | 'CUSTOM';

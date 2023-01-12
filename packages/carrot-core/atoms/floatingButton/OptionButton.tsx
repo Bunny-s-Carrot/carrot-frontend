@@ -1,9 +1,12 @@
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import theme from "../../style/theme";
+
 
 interface OptionListProps {
   emoji: string;
   content: string;
+  path: string;
 }
 
 interface OptionButtonProps {
@@ -13,11 +16,14 @@ interface OptionButtonProps {
 }
 
 const OptionButton = (props: OptionButtonProps) => {
+
+  const navigate = useNavigate();
+
   return (
     <Wrapper className={props.className}>
       <ul>
         {props.optionListProps.map((item, index) => (
-          <li key={index}>
+          <li key={index} onClick={() => navigate(item.path)}>
             <span>{item.emoji}</span>
             <span>{item.content}</span>
           </li>
@@ -26,7 +32,7 @@ const OptionButton = (props: OptionButtonProps) => {
       {props.optionListProps2 && 
         <ul>
         {props.optionListProps2?.map((item, index) => (
-          <li key={index}>
+          <li key={index} onClick={() => navigate(item.path)}>
             <span>{item.emoji}</span>
             <span>{item.content}</span>
           </li>
@@ -65,6 +71,5 @@ const Wrapper = styled.div`
 
   span {
     ${theme.typography.body3};
-
   }
 `

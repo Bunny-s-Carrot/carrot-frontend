@@ -8,7 +8,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import authApi from "../../api/auth";
 import AuthContext from "../../contexts/auth/authProvider";
-import backIcon from '@carrot/core/assets/icon/back_arrow.svg';
+import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');

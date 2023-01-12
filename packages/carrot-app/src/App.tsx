@@ -12,6 +12,7 @@ import SignupPage from "./pages/signup";
 import FindLocationPage from "./pages/signup/findLocation";
 import PersistLogin from "./components/auth/persistLogin";
 import ProductDetailPage from "./pages/home/[product_id]";
+import SellProductPage from "./pages/home/sellProduct";
 // import RequireAuth from "./components/auth/requireAuth";
 
 const App = () => {
@@ -25,6 +26,7 @@ const App = () => {
           <Route path="/" element={<LaunchPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/product/:product_id" element={<ProductDetailPage />} />
+          <Route path="/sell-product" element={<SellProductPage />} />
           <Route path="/neighborhood" element={<NeighborhoodPage />} />
           <Route path="/around" element={<AroundPage />} />
           <Route path="/chat" element={<ChatPage />} />
