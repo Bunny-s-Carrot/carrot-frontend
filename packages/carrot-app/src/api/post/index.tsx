@@ -5,8 +5,8 @@ const getPosts = async () => {
     try {
         const { data } = await api.get<{ payload: PostType[] }>('/post');
         return data;
-    } catch (e:any) {
-        throw Error(e);
+    } catch (e: any) {
+      throw Error(e);
     }
 }
 
