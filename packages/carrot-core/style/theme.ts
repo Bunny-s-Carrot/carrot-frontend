@@ -5,7 +5,7 @@ const colors = {
   tomato: '#FF6347',
   carrot: '#FF8B3A',
   red: '#F22D50',
-  blue: '#5E5AFF',
+  blue: '#03A9F4',
   grey90: '#323232',
   grey70: '#616161',
   grey50: '#9E9E9E',

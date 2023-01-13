@@ -46,6 +46,7 @@ const Neighborhood = () => {
             <Post 
             key={index} 
             title={item.title} 
+            location={item.lowest_sect_name}
             created_at={item.created_at} 
             />
           ))}
