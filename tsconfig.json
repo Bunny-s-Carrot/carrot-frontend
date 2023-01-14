@@ -3,6 +3,7 @@
     "baseUrl": ".",
     "paths": {
       "@carrot/core": ["./carrot-core"],
+      "@carrot/util": ["./carrot-util"],
     }
   }
 }

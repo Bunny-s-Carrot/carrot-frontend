@@ -14,7 +14,6 @@ import theme from "@carrot/core/style/theme";
 import useProductViewModel from "./home.viewModel";
 import FloatingButton from "../../components/floatingButton";
 
-
 const Home = () => {
   const navigate = useNavigate();
   const productViewModel = useProductViewModel();
@@ -39,7 +38,7 @@ const Home = () => {
     <>
       <HeaderTemplate
         leftContent={LeftContent}
-        onClickLeft={() => navigate('')}
+        onClickLeft={() => navigate('/setLocation')}
         rightContent={RightContent}
       >
         <Container>
