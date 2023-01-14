@@ -13,8 +13,9 @@ import FindLocationPage from "./pages/signup/findLocation";
 import PersistLogin from "./components/auth/persistLogin";
 import ProductDetailPage from "./pages/home/[product_id]";
 import SellProductPage from "./pages/home/sellProduct";
-import SetLocationPage from "./pages/setLocation";
 import PostDetailPage from "./pages/neighborhood/[post_id]";
+import SetLocationPage from "./pages/setLocation";
+
 
 // import RequireAuth from "./components/auth/requireAuth";
 
