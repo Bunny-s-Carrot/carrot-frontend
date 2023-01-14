@@ -107,8 +107,8 @@ align-items: center;
 `
 
 const Icon = styled.img`
-width: 20px;
-height: 20px;
+width: 15px;
+height: 15px;
 margin-right: 3px;
 padding-bottom: 2px;
 `
