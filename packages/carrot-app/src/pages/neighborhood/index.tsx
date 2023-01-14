@@ -1,3 +1,4 @@
+import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/navBar";
 // import PopularPost from "../../components/neighborhood/popularpost";
 
@@ -16,6 +17,7 @@ import usePostViewModel from './post.viewModel';
 import FloatingButton from "../../components/floatingButton";
 
 const Neighborhood = () => {
+  const navigate = useNavigate();
   const postViewModel = usePostViewModel();
   const results = postViewModel.data?.payload;
 
@@ -46,7 +48,10 @@ const Neighborhood = () => {
             <Post 
             key={index} 
             title={item.title} 
+            category={item.category_name}
+            location={item.lowest_sect_name}
             created_at={item.created_at} 
+            onClick = {() => navigate(`/post/${item.post_id}`)}
             />
           ))}
         </PostContainer>
