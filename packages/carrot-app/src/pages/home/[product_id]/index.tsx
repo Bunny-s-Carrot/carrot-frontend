@@ -12,7 +12,7 @@ import theme from "@carrot/core/style/theme";
 import Panel from "../../../components/panel";
 import Button from "@carrot/core/atoms/button";
 import MannerTemp from "../../../components/mannerTemp";
-import { convertDateToSimple } from "../../../infra/format";
+import { convertDateToSimple } from "@carrot/util/format";
 
 const ProductDetailPage = () => {
   const navigate = useNavigate();

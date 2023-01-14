@@ -25,3 +25,5 @@ const postApi = {
     getPosts,
     getPostDetail
 }
+
+export default postApi;
