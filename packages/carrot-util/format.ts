@@ -1,4 +1,4 @@
-import moment from 'moment'
+import * as moment from 'moment';
 
 export const formattedPrice = (price: number) => {
   return price.toLocaleString('ko-KR')

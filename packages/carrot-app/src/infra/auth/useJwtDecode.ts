@@ -17,6 +17,10 @@ const useJwtDecode = () => {
 
   const getLocation = () => decodedJwt.location;
 
+  const getXCoord = () => decodedJwt.x_coord;
+
+  const getYCoord = () => decodedJwt.y_coord;
+
   const getMannerTemp = () => decodedJwt.manner_temp;
 
   const getToken = () => jwt;
@@ -33,6 +37,8 @@ const useJwtDecode = () => {
     getName,
     getEmail,
     getLocation,
+    getXCoord,
+    getYCoord,
     getMannerTemp,
     getToken,
     isSigned,

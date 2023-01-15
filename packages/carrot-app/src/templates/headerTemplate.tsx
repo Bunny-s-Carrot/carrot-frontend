@@ -1,6 +1,7 @@
-import { PropsWithChildren, ReactNode } from 'react'
+import { PropsWithChildren, ReactNode, useRef } from 'react'
 import styled from 'styled-components';
 import theme from '@carrot/core/style/theme';
+import { useCustomContext } from '../contexts/etc/customProvider';
 
 interface HeaderTemplateProps extends PropsWithChildren {
   className?: string;
@@ -12,6 +13,13 @@ interface HeaderTemplateProps extends PropsWithChildren {
 }
 
 const HeaderTemplate = (props: HeaderTemplateProps) => {
+  const { setScrollTop } = useCustomContext();
+  const contentRef = useRef<any>();
+
+  const handleScroll = () => {
+    setScrollTop(contentRef.current.scrollTop);
+  }
+  
   return (
     <Wrapper className={props.className}>
       <Title>
@@ -22,7 +30,7 @@ const HeaderTemplate = (props: HeaderTemplateProps) => {
           {props.rightContent}
         </RightContent>
       </Title>
-      <Content>{props.children}</Content>
+      <Content ref={contentRef} onScroll={handleScroll}>{props.children}</Content>
     </Wrapper>
   )
 }
@@ -44,13 +52,6 @@ const Title = styled.div`
   justify-content: space-between;
   border-bottom: 0.1rem solid ${theme.colors.grey30};
   
-  img {
-    width: 4rem;
-    height: 4rem;
-    margin: 0.3rem;
-    padding: 0.8rem;
-  }
-  
   img:hover {
     background: ${theme.colors.grey30};
     border-radius: 18px;
@@ -58,12 +59,14 @@ const Title = styled.div`
 `
 const LeftContent = styled.div`
   display: flex;
-  ${theme.typography.body1};
+  ${theme.typography.body2};
   font-weight: bold;
+  gap: 2rem;
 
   .down {
     width: 2.7rem;
     height: 2.7rem;
+    padding: 0.8rem;
     transform: rotate(-90deg);
     margin: 0.4rem 0;
   }
@@ -81,4 +84,13 @@ const Content = styled.div`
   ${theme.option.hiddenScroll};
 `
 const RightContent = styled.div`
+  display: flex;
+  gap: 0.8rem;
+
+  img {
+    width: 4rem;
+    height: 4rem;
+    padding: 0.8rem;
+  }
+  ${theme.typography.body2};
 `

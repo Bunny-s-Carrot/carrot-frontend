@@ -14,7 +14,7 @@ import { useNavigate } from "react-router-dom";
 
 export type NavType = 'HOME' | 'NEIGHBORHOOD' | 'AROUND' | 'CHAT' | 'MYCARROT'
 
-interface NavProps {
+export interface NavProps {
   pageType: NavType
 }
 
@@ -34,7 +34,7 @@ const navListData = [
     path: '/neighborhood',
   },
   {
-    type: 'LOCATION',
+    type: 'AROUND',
     title: '내 근처',
     icon: icLocation,
     iconActive: icLocationActive,

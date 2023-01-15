@@ -4,7 +4,7 @@ import SalesTemplate from "../../../templates/salesTemplate"
 
 import { categoryList } from "../../../infra/category/categoryList";
 
-import backIconWhite from '@carrot/core/assets/icon/back_arrow_white.svg';
+import backIconWhite from '@carrot/core/assets/icon/back-arrow-white.svg';
 import homeIconWhite from '@carrot/core/assets/icon/home-outline-white.svg';
 import logo from '@carrot/core/assets/img/logo.png'
 import useProductDetailViewModel from "./[product_id].viewModel";
@@ -12,7 +12,7 @@ import theme from "@carrot/core/style/theme";
 import Panel from "../../../components/panel";
 import Button from "@carrot/core/atoms/button";
 import MannerTemp from "../../../components/mannerTemp";
-import { convertDateToSimple } from "../../../infra/format";
+import { convertDateToSimple } from "@carrot/util/format";
 
 const ProductDetailPage = () => {
   const navigate = useNavigate();
@@ -20,10 +20,10 @@ const ProductDetailPage = () => {
   const productDetailViewModel = useProductDetailViewModel();
 
   const leftContent = 
-    <LeftContentWrapper>
+    <>
       <img src={backIconWhite} alt='backIcon' />
       <img src={homeIconWhite} alt='homeIcon' />
-    </LeftContentWrapper>
+    </>
 
   const bottomLeftContent = 
     <BottomLeftContentWrapper isAbleNego={productDetailViewModel.data?.product.price_suggest === 1}>
@@ -105,15 +105,7 @@ const ProductDetailPage = () => {
 
 export default ProductDetailPage;
 
-const LeftContentWrapper = styled.div`
-  display: flex;
-  align-items: center;
 
-  img:first-of-type {
-    width: 75%;
-    height: 75%;
-  }
-`
 const BottomLeftContentWrapper = styled.div<{ isAbleNego: boolean }>`
   display: flex;
   flex-direction: column;

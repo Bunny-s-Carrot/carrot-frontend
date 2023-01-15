@@ -1,14 +1,19 @@
 {
   "name": "@carrot/util",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "> TODO: description",
   "license": "ISC",
-  "private": false,
+
   "directories": {
     "lib": "lib",
     "test": "__tests__"
   },
   "files": [
     "lib"
-  ]
+  ],
+  "dependencies": {
+    "@types/proj4": "^2.5.2",
+    "moment": "^2.29.4",
+    "proj4": "^2.8.1"
+  }
 }

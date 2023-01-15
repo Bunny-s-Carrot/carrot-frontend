@@ -1,4 +1,3 @@
-
 import styled from "styled-components";
 import Input from '@carrot/core/atoms/input/searchInput';
 import Button from '@carrot/core/atoms/button';
@@ -7,14 +6,14 @@ import searchGreyIcon from '@carrot/core/assets/icon/search_grey.svg'
 import useFindLocationViewModel from "./findLocation.viewModel";
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { getLocationList } from "../../api/location";
+import locationApi from "../../api/location";
 import { LocationDataType } from "../../api/location/locationDto";
 import { useNavigate } from "react-router-dom";
 
 const FindLocationPage = () => {
   const navigate = useNavigate();
   const [inputValue, setInputValue] = useState('');
-  const { data, isSuccess } = useQuery(['location'], getLocationList);
+  const { data, isSuccess } = useQuery(['location'], locationApi.getLocationList);
   const findLocationViewModel = useFindLocationViewModel();
 
   const searchLocation = (): LocationDataType[] => {
@@ -22,7 +21,7 @@ const FindLocationPage = () => {
 
     return data.payload.filter(
       (value) => 
-        value.full_name.includes(inputValue)
+          value.full_name?.includes(inputValue)
     );
   }
 
