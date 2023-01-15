@@ -4,4 +4,5 @@ export interface UserType {
   name: string,
   location: number,
   manner_temp: number,
+  lowest_sect_name: string
 }

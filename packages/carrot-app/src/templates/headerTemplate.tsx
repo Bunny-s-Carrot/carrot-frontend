@@ -51,12 +51,8 @@ const Title = styled.div`
   align-items: center;
   justify-content: space-between;
   border-bottom: 0.1rem solid ${theme.colors.grey30};
-  
-  img:hover {
-    background: ${theme.colors.grey30};
-    border-radius: 18px;
-  }
 `
+
 const LeftContent = styled.div`
   display: flex;
   ${theme.typography.body2};
@@ -88,8 +84,8 @@ const RightContent = styled.div`
   gap: 0.8rem;
 
   img {
-    width: 4rem;
-    height: 4rem;
+    width: 3.8rem;
+    height: 3.8rem;
     padding: 0.8rem;
   }
   ${theme.typography.body2};
