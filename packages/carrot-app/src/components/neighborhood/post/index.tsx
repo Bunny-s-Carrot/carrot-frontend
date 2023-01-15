@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import theme from '@carrot/core/style/theme';
-import { convertDateToSimple } from '../../../infra/format';
+import { convertDateToSimple } from '@carrot/util/format';
 
 interface PostProps {
   title: string;
