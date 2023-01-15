@@ -1,3 +1,5 @@
+import { UserType } from "../user/userDto";
+
 export interface PostType  {
     post_id: number;
     writer_id: number;
@@ -12,5 +14,6 @@ export interface PostType  {
 
 
 export interface PostDetailType {
+    user: UserType;
     post: PostType;
 }
