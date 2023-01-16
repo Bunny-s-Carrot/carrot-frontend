@@ -90,3 +90,12 @@ export const deleteLocation2 = () => {
   localStorage.removeItem('location_x_coord2')
   localStorage.removeItem('location_y_coord2')
 }
+
+
+export const setCurrentLocation = (location: string) => {
+  localStorage.setItem('current_location', location)
+}
+
+export const getCurrentLocation = () => {
+  return localStorage.getItem('current_location')
+}

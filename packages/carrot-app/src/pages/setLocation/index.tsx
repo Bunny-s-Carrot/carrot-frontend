@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, {css} from "styled-components"
 
@@ -12,7 +12,6 @@ import theme from "@carrot/core/style/theme";
 import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
 import closeIconWhite from '@carrot/core/assets/icon/close-white.svg';
 import addIcon from '@carrot/core/assets/icon/add.svg';
-import { getLocationName, getLocationName2, deleteLocation2, deleteLocation, setLocation, getLocation2 } from "../../infra/location/locationData";
 
 const SetLocationPage = () => {
   const { area } = useCustomContext();
@@ -21,8 +20,6 @@ const SetLocationPage = () => {
   
   const setLocationViewModel = useSetLocationViewModel();
 
-
-  
   useEffect(() => {
     const getArray = async () => {
       const array = await setLocationViewModel.createPolygon();
@@ -63,7 +60,9 @@ const SetLocationPage = () => {
   return (
     <HeaderTemplate
       leftContent={leftContent}
-      onClickLeft={() => navigate(-1)}
+      onClickLeft={() => {
+        const from = localStorage.getItem('from') ?? '/around';
+        navigate(from)}}
     >
       <Map id="map"></Map>
 

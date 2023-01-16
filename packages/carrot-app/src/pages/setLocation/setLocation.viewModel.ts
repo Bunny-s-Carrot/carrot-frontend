@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { convertUTMKToWgs84, convertWgs84ToUTMK } from "@carrot/util/coords";
 import { convertAreaToDistance } from '../../infra/location/convertArea'
 
 import SGISApi from "../../api/sgis";
 import { useCustomContext } from "../../contexts/etc/customProvider";
-import { deleteLocation, deleteLocation2, getLocation2, getLocationName, getLocationName2, getLocationXCoord, getLocationXCoord2, getLocationYCoord, getLocationYCoord2, setLocation } from "../../infra/location/locationData";
+import { deleteLocation, deleteLocation2, getLocation2, getLocationName, getLocationName2, getLocationXCoord, getLocationXCoord2, getLocationYCoord, getLocationYCoord2, setCurrentLocation, setLocation } from "../../infra/location/locationData";
 import { useNavigate } from "react-router-dom";
 
 
@@ -16,11 +16,12 @@ const useSetLocationViewModel = () => {
   const [myLocationName2, setMyLocationName2] = useState(getLocationName2());
   const { area, activeLocation, setActiveLocation } = useCustomContext();
 
-
   const { kakao } = window;
+
   const handleClickBoxLeft = () => {
     if (activeLocation === 1) {
       setActiveLocation(0)
+      setCurrentLocation(myLocationName)
     }
   }
 
@@ -29,6 +30,7 @@ const useSetLocationViewModel = () => {
       navigate('/findlocation', { state: { from: 'setlocation' } })
     } else {
     setActiveLocation(1)
+    setCurrentLocation(myLocationName2)
     }
   }
 
@@ -45,13 +47,18 @@ const useSetLocationViewModel = () => {
         setMyLocationName2('')
       }
     } else {
-      deleteLocation2()
-      setActiveLocation(0);
       setMyLocationName2('');
     }
   }
-  const xCoord = activeLocation === 0 ? parseFloat(getLocationXCoord()) : parseFloat(getLocationXCoord2());
-  const yCoord = activeLocation === 0 ? parseFloat(getLocationYCoord()) : parseFloat(getLocationYCoord2());
+
+  useEffect(() => {
+    if (myLocationName2 === '') {
+      setActiveLocation(0);
+    }
+  }, [myLocationName2])
+
+  let xCoord = activeLocation === 0 ? parseFloat(getLocationXCoord()) : parseFloat(getLocationXCoord2());
+  let yCoord = activeLocation === 0 ? parseFloat(getLocationYCoord()) : parseFloat(getLocationYCoord2());
 
   const [transCoordX, transCoordY] = convertWgs84ToUTMK(xCoord, yCoord)
 

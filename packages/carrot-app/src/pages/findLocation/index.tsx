@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import locationApi from "../../api/location";
 import { LocationDataType } from "../../api/location/locationDto";
 import { useCustomContext } from "../../contexts/etc/customProvider";
-import { setLocation, setLocation2 } from "../../infra/location/locationData";
+import { setCurrentLocation, setLocation, setLocation2 } from "../../infra/location/locationData";
 
 
 const FindLocationPage = () => {
@@ -74,6 +74,7 @@ const FindLocationPage = () => {
                     { state: { id: item.location_id, name: item.lowest_sect_name } })
                   } else {
                     setLocation(item.location_id.toString(), item.lowest_sect_name, item.h_code.toString(), item.x_coord.toString(), item.y_coord.toString())
+                    setCurrentLocation(item.lowest_sect_name)
                     navigate('/auth/signup', 
                     { state: { id: item.location_id, name: item.full_name } })
                   }
