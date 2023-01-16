@@ -74,6 +74,7 @@ const LeftContent = styled.div`
 
 `
 const Content = styled.div`
+  position: relative;
   overflow: scroll;
   width: 100%;
   height: calc(100% - 6rem);

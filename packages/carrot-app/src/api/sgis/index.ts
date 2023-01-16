@@ -38,9 +38,31 @@ const getBoundaryInArea = async (minx: string, miny: string, maxx: string, maxy:
   }
 }
 
+const transCoord = async (src: string, dst: string, posX: string, posY: string, accessToken: string) => {
+  try {
+    const result = await axios.get(
+      'https://sgisapi.kostat.go.kr/OpenAPI3/transformation/transcoord.json',
+      {
+        params: {
+          accessToken,
+          src,
+          dst,
+          posX,
+          posY,
+        }
+      }
+    )
+
+    return result;
+  } catch (e: any) {
+    throw Error(e);
+  }
+}
+
 const SGISApi = {
   getBoundaryInArea,
-  getAccessToken
+  getAccessToken,
+  transCoord,
 }
 
 export default SGISApi;

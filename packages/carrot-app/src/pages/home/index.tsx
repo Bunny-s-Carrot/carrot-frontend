@@ -13,15 +13,16 @@ import theme from "@carrot/core/style/theme";
 
 import useProductViewModel from "./home.viewModel";
 import FloatingButton from "../../components/floatingButton";
+import { getLocationName } from "../../infra/location/locationData";
 
 const Home = () => {
   const navigate = useNavigate();
   const productViewModel = useProductViewModel();
   const results = productViewModel.data?.payload;
-
+  const locationName = getLocationName();
   const LeftContent = (
     <LocationWrapper>
-      <p>연희동</p>
+      <p>{locationName}</p>
       <img className='down' src={backIcon} alt='backIcon' />
     </LocationWrapper>
   )
@@ -42,7 +43,7 @@ const Home = () => {
         rightContent={RightContent}
       >
         <Container>
-          {results?.map((item, index) => (
+          {results && results.map((item, index) => (
             <Product
               key={index}
               title={item.title}
