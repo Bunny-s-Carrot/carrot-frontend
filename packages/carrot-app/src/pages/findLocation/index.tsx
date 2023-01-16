@@ -1,3 +1,4 @@
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Input from '@carrot/core/atoms/input/searchInput';
 import Button from '@carrot/core/atoms/button';
@@ -8,14 +9,19 @@ import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import locationApi from "../../api/location";
 import { LocationDataType } from "../../api/location/locationDto";
-import { useNavigate } from "react-router-dom";
+import { useCustomContext } from "../../contexts/etc/customProvider";
+import { setLocation, setLocation2 } from "../../infra/location/locationData";
+
 
 const FindLocationPage = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const [inputValue, setInputValue] = useState('');
+  const { setActiveLocation } = useCustomContext();
   const { data, isSuccess } = useQuery(['location'], locationApi.getLocationList);
   const findLocationViewModel = useFindLocationViewModel();
 
+  const from = location.state.from;
   const searchLocation = (): LocationDataType[] => {
     if (data === undefined) return []
 
@@ -61,8 +67,16 @@ const FindLocationPage = () => {
               <li
                 key={index}
                 onClick={() => {
-                  navigate('/auth/signup', 
-                  { state: { id: item.location_id, name: item.full_name } })
+                  if (from === 'setlocation') {
+                    setLocation2(item.location_id.toString(), item.lowest_sect_name, item.h_code.toString(), item.x_coord.toString(), item.y_coord.toString())
+                    setActiveLocation(1);
+                    navigate('/setlocation', 
+                    { state: { id: item.location_id, name: item.lowest_sect_name } })
+                  } else {
+                    setLocation(item.location_id.toString(), item.lowest_sect_name, item.h_code.toString(), item.x_coord.toString(), item.y_coord.toString())
+                    navigate('/auth/signup', 
+                    { state: { id: item.location_id, name: item.full_name } })
+                  }
                 }}
               >
                 <span>{item.full_name}</span>

@@ -9,7 +9,7 @@ import MyCarrotPage from "./pages/myCarrot";
 import LaunchPage from "./pages/launch";
 import LoginPage from "./pages/logIn";
 import SignupPage from "./pages/signup";
-import FindLocationPage from "./pages/signup/findLocation";
+import FindLocationPage from "./pages/findLocation";
 import PersistLogin from "./components/auth/persistLogin";
 import ProductDetailPage from "./pages/home/[product_id]";
 import SellProductPage from "./pages/home/sellProduct";
@@ -41,7 +41,7 @@ const App = () => {
         </Route>
 
         <Route path="/auth/login" element={<LoginPage />} />
-        <Route path="/auth/findlocation" element={<FindLocationPage />} />
+        <Route path="/findlocation" element={<FindLocationPage />} />
         <Route path="/auth/signup" element={<SignupPage />} />
       </Routes>
     </QueryClientProvider>

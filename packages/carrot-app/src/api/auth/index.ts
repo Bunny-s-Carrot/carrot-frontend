@@ -18,7 +18,12 @@ const signup = async ({ email, password, name, locationId }: SignupData) => {
     password,
     name,
     locationId,
-  })
+  },
+  {
+    withCredentials: true,
+  }
+  )
+  console.log(data);
   return data;
 };
 
