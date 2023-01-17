@@ -1,5 +1,5 @@
 import { useAuth } from '../../contexts/auth/authProvider';
-import { api } from '../api';
+import { api } from '../../infra/api';
 
 const useRefreshToken = () => {
   const { setAuth } = useAuth();

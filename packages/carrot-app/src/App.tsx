@@ -15,6 +15,7 @@ import ProductDetailPage from "./pages/home/[product_id]";
 import SellProductPage from "./pages/home/sellProduct";
 import PostDetailPage from "./pages/neighborhood/[post_id]";
 import SetLocationPage from "./pages/setLocation";
+import SetWantedLocation from "./pages/home/sellProduct/setWantedLocation";
 
 
 // import RequireAuth from "./components/auth/requireAuth";
@@ -37,6 +38,7 @@ const App = () => {
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/mycarrot" element={<MyCarrotPage />} />
           <Route path="/setlocation" element={<SetLocationPage />} />
+          <Route path="/setwantedlocation" element={<SetWantedLocation />} />
         {/* </Route> */}
         </Route>
 

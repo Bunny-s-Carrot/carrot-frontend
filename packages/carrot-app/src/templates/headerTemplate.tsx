@@ -10,6 +10,7 @@ interface HeaderTemplateProps extends PropsWithChildren {
   onClickLeft?: () => void;
   rightContent?: ReactNode;
   onClickRight?: () => void;
+  noBorderBottom?: boolean
 }
 
 const HeaderTemplate = (props: HeaderTemplateProps) => {
@@ -22,7 +23,7 @@ const HeaderTemplate = (props: HeaderTemplateProps) => {
   
   return (
     <Wrapper className={props.className}>
-      <Title>
+      <Title noBorderBottom={props.noBorderBottom}>
         <LeftContent onClick={props.onClickLeft}>
           {props.leftContent}
         </LeftContent>
@@ -43,14 +44,14 @@ const Wrapper = styled.div`
   background: white;
   overflow: hidden;
 `
-const Title = styled.div`
+const Title = styled.div<{ noBorderBottom?: boolean }>`
   height: 6rem;
   width: 100%;
   padding: 0 1.6rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 0.1rem solid ${theme.colors.grey30};
+  border-bottom: ${props => props.noBorderBottom ? 'none' : `0.1rem solid ${theme.colors.grey30}`};
 `
 
 const LeftContent = styled.div`
