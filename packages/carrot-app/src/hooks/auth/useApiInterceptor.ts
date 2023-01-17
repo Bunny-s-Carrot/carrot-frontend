@@ -1,4 +1,4 @@
-import { privateApi } from "../api";
+import { privateApi } from "../../infra/api";
 import { useEffect } from 'react';
 import useRefreshToken from "./useRefreshToken";
 import { useAuth } from "../../contexts/auth/authProvider";

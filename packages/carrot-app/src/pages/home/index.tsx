@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import NavBar from "../../components/navBar";
@@ -13,15 +13,18 @@ import theme from "@carrot/core/style/theme";
 
 import useProductViewModel from "./home.viewModel";
 import FloatingButton from "../../components/floatingButton";
+import { getCurrentLocation, getLocationName } from "../../infra/location/locationData";
 
 const Home = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const productViewModel = useProductViewModel();
   const results = productViewModel.data?.payload;
-
+  const currentLocation = getCurrentLocation();
+  
   const LeftContent = (
     <LocationWrapper>
-      <p>연희동</p>
+      <p>{currentLocation}</p>
       <img className='down' src={backIcon} alt='backIcon' />
     </LocationWrapper>
   )
@@ -38,11 +41,13 @@ const Home = () => {
     <>
       <HeaderTemplate
         leftContent={LeftContent}
-        onClickLeft={() => navigate('/setLocation')}
+        onClickLeft={() => {
+          localStorage.setItem('from',  location.pathname)
+          navigate('/setLocation')}}
         rightContent={RightContent}
       >
         <Container>
-          {results?.map((item, index) => (
+          {results && results.map((item, index) => (
             <Product
               key={index}
               title={item.title}

@@ -10,6 +10,7 @@ interface HeaderTemplateProps extends PropsWithChildren {
   onClickLeft?: () => void;
   rightContent?: ReactNode;
   onClickRight?: () => void;
+  noBorderBottom?: boolean
 }
 
 const HeaderTemplate = (props: HeaderTemplateProps) => {
@@ -22,7 +23,7 @@ const HeaderTemplate = (props: HeaderTemplateProps) => {
   
   return (
     <Wrapper className={props.className}>
-      <Title>
+      <Title noBorderBottom={props.noBorderBottom}>
         <LeftContent onClick={props.onClickLeft}>
           {props.leftContent}
         </LeftContent>
@@ -43,20 +44,16 @@ const Wrapper = styled.div`
   background: white;
   overflow: hidden;
 `
-const Title = styled.div`
+const Title = styled.div<{ noBorderBottom?: boolean }>`
   height: 6rem;
   width: 100%;
   padding: 0 1.6rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 0.1rem solid ${theme.colors.grey30};
-  
-  img:hover {
-    background: ${theme.colors.grey30};
-    border-radius: 18px;
-  }
+  border-bottom: ${props => props.noBorderBottom ? 'none' : `0.1rem solid ${theme.colors.grey30}`};
 `
+
 const LeftContent = styled.div`
   display: flex;
   ${theme.typography.body2};
@@ -78,6 +75,7 @@ const LeftContent = styled.div`
 
 `
 const Content = styled.div`
+  position: relative;
   overflow: scroll;
   width: 100%;
   height: calc(100% - 6rem);
@@ -88,8 +86,8 @@ const RightContent = styled.div`
   gap: 0.8rem;
 
   img {
-    width: 4rem;
-    height: 4rem;
+    width: 3.8rem;
+    height: 3.8rem;
     padding: 0.8rem;
   }
   ${theme.typography.body2};

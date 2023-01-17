@@ -8,13 +8,15 @@ type PanelType = 'REPORT' | 'WANTED_LOCATION' | 'SELLING' | 'CUSTOM';
 
 interface PanelProps extends PropsWithChildren {
   type: PanelType;
+  className?: string;
   sellerName?: string;
+  onClick?: () => void;
 }
 
 const Panel = (props: PanelProps)  => {
   if (props.type === 'REPORT') {
     return (
-      <Wrapper>
+      <Wrapper className={props.className} onClick={props.onClick}>
         <Title>
           <span>이 게시글 신고하기</span>
           <img src={backIcon} alt='arrow' />
@@ -24,7 +26,7 @@ const Panel = (props: PanelProps)  => {
 
   else if (props.type === 'WANTED_LOCATION') {
     return (
-      <Wrapper>
+      <Wrapper className={props.className} onClick={props.onClick}>
         <Title>
           <span>거래 희망 장소</span>
           <img src={backIcon} alt='arrow' />
@@ -34,7 +36,7 @@ const Panel = (props: PanelProps)  => {
 
   else if (props.type === 'SELLING') {
     return (
-      <Wrapper>
+      <Wrapper className={props.className} onClick={props.onClick}>
         <Title>
           <span>{props.sellerName}님의 판매상품</span>
           <img src={backIcon} alt='arrow' />
@@ -42,7 +44,14 @@ const Panel = (props: PanelProps)  => {
     </Wrapper>
   )}
 
-  else return null;
+  else return (
+    <Wrapper className={props.className} onClick={props.onClick}>
+        <Title>
+          <span>{props.children}</span>
+          <img src={backIcon} alt='arrow' />
+      </Title>
+    </Wrapper>
+  );
 }
 
 export default Panel;

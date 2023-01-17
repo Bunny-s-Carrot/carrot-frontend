@@ -5,9 +5,14 @@ import usePostDetailViewModel from './[post_id].viewModel';
 import HeaderTemplate from '../../../templates/headerTemplate';
 import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
 import homeIcon from '@carrot/core/assets/icon/home-outline.svg';
+import BellOnIcon from '@carrot/core/assets/icon/Notifications.svg';
+import BellOffIcon from '@carrot/core/assets/icon/Notifications off.svg';
+import ShareIcon from '@carrot/core/assets/icon/Share.svg';
+import MoreIcon from '@carrot/core/assets/icon/More vert.svg';
 import thumbIcon from "@carrot/core/assets/icon/Thumb.svg";
 import heartIcon from "@carrot/core/assets/icon/heart-grey.svg";
 import chatIcon from '@carrot/core/assets/icon/chat-outline-grey.svg'
+import { convertDateToSimple } from '@carrot/util/format';
 
 
 const PostDetailPage = () => {
@@ -20,10 +25,18 @@ const PostDetailPage = () => {
       <Icon_head src={homeIcon} alt='homeIcon' />
     </>
 
+    let rightContent = 
+    <>
+      <img src={BellOffIcon} alt='bellonIcon'/>
+      <img src={ShareIcon} alt='shareIcon' />
+      <img src={MoreIcon} alt='moreIcon' />
+    </>
+
     return (
         <HeaderTemplate
         leftContent={leftContent}
         onClickLeft={() => navigate(-1)}
+        rightContent={rightContent}
         >
           <Container>
             <Category>
@@ -31,7 +44,14 @@ const PostDetailPage = () => {
                 {PostDetailViewModel.data?.post.category_name}  
               </Color>
             </Category>
-            <UserInfo>유저정보</UserInfo>
+            <UserInfo>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg" alt="" />
+              <div>
+                <p>{PostDetailViewModel.data?.user.name}</p>
+                <span>{PostDetailViewModel.data?.user.lowest_sect_name}</span>
+                <span> · {convertDateToSimple(PostDetailViewModel.data?.post.created_at)}</span>
+              </div>
+            </UserInfo>
             <Content>
               {PostDetailViewModel.data?.post.title}<br/><br/><br/>
               {PostDetailViewModel.data?.post.content}<br/><br/>
@@ -58,10 +78,6 @@ const PostDetailPage = () => {
 
 export default PostDetailPage;
 
-const styledHeaderTemplate = styled(HeaderTemplate)`
-img {
-  max-height: 2.6rem;
-}`
 
 const Container = styled.div`
 
@@ -72,7 +88,7 @@ padding: 15px 8px;
 `
 
 const Color = styled.span`
-background: ${theme.colors.grey30};
+background: ${theme.colors.grey20};
 border-radius: 3px;
 font-size: 12px;
 padding: 4px;
@@ -80,7 +96,27 @@ padding: 4px;
 
 const UserInfo = styled.div`
 height: 50px;
-border: 1px solid black;
+display: flex;
+
+  img {
+  margin: 7px;
+  width: 36px;
+  height: 36px;
+  }
+
+  div {
+    font-size: 14px;
+    margin-left: 3px;
+  }
+
+  p {
+    margin: 9px 0 5px 0;
+    font-weight: 500;
+  }
+
+  span {
+    color: ${theme.colors.grey50}
+  }
 `
 
 const Content = styled.div`
@@ -115,7 +151,7 @@ text-align: center;
 padding: 25px 0 35px 0;
 color: ${theme.colors.grey50};
 font-size: 18px;
-border-bottom: 8.5px solid ${theme.colors.grey30}
+border-bottom: 8.5px solid ${theme.colors.grey20}
 `
 
 const Icon_head = styled.img`
