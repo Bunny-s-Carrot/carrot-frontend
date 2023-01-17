@@ -45,7 +45,7 @@ const FindLocationPage = () => {
         />
         <SearchButton
           buttonType="CARROT"
-          onClick={findLocationViewModel.getLocation}
+          onClick={() => {}}
         >
           현재 위치로 찾기
         </SearchButton>

@@ -9,11 +9,14 @@ import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
 import theme from "@carrot/core/style/theme";
 import Panel from "../../../components/panel";
 import { getCurrentLocation } from "../../../infra/location/locationData";
+import useGeolocation from "../../../hooks/location/useGeolocation";
+import { useCustomContext } from "../../../contexts/etc/customProvider";
 
 const SellProductPage = () => {
   const navigate = useNavigate();
-
+  const geolocation = useGeolocation();
   const currentLocation = getCurrentLocation();
+
   const leftContent = 
     <>
       <img src={backIcon} alt='backIcon' />
@@ -57,7 +60,14 @@ const SellProductPage = () => {
           />
         </ProductInfoWrapper>
         <AdditionalInfoWrapper>
-          <WantedLocationPanel type='CUSTOM'>
+          <WantedLocationPanel
+            type='CUSTOM' 
+            onClick={() => {
+              geolocation(() => navigate('/setwantedlocation'));
+              console.log('넘어간다')
+              
+            }
+          }>
             거래 희망 장소
           </WantedLocationPanel>
         </AdditionalInfoWrapper>
