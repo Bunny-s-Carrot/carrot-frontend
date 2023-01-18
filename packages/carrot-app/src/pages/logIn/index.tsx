@@ -9,7 +9,7 @@ import { useMutation } from "@tanstack/react-query";
 import authApi from "../../api/auth";
 import AuthContext from "../../contexts/auth/authProvider";
 import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
-import { setCurrentLocation, setLocation } from "../../infra/location/locationData";
+import locationFn from "../../infra/location/locationData";
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
@@ -30,8 +30,8 @@ const LoginPage = () => {
       setEmail('');
       setPassword('');
       navigate(from, { replace: true });
-      setLocation(locationData.location_id, locationData.lowest_sect_name, locationData.h_code, locationData.x_coord, locationData.y_coord)
-      setCurrentLocation(locationData.lowest_sect_name)
+      locationFn.setLocation(locationData.location_id, locationData.lowest_sect_name, locationData.h_code, locationData.x_coord, locationData.y_coord)
+      locationFn.setCurrentLocation(locationData.lowest_sect_name)
     }
   });
 

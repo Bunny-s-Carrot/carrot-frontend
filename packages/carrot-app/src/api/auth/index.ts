@@ -13,18 +13,19 @@ type LoginData = {
 }
 
 const signup = async ({ email, password, name, locationId }: SignupData) => {
-  const { data } = await api.post('/auth/signup', {
-    email,
-    password,
-    name,
-    locationId,
-  },
-  {
-    withCredentials: true,
-  }
+  const response = await api.post('/auth/signup', 
+    {
+      email,
+      password,
+      name,
+      locationId,
+    },
+    {
+      withCredentials: true,
+    }
   )
-  console.log(data);
-  return data;
+
+  return response;
 };
 
 const login = async ({email, password}: LoginData) => {

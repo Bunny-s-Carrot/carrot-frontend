@@ -1,28 +1,22 @@
-import { useCallback, useEffect, useRef } from "react";
-import { useCustomContext } from "../../contexts/etc/customProvider";
-import useGeolocation from "../location/useGeolocation";
+import { useCallback, useRef } from "react";
+
  
 const useMap = () => {
   const { kakao } = window;
-  const geolocation = useGeolocation();
   
   const map = useRef<any>(null)
 
   const drawMap = useCallback(
-    (lat: number, lng: number) => {
+    (lat: number, lng: number, level=3, draggable=true) => {
       const container = document.getElementById('map');
       const options = { 
       center: new kakao.maps.LatLng(lat, lng),
-      level: 3
+      level,
+      draggable
       };
       
       map.current = new kakao.maps.Map(container, options);
   }, []);
-
-
-  useEffect(() => {
-    geolocation(drawMap);
-  }, [])
 
   return {
     map,
