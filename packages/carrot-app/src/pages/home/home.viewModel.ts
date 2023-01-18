@@ -1,13 +1,22 @@
 import { useQuery } from "@tanstack/react-query"
 import productApi from "../../api/product"
+import userApi from "../../api/user"
+import useJwtDecode from "../../hooks/auth/useJwtDecode"
 
 
 const useProductViewModel = () => {
 
-  const { data } = useQuery(['product'], productApi.getProducts)
+  const { getId } = useJwtDecode();
+  const userId = getId();
+  
+  const { data: products } = useQuery(['product'], productApi.getProducts)
+  
+  const { data: userLocation } = useQuery([`user/${userId}/location`], 
+    () => userApi.getLocationById(userId))
 
   return {
-    data
+    products,
+    userLocation
   }
 }
 

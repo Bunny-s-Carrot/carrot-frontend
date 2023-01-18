@@ -13,18 +13,21 @@ import theme from "@carrot/core/style/theme";
 
 import useProductViewModel from "./home.viewModel";
 import FloatingButton from "../../components/floatingButton";
-import { getCurrentLocation, getLocationName } from "../../infra/location/locationData";
+import { ProductTypeWithLocation } from "../../api/product/productDto";
 
 const Home = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const productViewModel = useProductViewModel();
-  const results = productViewModel.data?.payload;
-  const currentLocation = getCurrentLocation();
-  
+  const productList = productViewModel.products?.payload;
+  const locationData = productViewModel.userLocation?.payload;
+
+  const currentLocation = locationData?.active_location;
+  const locationInfo = currentLocation === 0 ? locationData?.location_info : locationData?.location_info2;
+
   const LeftContent = (
     <LocationWrapper>
-      <p>{currentLocation}</p>
+      <p>{locationInfo && locationInfo.lowest_sect_name}</p>
       <img className='down' src={backIcon} alt='backIcon' />
     </LocationWrapper>
   )
@@ -42,12 +45,12 @@ const Home = () => {
       <HeaderTemplate
         leftContent={LeftContent}
         onClickLeft={() => {
-          localStorage.setItem('from',  location.pathname)
-          navigate('/setLocation')}}
+          localStorage.setItem('from', location.pathname)
+          navigate('/setLocation', { state: locationData })}}
         rightContent={RightContent}
       >
         <Container>
-          {results && results.map((item, index) => (
+          {productList && productList.map((item: ProductTypeWithLocation, index: number) => (
             <Product
               key={index}
               title={item.title}

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, {css} from "styled-components"
 
+import useMap from "../../hooks/map/useMap";
 import useSetLocationViewModel from "./setLocation.viewModel";
 import { useCustomContext } from "../../contexts/etc/customProvider";
 import { convertAreaToLevel } from "../../infra/location/convertArea";
@@ -15,42 +16,11 @@ import addIcon from '@carrot/core/assets/icon/add.svg';
 
 const SetLocationPage = () => {
   const { area } = useCustomContext();
-  const { kakao } = window;
   const navigate = useNavigate();
   
   const setLocationViewModel = useSetLocationViewModel();
-
-  useEffect(() => {
-    const getArray = async () => {
-      const array = await setLocationViewModel.createPolygon();
-      return array;
-      };
-    
-    const container = document.getElementById('map'); //지도를 담을 영역의 DOM 레퍼런스
-    const options = { //지도를 생성할 때 필요한 기본 옵션
-      center: new kakao.maps.LatLng(setLocationViewModel.yCoord, setLocationViewModel.xCoord), //지도의 중심좌표.
-      level: convertAreaToLevel(area),
-      draggable: false,
-    };
-     
-    const map = new kakao.maps.Map(container, options);
-  
-    getArray().then(res => {
-
-      for (let i = 0; i < res!.length; i++) {
-
-        new kakao.maps.Polygon({
-          map: map,
-          path: res![i][0],
-          strokeOpacity: 0,
-          fillColor: theme.colors.carrot,
-          fillOpacity: 0.4
-        })
-      }
-    })
-   
-    }, [setLocationViewModel.createPolygon])
-
+  const locationInfo = setLocationViewModel.locationData?.location_info;
+  const locationInfo2 = setLocationViewModel.locationData?.location_info2;
 
   const leftContent = 
     <>
@@ -67,42 +37,63 @@ const SetLocationPage = () => {
     >
       <Map id="map"></Map>
 
-      <LocationSetWrapper>
+      {setLocationViewModel.isSuccess && <LocationSetWrapper>
         <Title>내 동네</Title>
         <MyLocations>
           <LocationBoxLeft 
-            active={setLocationViewModel.activeLocation === 0}
-            onClick={setLocationViewModel.handleClickBoxLeft}
+            active={setLocationViewModel.locationData?.active_location === 0}
+            onClick={(e) => {
+              e.stopPropagation()
+              setLocationViewModel.handleClickBoxLeft()}
+            }
           >
-            <span>{setLocationViewModel.myLocationName}</span>
-            <img
-              src={closeIconWhite}
-              alt='closeIcoonWhite'
-              onClick={() => setLocationViewModel.handleClickDeleteLocation(true)}
-            />
+            <span>{locationInfo.lowest_sect_name}</span>
+            <div>
+              <img
+                src={closeIconWhite}
+                alt='closeIcoonWhite'
+                onClick={(e) => {
+                  e.stopPropagation()
+                  setLocationViewModel.handleClickDeleteLocation(true)}
+                }
+              />
+            </div>
+            
           </LocationBoxLeft>
           <LocationBoxRight
             onClick={setLocationViewModel.handleClickBoxRight}
-            isMyLocation2={setLocationViewModel.myLocationName2 !== ''} 
-            active={setLocationViewModel.activeLocation === 1}
+            isMyLocation2={locationInfo2} 
+            active={setLocationViewModel.locationData?.active_location === 1}
           >
-            {setLocationViewModel.myLocationName2 === ''
-            ? <img 
-                src={addIcon}
-                alt='addIcon' 
-              />
-            : <>
-                <span>{setLocationViewModel.myLocationName2}</span>
+            {!locationInfo2
+            ? <div onClick={(e) => {
+              e.stopPropagation()
+              setLocationViewModel.handleClickAddLocation()}
+            }>
                 <img
-                  src={closeIconWhite}
-                  alt='closeIcoonWhite'
-                  onClick={() => setLocationViewModel.handleClickDeleteLocation(false)}  
+                   
+                  src={addIcon}
+                  alt='addIcon' 
                 />
+              </div>
+            : <>
+                <span>{locationInfo2.lowest_sect_name}</span>
+                <div onClick={(e) => {
+                  e.stopPropagation()
+                  setLocationViewModel.handleClickDeleteLocation(false)}
+                }>
+                  <img
+                    src={closeIconWhite}
+                    alt='closeIcoonWhite'  
+                  />
+                </div>
               </>}
           </LocationBoxRight>
         </MyLocations>
         <NeighborhoodLocation>
-            {setLocationViewModel.myLocationName}과 근처 동네
+            {setLocationViewModel.locationData?.active_location === 0 
+              ? locationInfo.lowest_sect_name
+              : locationInfo2?.lowest_sect_name}과 근처 동네
           </NeighborhoodLocation>
         <Slider />
         <InfoWrapper>
@@ -117,11 +108,8 @@ const SetLocationPage = () => {
             : '먼 동네'}
           </span> 게시글을 볼 수 있어요.
         </InfoWrapper>
-        
-      </LocationSetWrapper>
-      
+      </LocationSetWrapper>}
     </HeaderTemplate>
-    
   )
 }
 
@@ -137,6 +125,7 @@ const LocationSetWrapper = styled.div`
   height: calc(100% - 42rem);
   position: absolute;
   bottom: 0;
+  z-index: 5;
   display: flex;
   flex-direction: column;
   gap: 1.4rem;
@@ -157,7 +146,7 @@ const LocationBoxLeft = styled.div<{ active: boolean }>`
   width: 49%;
   height: 4.2rem;
   border-radius: 0.4rem;
-  padding: 1.6rem;
+  padding: 0 0 0 1.6rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -167,19 +156,26 @@ const LocationBoxLeft = styled.div<{ active: boolean }>`
   color: white;
   background: ${props => props.active ? `${theme.colors.carrot}` : `${theme.colors.grey30}`};
 
-  img {
-    width: 1.2rem;
-    height: 1.2rem;
+  div {
+    padding: 1rem 1.6rem;
+
+    img {
+      width: 1.2rem;
+      height: 1.2rem;
+    }
   }
+  
 `
 const LocationBoxRight = styled(LocationBoxLeft)<{ isMyLocation2: boolean }>`
   ${props => props.isMyLocation2
-    ? css``
+    ? css`
+    `
     : css`
         background: ${theme.colors.grey30};
 
-        img {
+        div {
           margin: 0 auto;
+          padding: 1rem 3.2rem 1rem 1.6rem;
         }
     `}
   
