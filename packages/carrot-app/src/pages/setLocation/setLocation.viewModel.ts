@@ -1,74 +1,137 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { convertUTMKToWgs84, convertWgs84ToUTMK } from "@carrot/util/coords";
-import { convertAreaToDistance } from '../../infra/location/convertArea'
+import { convertAreaToDistance, convertAreaToLevel } from '../../infra/location/convertArea'
 
 import SGISApi from "../../api/sgis";
 import { useCustomContext } from "../../contexts/etc/customProvider";
-import { deleteLocation, deleteLocation2, getLocation2, getLocationName, getLocationName2, getLocationXCoord, getLocationXCoord2, getLocationYCoord, getLocationYCoord2, setCurrentLocation, setLocation } from "../../infra/location/locationData";
 import { useNavigate } from "react-router-dom";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import userApi from "../../api/user";
+import useJwtDecode from "../../hooks/auth/useJwtDecode";
+import useMap from "../../hooks/map/useMap";
+import theme from "@carrot/core/style/theme";
 
 
 
 const useSetLocationViewModel = () => {
 
   const navigate = useNavigate();
-  const [myLocationName, setMyLocationName] = useState(getLocationName());
-  const [myLocationName2, setMyLocationName2] = useState(getLocationName2());
-  const { area, activeLocation, setActiveLocation } = useCustomContext();
+  const { getId } = useJwtDecode();
+  const queryClient = useQueryClient();
+
+  const { map, drawMap } = useMap();
+  const { area } = useCustomContext();
+
+  const user_id = useMemo(() => getId(), [getId]);
 
   const { kakao } = window;
+  const { data, isSuccess } = useQuery([`user/${user_id}/location`],
+    () => userApi.getLocationById(user_id))
+  
+  const locationData = useMemo(() => data?.payload, [data])
+
+  const locationInfo2 = locationData?.location_info2;
+
+  const updateActiveLocation = useMutation(userApi.updateActiveLocation,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([`user/${user_id}/location`])
+      }
+    });
+
+  const updateLocation = useMutation(userApi.updateLocation,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([`user/${user_id}/location`])
+      }
+    })
+
+  const deleteLocation = useMutation(userApi.deleteLocation,
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([`user/${user_id}/location`])
+      }
+    })
 
   const handleClickBoxLeft = () => {
-    if (activeLocation === 1) {
-      setActiveLocation(0)
-      setCurrentLocation(myLocationName)
+    if (locationData?.active_location === 1) {
+      updateActiveLocation.mutate({
+        user_id,
+        bit: 0
+      })
     }
   }
 
   const handleClickBoxRight = () => {
-    if (myLocationName2 === '') {
+
+      updateActiveLocation.mutate({
+        user_id,
+        bit: 1
+      })
+    }
+
+  const handleClickAddLocation = () => {
+    if (!locationData?.location_info2) {
       navigate('/findlocation', { state: { from: 'setlocation' } })
-    } else {
-    setActiveLocation(1)
-    setCurrentLocation(myLocationName2)
     }
   }
 
   const handleClickDeleteLocation = (isLeft: boolean) => {
     if (isLeft) {
-      if (myLocationName2 === '') {
+      if (!locationInfo2) {
 
       } else {
-        deleteLocation();
-        setMyLocationName(myLocationName2);
-        const data = getLocation2();
-        setLocation(data.locationId2, data.locationName2, data.locationHCode2, data.locationXCoord2, data.locationYCoord2)
-        deleteLocation2();
-        setMyLocationName2('')
+        updateLocation.mutate({
+          user_id,
+          location: locationInfo2.location_id,
+          key: 1
+        })
+
+        updateActiveLocation.mutate({
+          user_id,
+          bit: 0
+        })
+
+        deleteLocation.mutate({
+          user_id,
+          key: 2
+        })
       }
     } else {
-      setMyLocationName2('');
+      updateActiveLocation.mutate({
+        user_id,
+        bit: 0
+      })
+
+      deleteLocation.mutate({
+        user_id,
+        key: 2
+      })
+
     }
   }
 
-  useEffect(() => {
-    if (myLocationName2 === '') {
-      setActiveLocation(0);
-    }
-  }, [myLocationName2])
+  const selectCoords = (): number[] => {
+    let xCoord = locationData?.active_location === 0 ? locationData?.location_info?.x_coord : locationData?.location_info2?.x_coord
+    let yCoord = locationData?.active_location === 0 ? locationData?.location_info?.y_coord : locationData?.location_info2?.y_coord
 
-  let xCoord = activeLocation === 0 ? parseFloat(getLocationXCoord()) : parseFloat(getLocationXCoord2());
-  let yCoord = activeLocation === 0 ? parseFloat(getLocationYCoord()) : parseFloat(getLocationYCoord2());
+    return [xCoord, yCoord]
+  }
 
-  const [transCoordX, transCoordY] = convertWgs84ToUTMK(xCoord, yCoord)
+  const transCoords = () => {
+    const coords: any = isSuccess && selectCoords();
+    return convertWgs84ToUTMK(coords[0], coords[1])
+  }
 
-  const minX = String(transCoordX - convertAreaToDistance(area));
-  const maxX = String(transCoordX + convertAreaToDistance(area));
-  const minY = String(transCoordY - convertAreaToDistance(area));
-  const maxY = String(transCoordY + convertAreaToDistance(area));
-
-  
   const createPolygon = async () => {
+
+    const [transCoordX, transCoordY] = isSuccess && transCoords();
+
+    const minX = String(transCoordX - convertAreaToDistance(area));
+    const maxX = String(transCoordX + convertAreaToDistance(area));
+    const minY = String(transCoordY - convertAreaToDistance(area));
+    const maxY = String(transCoordY + convertAreaToDistance(area));
+
     try {
       const accessToken = (await SGISApi.getAccessToken()).data.result.accessToken
       const data = await SGISApi.getBoundaryInArea(minX, minY, maxX, maxY, accessToken)
@@ -92,28 +155,43 @@ const useSetLocationViewModel = () => {
     return array;
     } catch(e: any) {
       throw Error(e);
-    }
-    
-
-    
+    }  
   }
 
+  useEffect(() => {
+    const coords: any = isSuccess && selectCoords();
+    const getArray = async (callBack: Function) => {
+      const array = await createPolygon();
+      callBack(array);
+      };
+
+    drawMap(coords[1], coords[0], convertAreaToLevel(area), false);
+    const myMap = map.current;
+    
+    getArray((array: any) => {
+      for (let i = 0; i < array.length; i++) {
+
+        new kakao.maps.Polygon({
+          map: myMap,
+          path: array[i][0],
+          strokeOpacity: 0,
+          fillColor: theme.colors.carrot,
+          fillOpacity: 0.4
+        })
+      }
+    }) 
+   
+    }, [createPolygon])
 
   return {
-    xCoord,
-    yCoord,
-    minX,
-    minY,
-    maxX,
-    maxY,
+    locationData,
+    isSuccess,
     createPolygon,
-    myLocationName,
-    myLocationName2,
-    activeLocation,
     handleClickBoxLeft,
     handleClickBoxRight,
+    handleClickAddLocation,
     handleClickDeleteLocation,
   }
 }
 
-export default useSetLocationViewModel;
+export default useSetLocationViewModel

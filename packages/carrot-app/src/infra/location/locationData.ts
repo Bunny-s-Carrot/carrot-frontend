@@ -1,44 +1,44 @@
-export const getLocationId = () => {
+const getLocationId = () => {
   return localStorage.getItem('location_id') ?? ''
 }
 
-export const getLocationName = () => {
+const getLocationName = () => {
   return localStorage.getItem('location_name') ?? ''
 }
 
-export const getLocationHCode = () => {
+const getLocationHCode = () => {
   return localStorage.getItem('location_h_code') ?? ''
 }
 
-export const getLocationXCoord = () => {
+const getLocationXCoord = () => {
   return localStorage.getItem('location_x_coord') ?? ''
 }
 
-export const getLocationYCoord = () => {
+const getLocationYCoord = () => {
   return localStorage.getItem('location_y_coord') ?? ''
 }
 
-export const getLocationXCoord2 = () => {
+const getLocationXCoord2 = () => {
   return localStorage.getItem('location_x_coord2') ?? ''
 }
 
-export const getLocationYCoord2 = () => {
+const getLocationYCoord2 = () => {
   return localStorage.getItem('location_y_coord2') ?? ''
 }
 
-export const getLocationId2 = () => {
+const getLocationId2 = () => {
   return localStorage.getItem('location_id2') ?? ''
 }
 
-export const getLocationName2 = () => {
+const getLocationName2 = () => {
   return localStorage.getItem('location_name2') ?? ''
 }
 
-export const getLocationHCode2 = () => {
+const getLocationHCode2 = () => {
   return localStorage.getItem('location_h_code2') ?? ''
 }
 
-export const getLocation = () => {
+const getLocation = () => {
   return {
     locationId:  getLocationId(),
     locationHCode: getLocationHCode(),
@@ -48,7 +48,7 @@ export const getLocation = () => {
   }
 }
 
-export const getLocation2 = () => {
+const getLocation2 = () => {
   return {
     locationId2:  getLocationId2(),
     locationHCode2: getLocationHCode2(),
@@ -59,7 +59,7 @@ export const getLocation2 = () => {
 }
 
 
-export const setLocation = (locationId: string, locationName: string, locationHCode:string, locationXCoord: string, locationYCoord: string) => {
+const setLocation = (locationId: string, locationName: string, locationHCode:string, locationXCoord: string, locationYCoord: string) => {
   localStorage.setItem('location_id', locationId)
   localStorage.setItem('location_name', locationName)
   localStorage.setItem('location_h_code', locationHCode)
@@ -67,7 +67,7 @@ export const setLocation = (locationId: string, locationName: string, locationHC
   localStorage.setItem('location_y_coord', locationYCoord)
 }
 
-export const setLocation2 = (locationId: string, locationName: string, locationHCode:string, locationXCoord: string, locationYCoord: string) => {
+const setLocation2 = (locationId: string, locationName: string, locationHCode:string, locationXCoord: string, locationYCoord: string) => {
   localStorage.setItem('location_id2', locationId)
   localStorage.setItem('location_name2', locationName)
   localStorage.setItem('location_h_code2', locationHCode)
@@ -75,7 +75,7 @@ export const setLocation2 = (locationId: string, locationName: string, locationH
   localStorage.setItem('location_y_coord2', locationYCoord)
 }
 
-export const deleteLocation = () => {
+const deleteLocation = () => {
   localStorage.removeItem('location_id');
   localStorage.removeItem('location_name')
   localStorage.removeItem('location_h_code')
@@ -83,7 +83,7 @@ export const deleteLocation = () => {
   localStorage.removeItem('locatioin_y_coord')
 }
 
-export const deleteLocation2 = () => {
+const deleteLocation2 = () => {
   localStorage.removeItem('location_id2');
   localStorage.removeItem('location_name2')
   localStorage.removeItem('location_h_code2')
@@ -92,10 +92,34 @@ export const deleteLocation2 = () => {
 }
 
 
-export const setCurrentLocation = (location: string) => {
+const setCurrentLocation = (location: string) => {
+  console.log(location);
   localStorage.setItem('current_location', location)
 }
 
-export const getCurrentLocation = () => {
+const getCurrentLocation = () => {
   return localStorage.getItem('current_location')
 }
+
+const location = {
+  getLocationId,
+  getLocationName,
+  getLocationHCode,
+  getLocationXCoord,
+  getLocationYCoord,
+  getLocationId2,
+  getLocationName2,
+  getLocationHCode2,
+  getLocationXCoord2,
+  getLocationYCoord2,
+  getLocation,
+  getLocation2,
+  setLocation,
+  setLocation2,
+  deleteLocation,
+  deleteLocation2,
+  setCurrentLocation,
+  getCurrentLocation,
+}
+
+export default location

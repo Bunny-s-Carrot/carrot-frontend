@@ -8,14 +8,15 @@ import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
 
 import theme from "@carrot/core/style/theme";
 import Panel from "../../../components/panel";
-import { getCurrentLocation } from "../../../infra/location/locationData";
+
 import useGeolocation from "../../../hooks/location/useGeolocation";
-import { useCustomContext } from "../../../contexts/etc/customProvider";
+import useSellProductViewModel from "./sellProduct.viewModel";
 
 const SellProductPage = () => {
   const navigate = useNavigate();
   const geolocation = useGeolocation();
-  const currentLocation = getCurrentLocation();
+
+  const sellProductViewModel = useSellProductViewModel()
 
   const leftContent = 
     <>
@@ -39,6 +40,8 @@ const SellProductPage = () => {
           <StyledTextInput
             placeholder="제목"
             disableBorder
+            value={sellProductViewModel.title}
+            onChange={e => sellProductViewModel.setTitle(e.target.value)}
           />
           <StyledPanel type="CUSTOM">
             카테고리 선택
@@ -47,25 +50,27 @@ const SellProductPage = () => {
             <StyledTextInput
               placeholder='&#x20a9; 가격 (선택사항)'
               disableBorder
+              value={sellProductViewModel.price}
+              onChange={e => sellProductViewModel.setPrice(e.target.value)}
             />
-            <StyledCheckBox onClick={() => {}}>
+            <StyledCheckBox onClick={() => sellProductViewModel.setShare(prev => !prev)}>
               나눔
             </StyledCheckBox>
           </PriceWrapper>
           <StyledTextInput
-            placeholder={`${currentLocation}에 올릴 게시글 내용을 작성해주세요. (가품 및 판매금지 물품을 게시가 제한될 수 있어요)`}
+            placeholder={`${''}에 올릴 게시글 내용을 작성해주세요. (가품 및 판매금지 물품을 게시가 제한될 수 있어요)`}
             isMultiLine
             disableBorder
             noBorderBottom={true}
+            value={sellProductViewModel.contents}
+            onChange={e => sellProductViewModel.setContents(e.target.value)}
           />
         </ProductInfoWrapper>
         <AdditionalInfoWrapper>
           <WantedLocationPanel
             type='CUSTOM' 
             onClick={() => {
-              geolocation(() => navigate('/setwantedlocation'));
-              console.log('넘어간다')
-              
+              geolocation(() => navigate('setwantedlocation'));              
             }
           }>
             거래 희망 장소
@@ -99,14 +104,19 @@ const ProductInfoWrapper = styled.div`
 const UploadPhoto = styled.div``
 const StyledTextInput = styled(TextInput)<{ noBorderBottom?: boolean }>`
   border-bottom: ${props => props.noBorderBottom ? '' : `0.1rem solid ${theme.colors.grey20}`};
-  padding: 1rem 0;
-  input{
+  
+  input {
     padding: 0;
 
     ::placeholder {
       ${theme.typography.body2};
     }
   }
+
+  textarea {
+    padding: 0;
+  }
+  padding: 1rem 0;
 `
 const StyledPanel = styled(Panel)`
   border: none;
@@ -122,11 +132,11 @@ const PriceWrapper = styled.div`
   grid-template-columns: 4fr 1fr;
 `
 const StyledCheckBox = styled(CheckBox)`
-    ${theme.typography.body2};
+  ${theme.typography.body2};
 `
 const AdditionalInfoWrapper = styled.div`
-background: white;
-height: 100%;
+  background: white;
+  height: 100%;
 `
 const WantedLocationPanel = styled(Panel)`
   border: none;

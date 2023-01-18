@@ -38,7 +38,7 @@ const App = () => {
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/mycarrot" element={<MyCarrotPage />} />
           <Route path="/setlocation" element={<SetLocationPage />} />
-          <Route path="/setwantedlocation" element={<SetWantedLocation />} />
+          <Route path="/sell-product/setwantedlocation" element={<SetWantedLocation />} />
         {/* </Route> */}
         </Route>
 

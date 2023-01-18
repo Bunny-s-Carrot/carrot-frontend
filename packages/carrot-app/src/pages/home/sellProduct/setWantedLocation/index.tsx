@@ -3,7 +3,7 @@ import styled from "styled-components";
 
 import Button from '@carrot/core/atoms/button';
 
-import HeaderTemplate from "../../../templates/headerTemplate"
+import HeaderTemplate from "../../../../templates/headerTemplate"
 import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
 import gpsOnIcon from '@carrot/core/assets/icon/gps-on.svg'
 import locationMarker from '@carrot/core/assets/icon/location-marker.svg'

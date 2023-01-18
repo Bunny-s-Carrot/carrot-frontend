@@ -4,32 +4,15 @@ import Input from '@carrot/core/atoms/input/searchInput';
 import Button from '@carrot/core/atoms/button';
 import theme from "@carrot/core/style/theme";
 import searchGreyIcon from '@carrot/core/assets/icon/search_grey.svg'
-import useFindLocationViewModel from "./findLocation.viewModel";
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import locationApi from "../../api/location";
+
 import { LocationDataType } from "../../api/location/locationDto";
-import { useCustomContext } from "../../contexts/etc/customProvider";
-import { setCurrentLocation, setLocation, setLocation2 } from "../../infra/location/locationData";
+import useFindLocationViewModel from "./findLocation.viewModel";
 
 
 const FindLocationPage = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const [inputValue, setInputValue] = useState('');
-  const { setActiveLocation } = useCustomContext();
-  const { data, isSuccess } = useQuery(['location'], locationApi.getLocationList);
+
+
   const findLocationViewModel = useFindLocationViewModel();
-
-  const from = location.state.from;
-  const searchLocation = (): LocationDataType[] => {
-    if (data === undefined) return []
-
-    return data.payload.filter(
-      (value) => 
-          value.full_name?.includes(inputValue)
-    );
-  }
 
   return (
     <Container>
@@ -37,11 +20,11 @@ const FindLocationPage = () => {
         <SearchInput
           placeholder="내 동네 이름(동, 읍, 면)으로 검색"
           onChange={(e) => {
-            setInputValue(e.target.value);
-            searchLocation();
+            findLocationViewModel.setInputValue(e.target.value);
+            findLocationViewModel.searchAddress();
           }
             }
-          value={inputValue}
+          value={findLocationViewModel.inputValue}
         />
         <SearchButton
           buttonType="CARROT"
@@ -51,8 +34,8 @@ const FindLocationPage = () => {
         </SearchButton>
       </SearchWrapper>
       <ResultWrapper>
-        {isSuccess && 
-        (searchLocation().length === 0 || inputValue.length === 0
+        {findLocationViewModel.isSuccess && 
+        (findLocationViewModel.searchAddress().length === 0 || findLocationViewModel.inputValue.length === 0
         ? <NoResult>
             <p>
               검색 결과가 없어요. <br />
@@ -61,23 +44,13 @@ const FindLocationPage = () => {
             <span>내 동네 이름 검색하기</span>
           </NoResult>
         : <Result>
-            <p>'{inputValue}' 검색결과</p>
+            <p>'{findLocationViewModel.inputValue}' 검색결과</p>
             <ul>
-              {searchLocation().map((item: LocationDataType, index: number) => (
+              {findLocationViewModel.searchAddress().map((item: LocationDataType, index: number) => (
               <li
                 key={index}
                 onClick={() => {
-                  if (from === 'setlocation') {
-                    setLocation2(item.location_id.toString(), item.lowest_sect_name, item.h_code.toString(), item.x_coord.toString(), item.y_coord.toString())
-                    setActiveLocation(1);
-                    navigate('/setlocation', 
-                    { state: { id: item.location_id, name: item.lowest_sect_name } })
-                  } else {
-                    setLocation(item.location_id.toString(), item.lowest_sect_name, item.h_code.toString(), item.x_coord.toString(), item.y_coord.toString())
-                    setCurrentLocation(item.lowest_sect_name)
-                    navigate('/auth/signup', 
-                    { state: { id: item.location_id, name: item.full_name } })
-                  }
+                  findLocationViewModel.handleClickAddress(item)
                 }}
               >
                 <span>{item.full_name}</span>
