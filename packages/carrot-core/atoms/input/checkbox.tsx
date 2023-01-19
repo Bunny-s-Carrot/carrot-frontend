@@ -3,15 +3,18 @@ import styled from 'styled-components'
 import theme from '../../style/theme'
 
 interface CheckboxProps extends PropsWithChildren {
-  checked?: boolean
-  onClick?: () => void
   className?: string
+  disabled?: boolean
+  checked?: boolean
+  readOnly?: boolean
+  onClick?: () => void
+
 }
 
 const CheckBox = (props: CheckboxProps) => {
   return (
     <CheckboxLabel className={props.className} onClick={props.onClick}>
-      <Checkbox type='checkbox' checked={props.checked}></Checkbox>
+      <Checkbox type='checkbox' checked={props.checked} disabled={props.disabled} readOnly={props.readOnly}></Checkbox>
       <span>{props.children}</span>
     </CheckboxLabel>
 

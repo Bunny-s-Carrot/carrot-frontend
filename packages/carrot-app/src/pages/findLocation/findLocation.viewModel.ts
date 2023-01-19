@@ -49,7 +49,7 @@ const useFindLocationViewModel = () => {
       navigate('/setlocation')
     } else {
       navigate('/auth/signup', 
-      { state: { id: params.location_id, name: params.full_name } })
+      { state: { id: params.location_id, fullName: params.full_name, name: params.lowest_sect_name } })
     }
   }
   

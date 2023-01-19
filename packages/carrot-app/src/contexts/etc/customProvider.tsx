@@ -4,7 +4,7 @@ import { createContext, useState, useContext } from "react";
 const CustomContext = createContext<any>({});
 
 export const CustomProvider = ({ children }: any) => {
-  const [activeLocation, setActiveLocation] = useState<number>(0);
+  const [user, setUser] = useState<number>(0);
   const [scrollTop, setScrollTop] = useState<number>(0);
   const [area, setArea] = useState('');
   const [accessToken, setAccessToken] = useState('')
@@ -14,7 +14,7 @@ export const CustomProvider = ({ children }: any) => {
   })
   return (
     <CustomContext.Provider 
-      value={{ activeLocation, setActiveLocation, scrollTop, setScrollTop, area, setArea,
+      value={{ user, setUser, scrollTop, setScrollTop, area, setArea,
                 accessToken, setAccessToken, userLatLng, setUserLatLng }}
     >
       {children}

@@ -1,20 +1,19 @@
-import { keyboard } from "@testing-library/user-event/dist/keyboard"
 import { api } from "../../infra/api"
 import { UserLocationType } from './userDto'
 
 
-type LocationType = {
+type LocationData = {
   user_id: string
   location: number
   key: number
 }
 
-type ActiveLocationType = {
+type ActiveLocationData = {
   user_id: string
   bit: number
 }
 
-type DeleteLocationType = {
+type DeleteLocationData = {
   user_id: string
   key: number
 }
@@ -29,7 +28,7 @@ const getLocationById = async (user_id: string) => {
   }
 }
 
-const updateLocation = async ({ user_id, location, key}: LocationType) => {
+const updateLocation = async ({ user_id, location, key}: LocationData) => {
   const response = await api.patch(`/user/${user_id}/location${key}`,
     {
       location,
@@ -39,13 +38,13 @@ const updateLocation = async ({ user_id, location, key}: LocationType) => {
   return response;
 }
 
-const deleteLocation = async ({ user_id, key }: DeleteLocationType) => {
+const deleteLocation = async ({ user_id, key }: DeleteLocationData) => {
   const response = await api.delete(`/user/${user_id}/location${key}`)
 
   return response;
 }
 
-const updateActiveLocation = async ({ user_id, bit}: ActiveLocationType) => {
+const updateActiveLocation = async ({ user_id, bit}: ActiveLocationData) => {
   const response = await api.post(`/user/${user_id}/active-location/${bit}`)
 
   return response;

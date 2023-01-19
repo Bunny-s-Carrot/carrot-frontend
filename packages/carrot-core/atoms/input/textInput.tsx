@@ -78,12 +78,11 @@ const TextInputWrapper = styled.div<{ disableBorder: boolean | undefined}>`
     min-height: 4.2rem;
     border: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey30}`};
     border-radius: 0.8rem;
-    padding: 0.8rem 1.6rem;
+
     outline: none;
     ::placeholder {
       color: ${theme.colors.grey40};
-      ${theme.typography.body3};
-      
+      ${theme.typography.body2};
     }
     :focus {
       border: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey90}`};
@@ -105,7 +104,6 @@ const TextInputWrapper = styled.div<{ disableBorder: boolean | undefined}>`
     height: 15rem;
     border: none;
     border-bottom: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey40}`};
-    padding: 0.8rem 1.6rem;
     outline: none;
     ${theme.colors.grey90};
     ${theme.typography.body3};
