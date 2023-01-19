@@ -5,8 +5,10 @@ export interface PostType  {
     writer_id: number;
     title: string;
     content: string;
-    chat_count: number;
-    empa_count: number;
+    views: number;
+    chat: number;
+    empa: number;
+    heart: number;
     created_at: any;
     lowest_sect_name: string;
     category_name: string;

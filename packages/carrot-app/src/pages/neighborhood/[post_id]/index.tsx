@@ -55,7 +55,7 @@ const PostDetailPage = () => {
             <Content>
               {PostDetailViewModel.data?.post.title}<br/><br/><br/>
               {PostDetailViewModel.data?.post.content}<br/><br/>
-              <Empa>조회 {PostDetailViewModel.data?.post.empa_count}</Empa>
+              <Empa>조회 {PostDetailViewModel.data?.post.views}</Empa>
             </Content>
             <Buttons>
               <Btn>

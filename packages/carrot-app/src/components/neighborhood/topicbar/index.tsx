@@ -1,3 +1,4 @@
+import { useNavigate } from 'react-router-dom';
 import styled from "styled-components";
 import theme from '@carrot/core/style/theme';
 import themeIcon from '@carrot/core/assets/icon/Dehaze.svg';
@@ -16,7 +17,7 @@ const topicListData = [
   },
   {
     title: "겨울간식",
-    path: ""
+    path: "/topic"
   },
   {
     title: "동네소식",
@@ -57,6 +58,9 @@ const topicListData = [
 ];
 
 const TopicBar = () => {
+
+  const navigate = useNavigate();
+
   return (
     <TopicContainer>
 
@@ -69,7 +73,7 @@ const TopicBar = () => {
           </TopicItem>
           )} else {
           return (
-          <TopicItem key={index}>
+          <TopicItem key={index} onClick={() => navigate(`${item.path}`)}>
           {item.title}
           </TopicItem>
           )}

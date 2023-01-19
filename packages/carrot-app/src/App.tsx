@@ -13,7 +13,9 @@ import FindLocationPage from "./pages/findLocation";
 import PersistLogin from "./components/auth/persistLogin";
 import ProductDetailPage from "./pages/home/[product_id]";
 import SellProductPage from "./pages/home/sellProduct";
+import TopicBarDetailPage from './pages/neighborhood/topicbar';
 import PostDetailPage from "./pages/neighborhood/[post_id]";
+import WritePostPage from "./pages/neighborhood/writePost";
 import SetLocationPage from "./pages/setLocation";
 import SetWantedLocation from "./pages/home/sellProduct/setWantedLocation";
 
@@ -33,7 +35,9 @@ const App = () => {
           <Route path="/product/:product_id" element={<ProductDetailPage />} />
           <Route path="/sell-product" element={<SellProductPage />} />
           <Route path="/neighborhood" element={<NeighborhoodPage />} />
+          <Route path="/topic" element={<TopicBarDetailPage />} />
           <Route path="/post/:post_id" element={<PostDetailPage />} />
+          <Route path="/write-post" element={<WritePostPage />} />
           <Route path="/around" element={<AroundPage />} />
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/mycarrot" element={<MyCarrotPage />} />
