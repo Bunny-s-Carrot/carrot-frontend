@@ -48,11 +48,6 @@ const useFindLocationViewModel = () => {
 
       navigate('/setlocation')
     } else {
-      updateLocation.mutate({
-        user_id,
-        location: params.location_id,
-        key: 1
-      })
       navigate('/auth/signup', 
       { state: { id: params.location_id, name: params.full_name } })
     }
