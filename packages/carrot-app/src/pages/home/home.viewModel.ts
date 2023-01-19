@@ -1,22 +1,28 @@
+import { useEffect, useMemo } from "react"
+import { useLocation } from "react-router-dom"
 import { useQuery } from "@tanstack/react-query"
 import productApi from "../../api/product"
-import userApi from "../../api/user"
-import useJwtDecode from "../../hooks/auth/useJwtDecode"
+import { getActiveLocation } from "../../infra/location/activeLocation"
+import { setFrom } from "../../infra/from"
+
+
 
 
 const useProductViewModel = () => {
+  const location = useLocation();
+  useEffect(() => {
+    setFrom(location.pathname)
 
-  const { getId } = useJwtDecode();
-  const userId = getId();
+  }, [])
+  
+  const activeLocation = useMemo(() => getActiveLocation(), [getActiveLocation]);
   
   const { data: products } = useQuery(['product'], productApi.getProducts)
   
-  const { data: userLocation } = useQuery([`user/${userId}/location`], 
-    () => userApi.getLocationById(userId))
-
+ 
   return {
     products,
-    userLocation
+    activeLocation,
   }
 }
 
