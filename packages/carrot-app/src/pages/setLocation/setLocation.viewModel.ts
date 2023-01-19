@@ -10,6 +10,7 @@ import userApi from "../../api/user";
 import useJwtDecode from "../../hooks/auth/useJwtDecode";
 import useMap from "../../hooks/map/useMap";
 import theme from "@carrot/core/style/theme";
+import { setActiveLocation } from "../../infra/location/activeLocation";
 
 
 
@@ -30,6 +31,7 @@ const useSetLocationViewModel = () => {
   
   const locationData = useMemo(() => data?.payload, [data])
 
+  const locationInfo = locationData?.location_info;
   const locationInfo2 = locationData?.location_info2;
 
   const updateActiveLocation = useMutation(userApi.updateActiveLocation,
@@ -55,6 +57,7 @@ const useSetLocationViewModel = () => {
 
   const handleClickBoxLeft = () => {
     if (locationData?.active_location === 1) {
+      setActiveLocation(locationInfo.lowest_sect_name);
       updateActiveLocation.mutate({
         user_id,
         bit: 0
@@ -63,12 +66,12 @@ const useSetLocationViewModel = () => {
   }
 
   const handleClickBoxRight = () => {
-
-      updateActiveLocation.mutate({
-        user_id,
-        bit: 1
-      })
-    }
+    setActiveLocation(locationInfo2.lowest_sect_name);
+    updateActiveLocation.mutate({
+      user_id,
+      bit: 1
+    })
+  }
 
   const handleClickAddLocation = () => {
     if (!locationData?.location_info2) {

@@ -1,47 +1,17 @@
-import {useState, useContext} from "react";
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
 import HeaderTemplate from "../../templates/headerTemplate";
 import Button from "@carrot/core/atoms/button";
 import TextInput from "@carrot/core/atoms/input/textInput";
-import { useLocation, useNavigate } from "react-router-dom";
-import { useMutation } from "@tanstack/react-query";
-import authApi from "../../api/auth";
-import AuthContext from "../../contexts/auth/authProvider";
+import { useNavigate } from "react-router-dom";
 import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
-import locationFn from "../../infra/location/locationData";
+import useLoginViewModel from "./login.viewModel";
+
 
 const LoginPage = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const { setAuth } = useContext(AuthContext);
+
   const navigate = useNavigate();
-  const location = useLocation();
-  const from = location.state?.from?.pathname || '/home';
-
-  const loginMutate = useMutation(authApi.login, {
-    onSuccess: ({ data }) => {
-      const token = {
-        token: data?.token
-      }
-
-      const locationData = data?.locationData;
-      setAuth(token);
-      setEmail('');
-      setPassword('');
-      navigate(from, { replace: true });
-      locationFn.setLocation(locationData.location_id, locationData.lowest_sect_name, locationData.h_code, locationData.x_coord, locationData.y_coord)
-      locationFn.setCurrentLocation(locationData.lowest_sect_name)
-    }
-  });
-
-  const handleLogin = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (email !== '' && password !== '') {
-      loginMutate.mutate({ email, password })
-    }
-  }
-
+  const loginViewModel = useLoginViewModel();
   return (
     <HeaderTemplate 
       onClickLeft={() => navigate('/')}
@@ -53,19 +23,22 @@ const LoginPage = () => {
           <TextInput
             placeholder="이메일 주소를 입력해주세요"
             inputType="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            value={loginViewModel.email}
+            onChange={(e) => loginViewModel.setEmail(e.target.value)}
           />
           <TextInput
             placeholder="비밀번호를 입력해주세요"
             inputType="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            value={loginViewModel.password}
+            onChange={(e) => loginViewModel.setPassword(e.target.value)}
           />
           <LoginButton
             buttonType='WHITE'
-            onClick={(e) => handleLogin(e)}
-            disabled={email.length === 0 || password.length === 0}>로그인</LoginButton>
+            onClick={(e) => loginViewModel.handleLogin(e)}
+            disabled={loginViewModel.email.length === 0 || loginViewModel.password.length === 0}
+          >
+            로그인
+          </LoginButton>
         </InputForm>
         <ForgotPassword>
           비밀번호를 잊어버렸나요? <span>비밀번호 찾기</span>

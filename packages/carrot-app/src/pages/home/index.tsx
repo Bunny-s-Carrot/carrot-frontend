@@ -1,4 +1,4 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 
 import NavBar from "../../components/navBar";
@@ -17,17 +17,12 @@ import { ProductTypeWithLocation } from "../../api/product/productDto";
 
 const Home = () => {
   const navigate = useNavigate();
-  const location = useLocation();
   const productViewModel = useProductViewModel();
   const productList = productViewModel.products?.payload;
-  const locationData = productViewModel.userLocation?.payload;
-
-  const currentLocation = locationData?.active_location;
-  const locationInfo = currentLocation === 0 ? locationData?.location_info : locationData?.location_info2;
 
   const LeftContent = (
     <LocationWrapper>
-      <p>{locationInfo && locationInfo.lowest_sect_name}</p>
+      <p>{productViewModel.activeLocation}</p>
       <img className='down' src={backIcon} alt='backIcon' />
     </LocationWrapper>
   )
@@ -44,9 +39,7 @@ const Home = () => {
     <>
       <HeaderTemplate
         leftContent={LeftContent}
-        onClickLeft={() => {
-          localStorage.setItem('from', location.pathname)
-          navigate('/setLocation', { state: locationData })}}
+        onClickLeft={() => {navigate('/setLocation')}}
         rightContent={RightContent}
       >
         <Container>

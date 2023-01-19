@@ -1,5 +1,4 @@
-import { useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import HeaderTemplate from '../../templates/headerTemplate';
 import backIcon from '@carrot/core/assets/icon/back-arrow.svg'
@@ -10,15 +9,7 @@ import useSignupViewModel from './signup.viewModel';
 
 const SignupPage = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-
   const signupViewModel = useSignupViewModel();
-
-
-  useEffect(() => {
-    signupViewModel.setLocationId(location.state?.id);
-    signupViewModel.setLocationName(location.state?.name);
-  }, [location.state?.id, location.state?.name, signupViewModel])
 
   return (
     <HeaderTemplate
@@ -57,7 +48,7 @@ const SignupPage = () => {
           <TextInput 
             placeholder=''
             onChange={() => {}}
-            value={location.state.name}
+            value={signupViewModel.locationData.fullName}
           />
           <SubmitButton
             buttonType='CARROT'

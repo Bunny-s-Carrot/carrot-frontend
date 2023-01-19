@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useCustomContext } from "../../../../contexts/etc/customProvider";
 import useGeolocation from "../../../../hooks/location/useGeolocation";
 import useMap from "../../../../hooks/map/useMap"
@@ -12,7 +12,10 @@ const useSetWantedLocationViewModel = () => {
   const { setUserLatLng } = useCustomContext();
   const{ map, drawMap } = useMap();
   const navigate = useNavigate();
+  const location = useLocation();
 
+  const from = location.state?.from?.pathname
+  const data = location.state?.data;
   useEffect(() => {
     geolocation(drawMap)
   }, [])
@@ -31,7 +34,7 @@ const useSetWantedLocationViewModel = () => {
       }
     })
 
-    navigate(-1)
+    navigate(from, { state: { data } })
   }
   const panTo = (lat: number, lng: number) => {
     const moveLatLng = new kakao.maps.LatLng(lat, lng);

@@ -1,6 +1,18 @@
 import { api } from "../../infra/api";
 import { ProductTypeWithLocation, ProductDetailType } from "./productDto";
 
+type ProductData = {
+  seller_id: number
+  seller_location: number
+  title: string
+  price: number
+  contents: string
+  wanted_location: string
+  price_suggest: boolean,
+  share: boolean
+  classif_id: number
+}
+
 const getProducts = async () => {
   try {
     const { data } = await api.get<{ payload: ProductTypeWithLocation[] }>('/product');
@@ -21,9 +33,40 @@ const getProductDetail = async (product_id: string) => {
   }
 }
 
+const createProduct = async ({
+  seller_id,
+  seller_location, 
+  title,
+  price,
+  contents,
+  wanted_location,
+  price_suggest,
+  share,
+  classif_id }: ProductData) => {
+    try {
+    const result = await api.post('/product',
+    {
+      seller_id,
+      seller_location,
+      title,
+      price,
+      contents,
+      wanted_location,
+      price_suggest,
+      share,
+      classif_id,
+    })
+
+    return result;
+  } catch (e: any) {
+    throw Error(e);
+  }
+}
+
 const productApi = {
   getProducts,
   getProductDetail,
+  createProduct,
 }
 
 export default productApi;
