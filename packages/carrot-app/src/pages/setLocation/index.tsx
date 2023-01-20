@@ -13,6 +13,7 @@ import theme from "@carrot/core/style/theme";
 import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
 import closeIconWhite from '@carrot/core/assets/icon/close-white.svg';
 import addIcon from '@carrot/core/assets/icon/add.svg';
+import { getFrom } from '../../infra/from';
 
 const SetLocationPage = () => {
   const { area } = useCustomContext();
@@ -32,7 +33,7 @@ const SetLocationPage = () => {
     <HeaderTemplate
       leftContent={leftContent}
       onClickLeft={() => {
-        const from = localStorage.getItem('from') ?? '/around';
+        const from = getFrom() ?? '/around';
         navigate(from)}}
     >
       <Map id="map"></Map>

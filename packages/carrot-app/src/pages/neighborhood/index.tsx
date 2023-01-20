@@ -23,7 +23,7 @@ const Neighborhood = () => {
 
   let LeftContent = (
     <Locationdiv>
-      <p>연희동</p>
+      <p>{postViewModel.activeLocation}</p>
       <img className='down' src={backIcon} alt='backIcon' />
     </Locationdiv>
   )
@@ -40,6 +40,7 @@ const Neighborhood = () => {
     <>
       <HeaderTemplate 
         leftContent={LeftContent}
+        onClickLeft={() => {navigate('/setLocation')}}
         rightContent={RightContent}
       >
         <TopicBar />

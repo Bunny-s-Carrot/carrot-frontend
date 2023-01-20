@@ -4,10 +4,12 @@ import theme from "@carrot/core/style/theme";
 import HeaderTemplate from '../../../templates/headerTemplate';
 import Panel from "../../../components/panel";
 import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
+import useWritePostViewModel from './writePost.viewModel';
 
 
 const WritePostPage = () => {
     const navigate = useNavigate();
+    const writePostViewModel = useWritePostViewModel()
 
     const leftContent = (
     <>
@@ -27,8 +29,12 @@ const WritePostPage = () => {
         leftContent={leftContent}
         rightContent={rightContent}>
             <StyledPanel type="CUSTOM">게시글의 주제를 선택해주세요</StyledPanel>
-            <form id="content" action="http://localhost:5000/createpost">
-                <Content name="content" placeholder='연희동 관련된 질문이나 이야기를 해보세요.'/>
+            <form id="content" onSubmit={(e) => {
+                e.preventDefault()
+                writePostViewModel.handleClickSubmit()}
+            }>
+                <Content name="content" placeholder='연희동 관련된 질문이나 이야기를 해보세요.'
+                onChange={e => writePostViewModel.setContent(e.target.value)}/>
             </form>
         </HeaderTemplate>
     )
