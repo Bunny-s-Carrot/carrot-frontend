@@ -53,9 +53,8 @@ const PostDetailPage = () => {
               </div>
             </UserInfo>
             <Content>
-              {PostDetailViewModel.data?.post.title}<br/><br/><br/>
               {PostDetailViewModel.data?.post.content}<br/><br/>
-              <Empa>조회 {PostDetailViewModel.data?.post.empa_count}</Empa>
+              <Empa>조회 {PostDetailViewModel.data?.post.views}</Empa>
             </Content>
             <Buttons>
               <Btn>
@@ -123,6 +122,7 @@ const Content = styled.div`
 padding: 15px 10px;
 font-size: 16px;
 border-bottom: 1px solid ${theme.colors.grey30};
+white-space: pre-line;
 `
 
 const Empa = styled.p`

@@ -1,5 +1,5 @@
 import { api } from "../../infra/api";
-import { PostType, PostDetailType } from "./postDto";
+import { PostType, PostDetailType, CreatePostType } from "./postDto";
 
 const getPosts = async () => {
     try {
@@ -21,9 +21,28 @@ const getPostDetail = async (post_id: string) => {
   }
 }
 
+const createPost = async ({
+  classif_id,
+  content,
+  writer_id }: CreatePostType) => {
+    try {
+      const result = await api.post('/post',
+      {
+        classif_id,
+        content,
+        writer_id
+      })
+      
+      return result;
+    } catch (e: any) {
+      throw Error(e);
+    }
+  }
+
 const postApi = {
     getPosts,
-    getPostDetail
+    getPostDetail,
+    createPost
 }
 
 export default postApi;

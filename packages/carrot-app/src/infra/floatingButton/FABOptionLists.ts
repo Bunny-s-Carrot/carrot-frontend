@@ -40,7 +40,7 @@ const neighborhoodOption = [
   {
     emoji: '📒',
     content: '동네생활',
-    path: ''
+    path: '/write-post'
   },
 ];
 
