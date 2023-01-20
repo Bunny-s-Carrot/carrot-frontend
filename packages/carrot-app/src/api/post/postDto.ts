@@ -14,6 +14,12 @@ export interface PostType  {
     category_name: string;
 }   
 
+export interface CreatePostType {
+    classif_id: number,
+    writer_id: number,
+    content: string
+}
+
 
 export interface PostDetailType {
     user: UserType;
