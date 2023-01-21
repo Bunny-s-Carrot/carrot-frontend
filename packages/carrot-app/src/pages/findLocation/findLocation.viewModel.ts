@@ -15,7 +15,7 @@ const useFindLocationViewModel = () => {
   const { getId } = useJwtDecode();
   const queryClient = useQueryClient();
   
-  const from = location.state.from;
+  const from = location.state?.from || '/';
   
   const { data: address, isSuccess } = useQuery(['location'], locationApi.getLocationList);
   const user_id = useMemo(() => getId(), [getId])
