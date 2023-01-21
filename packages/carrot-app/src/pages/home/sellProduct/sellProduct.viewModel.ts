@@ -5,13 +5,18 @@ import { getActiveLocation } from "../../../infra/location/activeLocation";
 import { useMutation } from "@tanstack/react-query";
 import productApi from "../../../api/product";
 import useJwtDecode from "../../../hooks/auth/useJwtDecode";
+import { postImages } from "../../../api/file/product";
 
+interface ImageType {
+  data: File,
+  url: string
+}
 
 const useSellProductViewModel = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const data = location.state?.data;
-
+  const [images, setImages] = useState<ImageType[]>(data? data.images : [])
   const [title, setTitle] = useState(data ? data.title : '');
   const [price, setPrice] = useState(data ? data.price : '');
   const [contents, setContents] = useState(data ? data.contents : '');
@@ -27,26 +32,51 @@ const useSellProductViewModel = () => {
   const activeLocation = useMemo(() => getActiveLocation(), [getActiveLocation])
 
   const createPost = useMutation(productApi.createProduct);
+  const sendImage = useMutation(postImages);
+  const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const fileList = e.target.files;
+    
+    if (fileList && fileList[0]) {
+      for (let file of fileList) {
+        const image: ImageType = {data: file, url: URL.createObjectURL(file)};
+
+        setImages((prev: any) => [...prev, image])
+      }
+    }
+  }
+
+  const deleteImage = (index: number) => {
+    const list = [...images];
+    list.splice(index, 1);
+    setImages(list);
+  }
 
   const handleClickSubmit = () => {
-    (title !== '' && classifId !== 0 && contents !== '')  &&
-    createPost.mutate({
-      seller_id,
-      seller_location,
-      title,
-      price: price === '' ? 0 : Number(price),
-      contents,
-      wanted_location: JSON.stringify(userLatLng),
-      price_suggest: priceSuggest,
-      share,
-      classif_id: 1001
-    },
-    {
-      onSuccess: () => navigate('/home')
+    const imageFiles = images.map(item => item.data);
+
+    // (title !== '' && classifId !== 0 && contents !== '')  &&
+
+    sendImage.mutate({
+      image: imageFiles
     })
+    // createPost.mutate({
+    //   seller_id,
+    //   seller_location,
+    //   title,
+    //   price: price === '' ? 0 : Number(price),
+    //   contents,
+    //   wanted_location: JSON.stringify(userLatLng),
+    //   price_suggest: priceSuggest,
+    //   share,
+    //   classif_id: 1001
+    // },
+    // {
+    //   onSuccess: () => navigate('/home')
+    // })
   }
 
   return {
+    images,
     title,
     setTitle,
     price,
@@ -60,6 +90,8 @@ const useSellProductViewModel = () => {
     classifId,
     setClassifId,
     activeLocation,
+    uploadImage,
+    deleteImage,
     handleClickSubmit,
   }
 }
