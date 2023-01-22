@@ -1,7 +1,8 @@
-import { api } from "../../infra/api";
+import { api, fileApi } from "../../infra/api";
 import { ProductTypeWithLocation, ProductDetailType } from "./productDto";
 
 type ProductData = {
+  image: File[]
   seller_id: number
   seller_location: number
   title: string
@@ -34,6 +35,7 @@ const getProductDetail = async (product_id: string) => {
 }
 
 const createProduct = async ({
+  image,
   seller_id,
   seller_location, 
   title,
@@ -55,6 +57,12 @@ const createProduct = async ({
       price_suggest,
       share,
       classif_id,
+    }).then(res => {
+      fileApi.post(`/product/image/upload`,
+      {
+        payload: res,
+        image,
+      })
     })
 
     return result;

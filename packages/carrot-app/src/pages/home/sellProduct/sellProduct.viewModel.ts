@@ -5,7 +5,6 @@ import { getActiveLocation } from "../../../infra/location/activeLocation";
 import { useMutation } from "@tanstack/react-query";
 import productApi from "../../../api/product";
 import useJwtDecode from "../../../hooks/auth/useJwtDecode";
-import { postImages } from "../../../api/file/product";
 
 interface ImageType {
   data: File,
@@ -32,7 +31,7 @@ const useSellProductViewModel = () => {
   const activeLocation = useMemo(() => getActiveLocation(), [getActiveLocation])
 
   const createPost = useMutation(productApi.createProduct);
-  const sendImage = useMutation(postImages);
+
   const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
     
@@ -54,25 +53,22 @@ const useSellProductViewModel = () => {
   const handleClickSubmit = () => {
     const imageFiles = images.map(item => item.data);
 
-    // (title !== '' && classifId !== 0 && contents !== '')  &&
-
-    sendImage.mutate({
-      image: imageFiles
+    (title !== '' && classifId !== 0 && contents !== '')  &&
+    createPost.mutate({
+      image: imageFiles,
+      seller_id,
+      seller_location,
+      title,
+      price: price === '' ? 0 : Number(price),
+      contents,
+      wanted_location: JSON.stringify(userLatLng),
+      price_suggest: priceSuggest,
+      share,
+      classif_id: 1001
+    },
+    {
+      onSuccess: () => navigate('/home')
     })
-    // createPost.mutate({
-    //   seller_id,
-    //   seller_location,
-    //   title,
-    //   price: price === '' ? 0 : Number(price),
-    //   contents,
-    //   wanted_location: JSON.stringify(userLatLng),
-    //   price_suggest: priceSuggest,
-    //   share,
-    //   classif_id: 1001
-    // },
-    // {
-    //   onSuccess: () => navigate('/home')
-    // })
   }
 
   return {

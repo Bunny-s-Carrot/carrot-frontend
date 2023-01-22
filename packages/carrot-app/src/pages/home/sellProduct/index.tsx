@@ -135,7 +135,8 @@ const SellProductPage = () => {
             type='CUSTOM' 
             onClick={() => {
               geolocation(() => navigate('setwantedlocation',
-              { state: { from: location, data: { 
+              { state: { from: location, data: {
+                images: sellProductViewModel.images,
                 title: sellProductViewModel.title,
                 price: sellProductViewModel.price,
                 contents: sellProductViewModel.contents,
