@@ -10,8 +10,13 @@ const privateApi = axios.create({
   withCredentials: true,
 });
 
+const fileApi = axios.create({
+  baseURL: process.env.REACT_APP_API_URL,
+  headers: { 'Content-Type': 'multipart/form-data' }
+})
+
 const kakaoDApi = axios.create({
   baseURL: "https://dapi.kakao.com"
 })
 
-export { api, privateApi, kakaoDApi }
+export { api, fileApi, privateApi, kakaoDApi }

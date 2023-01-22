@@ -48,7 +48,7 @@ const SignupPage = () => {
           <TextInput 
             placeholder=''
             onChange={() => {}}
-            value={signupViewModel.locationData.fullName}
+            value={signupViewModel.locationData?.fullName}
           />
           <SubmitButton
             buttonType='CARROT'

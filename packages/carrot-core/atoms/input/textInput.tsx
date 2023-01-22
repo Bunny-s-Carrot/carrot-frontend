@@ -73,6 +73,8 @@ const TextInputWrapper = styled.div<{ disableBorder: boolean | undefined}>`
   box-sizing: border-box;
   font-size: 1.6rem;
   input {
+    padding: 0.4rem 1.6rem;
+    ${theme.typography.body3};
     box-sizing: border-box;
     width: 100%;
     min-height: 4.2rem;
@@ -82,7 +84,7 @@ const TextInputWrapper = styled.div<{ disableBorder: boolean | undefined}>`
     outline: none;
     ::placeholder {
       color: ${theme.colors.grey40};
-      ${theme.typography.body2};
+      ${theme.typography.body3};
     }
     :focus {
       border: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey90}`};
@@ -99,6 +101,8 @@ const TextInputWrapper = styled.div<{ disableBorder: boolean | undefined}>`
     }
   }
   textarea {
+    padding: 0.4rem 1.6rem;
+    ${theme.typography.body3};
     box-sizing: border-box;
     width: 100%;
     height: 15rem;
