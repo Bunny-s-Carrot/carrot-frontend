@@ -19,7 +19,7 @@ const Product = (props: ProductProps) => {
   return (
     <Container onClick={props.onClick}>
       <ImageWrapper>
-        <img src={searchIcon} alt='search' />
+        <img src='' alt='search' />
       </ImageWrapper>
       <ContentWrapper>
         <TitleWrapper>

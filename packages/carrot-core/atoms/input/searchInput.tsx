@@ -1,15 +1,15 @@
-import { ChangeEventHandler, ReactNode } from 'react';
+import { ChangeEventHandler } from 'react';
 import styled from 'styled-components';
 import theme from '../../style/theme';
 
-interface InputProps {
+interface SearchInputProps {
   className?: string;
   placeholder: string;
   onChange?: ChangeEventHandler<HTMLInputElement>;
   value?: string
 }
 
-const SearchInput = (props: InputProps) => {
+const SearchInput = (props: SearchInputProps) => {
   return (
     <Wrapper className={props.className}>
       <input

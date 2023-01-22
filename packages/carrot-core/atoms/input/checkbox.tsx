@@ -14,7 +14,13 @@ interface CheckboxProps extends PropsWithChildren {
 const CheckBox = (props: CheckboxProps) => {
   return (
     <CheckboxLabel className={props.className} onClick={props.onClick}>
-      <Checkbox type='checkbox' checked={props.checked} disabled={props.disabled} readOnly={props.readOnly}></Checkbox>
+      <Checkbox 
+        type='checkbox'
+        checked={props.checked}
+        disabled={props.disabled}
+        readOnly={props.readOnly}
+      >
+      </Checkbox>
       <span>{props.children}</span>
     </CheckboxLabel>
 
