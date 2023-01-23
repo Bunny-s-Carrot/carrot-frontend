@@ -9,7 +9,9 @@ declare module '*.png' {
 }
 
 declare global {
-  interface Window {
-    Cypress: unknown;
+export interface Window {
+    kakao: any;
+    openMap: any;
+
   }
 }

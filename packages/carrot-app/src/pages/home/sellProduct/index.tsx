@@ -21,6 +21,7 @@ import { getFrom } from "../../../infra/from";
 
 
 const SellProductPage = () => {
+  const { openMap } = window;
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -134,6 +135,9 @@ const SellProductPage = () => {
           <WantedLocationPanel
             type='CUSTOM' 
             onClick={() => {
+              window.openMap = () => {
+                postMessage("hihi");
+              }
               geolocation(() => navigate('setwantedlocation',
               { state: { from: location, data: {
                 images: sellProductViewModel.images,

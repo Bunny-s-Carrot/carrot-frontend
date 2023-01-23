@@ -1,7 +1,9 @@
 declare global {
   interface Window {
-    kakao: any;
+    kakao: any
+    openMap: any
+    sendcookie: any;
   }
 }
 
-export {};
+export {}
