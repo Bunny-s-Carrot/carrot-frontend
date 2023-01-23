@@ -17,6 +17,7 @@ export default SwiperItem;
 
 const SwiperList = styled.li`
   width: 100%;
+  height: 100%;
   flex-shrink: 0;
   object-fit: cover;
 
