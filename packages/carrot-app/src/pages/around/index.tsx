@@ -3,20 +3,14 @@ import NavBar from "../../components/navBar"
 
 const AroundPage = () => {
   const handleClickTest = () => {
-    const Message = () => {
-      postMessage("HIHIHIHIHI");
-    }
-
-  window.OpenMap = Message;
-  window.OpenMap.postMessage("HHAAAAAAAAAHHHHHHHHHHHHHAAAAAAAAHHHHH");
+    postMessage("HIHIHIHIHI");
   }
   
   return (
     <div>
-      <button onClick={() => {
-        window.postMessage("HIHIHIHIALAKSFJLAKSJFLA");
-        handleClickTest()}
-      }>test</button>
+      <button onClick={handleClickTest}>
+        test
+      </button>
       <FloatingButton pageType="AROUND" />
       <NavBar pageType='AROUND' />
     </div>

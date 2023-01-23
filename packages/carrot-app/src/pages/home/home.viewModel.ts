@@ -15,8 +15,7 @@ const useHomeViewModel = () => {
   
   const activeLocation = useMemo(() => getActiveLocation(), []);
   
-  const { data: products, isSuccess: getProductsSuccess, refetch } = useQuery(['product'], productApi.getProducts)
-  getProductsSuccess && console.log(products);
+  const { data: products } = useQuery(['product'], productApi.getProducts)
  
   useEffect(() => {
     setFrom(location.pathname)
