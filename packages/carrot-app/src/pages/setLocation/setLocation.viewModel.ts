@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo } from "react";
 import { convertUTMKToWgs84, convertWgs84ToUTMK } from "@carrot/util/coords";
 import { convertAreaToDistance, convertAreaToLevel } from '../../infra/location/convertArea'
 
@@ -28,7 +28,7 @@ const useSetLocationViewModel = () => {
   const { kakao } = window;
   const { data, isSuccess } = useQuery([`user/${user_id}/location`],
     () => userApi.getLocationById(user_id))
-  
+
   const locationData = useMemo(() => data?.payload, [data])
 
   const locationInfo = locationData?.location_info;
@@ -114,19 +114,19 @@ const useSetLocationViewModel = () => {
     }
   }
 
-  const selectCoords = (): number[] => {
+  const selectCoords = useCallback((): number[] => {
     let xCoord = locationData?.active_location === 0 ? locationData?.location_info?.x_coord : locationData?.location_info2?.x_coord
     let yCoord = locationData?.active_location === 0 ? locationData?.location_info?.y_coord : locationData?.location_info2?.y_coord
 
     return [xCoord, yCoord]
-  }
+  }, [locationData?.active_location, locationData?.location_info?.x_coord, locationData?.location_info?.y_coord, locationData?.location_info2?.x_coord, locationData?.location_info2?.y_coord])
 
-  const transCoords = () => {
+  const transCoords = useCallback(() => {
     const coords: any = isSuccess && selectCoords();
     return convertWgs84ToUTMK(coords[0], coords[1])
-  }
+  }, [isSuccess, selectCoords])
 
-  const createPolygon = async () => {
+  const createPolygon = useCallback(async () => {
 
     const [transCoordX, transCoordY] = isSuccess && transCoords();
 
@@ -159,7 +159,7 @@ const useSetLocationViewModel = () => {
     } catch(e: any) {
       throw Error(e);
     }  
-  }
+  }, [area, isSuccess, kakao.maps.LatLng, transCoords])
 
   useEffect(() => {
     const coords: any = isSuccess && selectCoords();
@@ -171,7 +171,7 @@ const useSetLocationViewModel = () => {
     drawMap(coords[1], coords[0], convertAreaToLevel(area), false);
     const myMap = map.current;
     
-    getArray((array: any) => {
+    isSuccess && getArray((array: any) => {
       for (let i = 0; i < array.length; i++) {
 
         new kakao.maps.Polygon({
@@ -184,7 +184,7 @@ const useSetLocationViewModel = () => {
       }
     }) 
    
-    }, [createPolygon])
+    }, [isSuccess, createPolygon, area, drawMap, kakao.maps.Polygon, map, selectCoords])
 
   return {
     locationData,
@@ -198,3 +198,4 @@ const useSetLocationViewModel = () => {
 }
 
 export default useSetLocationViewModel
+

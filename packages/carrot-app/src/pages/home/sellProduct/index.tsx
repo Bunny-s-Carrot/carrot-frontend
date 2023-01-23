@@ -220,6 +220,7 @@ const Thumbnail = styled.div`
     object-fit: cover;
     width: 100%;
     height: 100%;
+    border-radius: 0.4rem;
 
     :last-of-type {
       position: absolute;
@@ -228,6 +229,8 @@ const Thumbnail = styled.div`
       z-index: 10;
       width: 2rem;
       height: 2rem;
+      background: white;
+      border-radius: 50%;
     }
   }
 `

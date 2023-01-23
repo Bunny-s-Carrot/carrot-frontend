@@ -7,8 +7,14 @@ const useProductDetailViewModel = () => {
 
   const { data } = useQuery(['product', params.product_id], () =>
     productApi.getProductDetail(params.product_id!))
+
+  const { data: imageData, isSuccess: getImageSuccess } = useQuery(['product/image', params.product_id], () =>
+    productApi.getImageList(params.product_id!))
+
   return {
-    data: data?.payload
+    data: data?.payload,
+    imageData,
+    getImageSuccess,
   }
 }
 

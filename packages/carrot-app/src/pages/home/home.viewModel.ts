@@ -8,14 +8,16 @@ import { setFrom } from "../../infra/from"
 
 
 
-const useProductViewModel = () => {
+
+
+const useHomeViewModel = () => {
   const location = useLocation();
   useEffect(() => {
     setFrom(location.pathname)
 
-  }, [])
+  }, [location.pathname])
   
-  const activeLocation = useMemo(() => getActiveLocation(), [getActiveLocation]);
+  const activeLocation = useMemo(() => getActiveLocation(), []);
   
   const { data: products } = useQuery(['product'], productApi.getProducts)
   
@@ -26,4 +28,4 @@ const useProductViewModel = () => {
   }
 }
 
-export default useProductViewModel
+export default useHomeViewModel
