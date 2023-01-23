@@ -14,7 +14,7 @@ const AroundPage = () => {
   return (
     <div>
       <button onClick={() => {
-        window.OpenMap.postMessage("HALFG:ADLKGJA:DLKGJA:LDFJA:LKSF")
+        window.postMessage("HIHIHIHIALAKSFJLAKSJFLA");
         handleClickTest()}
       }>test</button>
       <FloatingButton pageType="AROUND" />
