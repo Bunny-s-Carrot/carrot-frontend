@@ -80,11 +80,21 @@ const getImageList = async (productId: string) => {
   }
 }
 
+const getThumbnail = async (productId: string) => {
+  try {
+    const { data } = await api.get(`product/image/${productId}/thumbnail`);
+    return data.payload;
+  } catch (e: any) {
+    throw Error(e);
+  }
+}
+
 const productApi = {
   getProducts,
   getProductDetail,
   createProduct,
   getImageList,
+  getThumbnail,
 }
 
 export default productApi;

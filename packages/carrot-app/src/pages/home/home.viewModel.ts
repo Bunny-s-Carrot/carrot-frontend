@@ -12,16 +12,17 @@ import { setFrom } from "../../infra/from"
 
 const useHomeViewModel = () => {
   const location = useLocation();
-  useEffect(() => {
-    setFrom(location.pathname)
-
-  }, [location.pathname])
   
   const activeLocation = useMemo(() => getActiveLocation(), []);
   
-  const { data: products } = useQuery(['product'], productApi.getProducts)
-  
+  const { data: products, isSuccess: getProductsSuccess, refetch } = useQuery(['product'], productApi.getProducts)
+  getProductsSuccess && console.log(products);
  
+  useEffect(() => {
+    setFrom(location.pathname)
+  }, [location.pathname])
+
+
   return {
     products,
     activeLocation,
