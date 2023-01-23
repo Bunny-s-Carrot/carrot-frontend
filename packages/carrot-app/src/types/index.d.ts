@@ -1,8 +1,8 @@
 declare global {
   interface Window {
     kakao: any
-    openMap: any
-    sendcookie: any;
+    OpenMap: any
+    sendCookie: any;
   }
 }
 

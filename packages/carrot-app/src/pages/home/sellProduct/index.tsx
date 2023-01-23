@@ -134,7 +134,7 @@ const SellProductPage = () => {
           <WantedLocationPanel
             type='CUSTOM' 
             onClick={() => {
-              window.openMap.postMessage("HAAAAAAAAAAAAAAAAA")
+              window.OpenMap.postMessage("HFROM 여끼따AAAAAAAAAAAAAAAAA")
               geolocation(() => navigate('setwantedlocation',
               { state: { from: location, data: {
                 images: sellProductViewModel.images,
