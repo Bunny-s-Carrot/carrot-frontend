@@ -6,18 +6,20 @@ import { categoryList } from "../../../infra/category/categoryList";
 
 import backIconWhite from '@carrot/core/assets/icon/back-arrow-white.svg';
 import homeIconWhite from '@carrot/core/assets/icon/home-outline-white.svg';
-import logo from '@carrot/core/assets/img/logo.png'
+
 import useProductDetailViewModel from "./[product_id].viewModel";
 import theme from "@carrot/core/style/theme";
 import Panel from "../../../components/panel";
 import Button from "@carrot/core/atoms/button";
 import MannerTemp from "../../../components/mannerTemp";
 import { convertDateToSimple } from "@carrot/util/format";
+import Swiper from "../../../components/swiper/swiper";
 
 const ProductDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const productDetailViewModel = useProductDetailViewModel();
+  const baseUrl = 'https://carrot-bucket-01.s3.us-west-004.backblazeb2.com/'
 
   const leftContent = 
     <>
@@ -48,7 +50,13 @@ const ProductDetailPage = () => {
     >
       <Container>
         <ImageWrapper>
-          <img src={logo} alt='logo' />
+          {productDetailViewModel.getImageSuccess &&
+            <Swiper
+              items={productDetailViewModel.imageData.names.map((item: string) => 
+                baseUrl + item
+              )} 
+            />
+          }          
         </ImageWrapper>
         <ContentWrapper>
           <SellerInfoWrapper>

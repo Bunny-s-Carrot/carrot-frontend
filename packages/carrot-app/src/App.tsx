@@ -11,6 +11,7 @@ import LoginPage from "./pages/logIn";
 import SignupPage from "./pages/signup";
 import FindLocationPage from "./pages/findLocation";
 import PersistLogin from "./components/auth/persistLogin";
+import RequireAuth from "./components/auth/requireAuth";
 import ProductDetailPage from "./pages/home/[product_id]";
 import SellProductPage from "./pages/home/sellProduct";
 import TopicBarDetailPage from './pages/neighborhood/topicbar';
@@ -20,7 +21,6 @@ import SetLocationPage from "./pages/setLocation";
 import SetWantedLocation from "./pages/home/sellProduct/setWantedLocation";
 
 
-// import RequireAuth from "./components/auth/requireAuth";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -29,11 +29,12 @@ const App = () => {
       <Routes>
    
         <Route element={<PersistLogin />}>
-        {/* <Route element={<RequireAuth />}> */}
+        <Route element={<RequireAuth />}>
           <Route path="/" element={<LaunchPage />} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/product/:product_id" element={<ProductDetailPage />} />
           <Route path="/sell-product" element={<SellProductPage />} />
+          <Route path="/sell-product/setwantedlocation" element={<SetWantedLocation />} />
           <Route path="/neighborhood" element={<NeighborhoodPage />} />
           <Route path="/topic" element={<TopicBarDetailPage />} />
           <Route path="/post/:post_id" element={<PostDetailPage />} />
@@ -42,8 +43,7 @@ const App = () => {
           <Route path="/chat" element={<ChatPage />} />
           <Route path="/mycarrot" element={<MyCarrotPage />} />
           <Route path="/setlocation" element={<SetLocationPage />} />
-          <Route path="/sell-product/setwantedlocation" element={<SetWantedLocation />} />
-        {/* </Route> */}
+        </Route>
         </Route>
 
         <Route path="/auth/login" element={<LoginPage />} />

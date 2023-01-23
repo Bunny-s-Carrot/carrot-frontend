@@ -71,10 +71,20 @@ const createProduct = async ({
   }
 }
 
+const getImageList = async (productId: string) => {
+  try {
+    const { data } = await api.get(`/product/image/${productId}`);
+    return data.payload;
+  } catch (e: any) {
+    throw Error(e);
+  }
+}
+
 const productApi = {
   getProducts,
   getProductDetail,
   createProduct,
+  getImageList,
 }
 
 export default productApi;
