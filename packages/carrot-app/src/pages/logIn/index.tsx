@@ -35,7 +35,6 @@ const LoginPage = () => {
           <LoginButton
             buttonType='WHITE'
             onClick={(e) => {
-              window.SendCookie?.postMessage("dddddddddsdsdsdfasdf");
               loginViewModel.handleLogin(e)
             }}
             disabled={loginViewModel.email.length === 0 || loginViewModel.password.length === 0}

@@ -20,6 +20,7 @@ const useLoginViewModel = () => {
       const locationData = data?.locationData;
       
       setAuth(token);
+      window.SendCookie?.postMessage(data?.token);
       setEmail('');
       setPassword('');
       setActiveLocation(
