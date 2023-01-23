@@ -30,7 +30,7 @@ const App = () => {
    
         <Route element={<PersistLogin />}>
         <Route element={<RequireAuth />}>
-          <Route path="/" element={<LaunchPage />} />
+          
           <Route path="/home" element={<HomePage />} />
           <Route path="/product/:product_id" element={<ProductDetailPage />} />
           <Route path="/sell-product" element={<SellProductPage />} />
@@ -45,7 +45,8 @@ const App = () => {
           <Route path="/setlocation" element={<SetLocationPage />} />
         </Route>
         </Route>
-
+        
+        <Route path="/" element={<LaunchPage />} />
         <Route path="/auth/login" element={<LoginPage />} />
         <Route path="/findlocation" element={<FindLocationPage />} />
         <Route path="/auth/signup" element={<SignupPage />} />
