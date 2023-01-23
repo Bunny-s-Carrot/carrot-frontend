@@ -34,7 +34,9 @@ const LoginPage = () => {
           />
           <LoginButton
             buttonType='WHITE'
-            onClick={(e) => loginViewModel.handleLogin(e)}
+            onClick={(e) => {
+              loginViewModel.handleLogin(e)
+            }}
             disabled={loginViewModel.email.length === 0 || loginViewModel.password.length === 0}
           >
             로그인

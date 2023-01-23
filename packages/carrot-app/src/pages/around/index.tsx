@@ -2,8 +2,14 @@ import FloatingButton from "../../components/floatingButton";
 import NavBar from "../../components/navBar"
 
 const AroundPage = () => {
+  
   return (
-    <div>Around
+    <div>
+      <button onClick={() => {
+        window.OpenMap?.postMessage("open map");
+      }}>
+        test
+      </button>
       <FloatingButton pageType="AROUND" />
       <NavBar pageType='AROUND' />
     </div>
