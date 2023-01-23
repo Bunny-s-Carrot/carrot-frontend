@@ -83,6 +83,9 @@ const ButtonWrapper = styled.div<{ open: boolean, scrollTop?: number }>`
     ${theme.typography.body3};
     font-weight: bold;
     color: white;
+    display: inline-block;
+    height: 2.4rem;
+    overflow: hidden;
   }
 `
 const StyledOption = styled(Option)<{ open: boolean }>`

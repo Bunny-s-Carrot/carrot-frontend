@@ -19,7 +19,7 @@ const Home = () => {
   const navigate = useNavigate();
   const productViewModel = useProductViewModel();
   const productList = productViewModel.products?.payload;
-
+  const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
   const LeftContent = (
     <LocationWrapper>
       <p>{productViewModel.activeLocation}</p>
@@ -45,6 +45,7 @@ const Home = () => {
         <Container>
           {productList && productList.map((item: ProductTypeWithLocation, index: number) => (
             <Product
+               thumbnail={baseUrl + 'product/' + item.product_id.toString() + '/0.jpg'}
               key={index}
               title={item.title}
               price={item.price}
@@ -55,7 +56,6 @@ const Home = () => {
               onClick={() => navigate(`/product/${item.product_id}`, { state: {locationName: item.lowest_sect_name} })}
             />
           ))}
-          <div style={{ height: '1000px' }}></div>
         </Container>
       </HeaderTemplate>
       <FloatingButton pageType='HOME' />

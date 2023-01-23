@@ -19,7 +19,7 @@ const ProductDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const productDetailViewModel = useProductDetailViewModel();
-  const baseUrl = 'https://carrot-bucket-01.s3.us-west-004.backblazeb2.com/'
+  const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
 
   const leftContent = 
     <>
@@ -134,6 +134,7 @@ const ChatButton = styled(Button)`
   width: 8.8rem;
   height: 3.6rem;
   ${theme.typography.body3};
+  font-weight: bold;
   border-radius: 0.4rem;
   align-self: center;
 `
@@ -146,12 +147,6 @@ const Container = styled.div`
 const ImageWrapper = styled.div`
   width: 100%;
   height: 35rem;
-  object-fit: contain;
-
-  img {
-    width: 100%;
-    height: 100%;
-  }
 `
 const ContentWrapper = styled.div`
   padding: 1.6rem 1.6rem 0 1.6rem ;
