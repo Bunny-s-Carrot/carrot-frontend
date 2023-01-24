@@ -8,7 +8,6 @@ const AroundPage = () => {
   }
   
   useEffect(() => {
-    const DoSomething1 = new CustomEvent("mapEvent");
     window.DoSomething2 = new EventTarget;
     window.DoSomething3 = new CustomEvent("mapEvent")
     window.DoSomething4 = new CustomEvent(window.DoSomething2);

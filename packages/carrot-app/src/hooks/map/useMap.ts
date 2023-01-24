@@ -7,7 +7,7 @@ const useMap = () => {
   const map = useRef<any>(null)
 
   const drawMap = useCallback(
-    (lat: number, lng: number, level=3, draggable=true) => {
+    (lat?: number, lng?: number, level=3, draggable=true) => {
       const container = document.getElementById('map');
       const options = { 
       center: new kakao.maps.LatLng(lat, lng),
