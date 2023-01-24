@@ -6,15 +6,15 @@ const useGeolocation = () => {
   const { setUserLatLng } = useCustomContext();
 
   useEffect(() => {
-    window.OpenMap.alert("hihihihihihihihihii");
+    window.OpenMap = new CustomEvent("mapEvent");
     const mapEventCallback = () => {
-      alert("hihihihihihihihihd으하하하하하ㅏ하ihihih")
+      alert("ㅗㅑㅗㅑㅗㅑㅗㅑㅗㅑ")
     }
 
-    window.addEventListener("OpenMap", mapEventCallback);
+    window.addEventListener("mapEvent", mapEventCallback);
 
     return () => {
-      window.removeEventListener("OpenMap", mapEventCallback);
+      window.removeEventListener("mapEvent", mapEventCallback);
     }
   })
 
