@@ -16,7 +16,7 @@ const useMap = () => {
       };
       
       map.current = new kakao.maps.Map(container, options);
-  }, []);
+  }, [kakao.maps.LatLng, kakao.maps.Map]);
 
   return {
     map,

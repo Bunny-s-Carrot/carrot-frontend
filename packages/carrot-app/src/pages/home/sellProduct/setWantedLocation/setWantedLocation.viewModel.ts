@@ -18,7 +18,7 @@ const useSetWantedLocationViewModel = () => {
   const data = location.state?.data;
   useEffect(() => {
     geolocation(drawMap)
-  }, [])
+  }, [drawMap, geolocation])
 
   const getCenter = async () => {
     const latlng = map.current.getCenter();

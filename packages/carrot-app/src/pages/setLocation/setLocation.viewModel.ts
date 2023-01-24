@@ -13,7 +13,6 @@ import theme from "@carrot/core/style/theme";
 import { setActiveLocation } from "../../infra/location/activeLocation";
 
 
-
 const useSetLocationViewModel = () => {
 
   const navigate = useNavigate();

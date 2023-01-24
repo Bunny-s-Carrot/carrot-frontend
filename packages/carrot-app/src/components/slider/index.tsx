@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
 import styled from "styled-components"
 import { useCustomContext } from "../../contexts/etc/customProvider"
 import theme from "@carrot/core/style/theme";

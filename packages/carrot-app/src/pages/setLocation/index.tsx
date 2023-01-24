@@ -1,11 +1,8 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, {css} from "styled-components"
 
-import useMap from "../../hooks/map/useMap";
 import useSetLocationViewModel from "./setLocation.viewModel";
 import { useCustomContext } from "../../contexts/etc/customProvider";
-import { convertAreaToLevel } from "../../infra/location/convertArea";
 
 import HeaderTemplate from "../../templates/headerTemplate";
 import Slider from "../../components/slider";

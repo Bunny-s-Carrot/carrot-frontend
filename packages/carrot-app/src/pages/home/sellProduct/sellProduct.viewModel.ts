@@ -28,7 +28,7 @@ const useSellProductViewModel = () => {
 
   const seller_id = useMemo(() => getId(), [getId]);
   const seller_location = useMemo(() => getLocation(), [getLocation]);
-  const activeLocation = useMemo(() => getActiveLocation(), [getActiveLocation])
+  const activeLocation = useMemo(() => getActiveLocation(), [])
 
   const createPost = useMutation(productApi.createProduct);
 

@@ -1,4 +1,3 @@
-import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import Input from '@carrot/core/atoms/input/searchInput';
 import Button from '@carrot/core/atoms/button';
