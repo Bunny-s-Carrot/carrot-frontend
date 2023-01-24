@@ -8,7 +8,7 @@ const useGeolocation = () => {
   useEffect(() => {
     window.OpenMap = new CustomEvent("mapEvent");
     const mapEventCallback = () => {
-      console.log("HIHIHIHIHIHㅈ발");
+      alert("hihihihihihihihihihihih")
     }
 
     window.addEventListener("mapEvent", mapEventCallback);

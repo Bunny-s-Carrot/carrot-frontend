@@ -17,7 +17,7 @@ const SignupPage = () => {
       onClickLeft={() => navigate(-1)}  
     >
       <Container>
-        <InputWrapper>
+        <InputForm onSubmit={signupViewModel.handleClickSignup}>
           <TextInput 
             placeholder='이메일 주소를 입력해주세요'
             required
@@ -56,7 +56,7 @@ const SignupPage = () => {
           >
             회원가입
           </SubmitButton>
-        </InputWrapper>
+        </InputForm>
       </Container>
     </HeaderTemplate>      
   )
@@ -67,7 +67,7 @@ export default SignupPage;
 const Container = styled.div`
   padding: 1.6rem;
 `
-const InputWrapper = styled.div`
+const InputForm = styled.form`
   width: 100%;
   display: flex;
   flex-direction: column;
