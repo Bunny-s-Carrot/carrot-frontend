@@ -44,7 +44,6 @@ const useGeolocation = () => {
           } else if (error.code === 2) {
             console.log(error);
             console.log("bububububububu");
-            mapEventCallback
           }
         },
         {
