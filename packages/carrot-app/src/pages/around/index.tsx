@@ -3,13 +3,14 @@ import FloatingButton from "../../components/floatingButton";
 import NavBar from "../../components/navBar"
 
 const AroundPage = () => {
-  const mapEventCallback = () => {
-    alert("ㅗㅑㅗㅑㅗㅑㅗㅑㅗㅑ")
+  const mapEventCallback = (value: any) => {
+    alert(value);
+    console.log("From React ::::::", value, typeof value);
   }
   
   useEffect(() => {
-    window.DoSomething2 = new EventTarget;
-    window.DoSomething3 = new CustomEvent("mapEvent")
+    window.DoSomething2 = new EventTarget();
+    window.getCoords = new CustomEvent("mapEvent")
     window.DoSomething4 = new CustomEvent(window.DoSomething2);
 
     window.addEventListener(window.DoSomething2, mapEventCallback)
@@ -19,7 +20,7 @@ const AroundPage = () => {
       window.removeEventListener(window.DoSomething2, mapEventCallback)
       window.removeEventListener("mapEvent", mapEventCallback);
     }
-  }, [mapEventCallback])
+  }, [])
 
   
   return (
