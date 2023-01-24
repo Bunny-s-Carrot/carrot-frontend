@@ -5,21 +5,6 @@ const useGeolocation = () => {
 
   const { setUserLatLng } = useCustomContext();
   
-  const mapEventCallback = (value: any) => {
-    alert(value.latitude);
-  }
-
-  useEffect(() => {
-
-    window.getCoords = new CustomEvent("mapEvent")
-
-    window.addEventListener("mapEvent", mapEventCallback);
-
-    return () => {
-      window.removeEventListener("mapEvent", mapEventCallback);
-    }
-  }, [])
-
   const geolocation = (callBack: Function) => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -38,13 +23,7 @@ const useGeolocation = () => {
           callBack(lat, lng)
         },
         (error) => {
-          if (error.code === 1) {
-            console.log(error);
-            console.log("HIHIHIHIHI");
-          } else if (error.code === 2) {
-            console.log(error);
-            console.log("bububububububu");
-          }
+          console.log(error);
         },
         {
           enableHighAccuracy: true,
