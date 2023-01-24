@@ -5,7 +5,7 @@ import usePostDetailViewModel from './[post_id].viewModel';
 import HeaderTemplate from '../../../templates/headerTemplate';
 import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
 import homeIcon from '@carrot/core/assets/icon/home-outline.svg';
-import BellOnIcon from '@carrot/core/assets/icon/Notifications.svg';
+// import BellOnIcon from '@carrot/core/assets/icon/Notifications.svg';
 import BellOffIcon from '@carrot/core/assets/icon/Notifications off.svg';
 import ShareIcon from '@carrot/core/assets/icon/Share.svg';
 import MoreIcon from '@carrot/core/assets/icon/More vert.svg';
@@ -21,8 +21,8 @@ const PostDetailPage = () => {
 
     const leftContent = 
     <>
-      <Icon_head src={backIcon} alt='backIcon' />
-      <Icon_head src={homeIcon} alt='homeIcon' />
+      <IconHead src={backIcon} alt='backIcon' />
+      <IconHead src={homeIcon} alt='homeIcon' />
     </>
 
     let rightContent = 
@@ -154,7 +154,7 @@ font-size: 18px;
 border-bottom: 8.5px solid ${theme.colors.grey20}
 `
 
-const Icon_head = styled.img`
+const IconHead = styled.img`
 max-height: 2.6rem;
 `
 
