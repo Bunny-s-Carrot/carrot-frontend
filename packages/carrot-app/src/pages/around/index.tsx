@@ -3,32 +3,19 @@ import FloatingButton from "../../components/floatingButton";
 import NavBar from "../../components/navBar"
 
 const AroundPage = () => {
-  const mapEventCallback = (value: any) => {
-    alert(value);
-    console.log("From React ::::::", value, typeof value);
-  }
-  
+
   useEffect(() => {
-    window.DoSomething2 = new EventTarget();
-    window.getCoords = new CustomEvent("mapEvent")
-    window.DoSomething4 = new CustomEvent(window.DoSomething2);
-
-    window.addEventListener(window.DoSomething2, mapEventCallback)
-    window.addEventListener("mapEvent", mapEventCallback);
-
-    return () => {
-      window.removeEventListener(window.DoSomething2, mapEventCallback)
-      window.removeEventListener("mapEvent", mapEventCallback);
-    }
+    window.addEventListener("flutterInAppWebViewPlatformReady", () => {
+      window.flutter_inappwebview._callHandler('OpenMap', "문열어")
+        .then((res: any) => alert(res))
+    })
   }, [])
-
   
   return (
     <div>
       <button onClick={() => {
-        window.OpenMap?.postMessage("open map");
+        window.flutter_inappwebview?._callHandler('OpenMap', '맵 열어!');
       }}>
-        <button onClick={mapEventCallback}></button>
         test
       </button>
       <FloatingButton pageType="AROUND" />
