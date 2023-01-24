@@ -19,7 +19,6 @@ import { category, categoryList, reverseCategoryList } from "../../../infra/cate
 import { getFrom } from "../../../infra/from";
 
 
-
 const SellProductPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -135,7 +134,6 @@ const SellProductPage = () => {
             type='CUSTOM' 
             onClick={() => {
               window.OpenMap?.postMessage("Open Map");
-              
               geolocation(() => navigate('setwantedlocation',
               { state: { from: location, data: {
                 images: sellProductViewModel.images,
