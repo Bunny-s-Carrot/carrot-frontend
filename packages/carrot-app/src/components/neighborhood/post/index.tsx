@@ -12,16 +12,16 @@ interface PostProps {
 
 const Post = (props: PostProps) => {
   let Category=""
-  if (props.category == "동네질문") {
+  if (props.category === "동네질문") {
     Category = "질문"
-  } else if (props.category == "반짝모임") {
+  } else if (props.category === "반짝모임") {
     Category = "반짝모임"
-  } else if (props.category == "분실/실종") {
+  } else if (props.category === "분실/실종") {
     Category = "분실/실종"
   } 
 
   let Loca;
-  if (Category == "") {
+  if (Category === "") {
     Loca = (<Loc>{props.location}</Loc>)
   } else {
     Loca = (<Loc> · {props.location}</Loc>)
@@ -76,5 +76,5 @@ color: ${theme.colors.grey50};
 const Time = styled.span`
 color: ${theme.colors.grey50}
 `
-const ImageWrapper = styled.div`
-`
+// const ImageWrapper = styled.div`
+// `

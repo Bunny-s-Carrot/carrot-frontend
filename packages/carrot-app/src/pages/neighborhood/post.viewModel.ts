@@ -10,11 +10,11 @@ const usePostViewModel = () => {
   useEffect(() => {
     setFrom(location.pathname)
 
-  }, [])
+  }, [location.pathname])
 
     const { data } = useQuery(['post'], postApi.getPosts)
 
-    const activeLocation = useMemo(() => getActiveLocation(), [getActiveLocation]);
+    const activeLocation = useMemo(() => getActiveLocation(), []);
 
     return {
       data,
