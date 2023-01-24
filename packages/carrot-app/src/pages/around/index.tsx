@@ -5,6 +5,7 @@ import NavBar from "../../components/navBar"
 const AroundPage = () => {
   const mapEventCallback = (value: any) => {
     alert(value);
+    console.log("From React ::::::", value, typeof value);
   }
   
   useEffect(() => {
