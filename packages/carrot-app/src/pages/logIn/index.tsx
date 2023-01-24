@@ -19,7 +19,9 @@ const LoginPage = () => {
     >
       <Container>
         <TextHeader>로그인 정보를 입력해주세요.</TextHeader>
-        <InputForm>
+        <InputForm onSubmit={(e) => {
+              loginViewModel.handleLogin(e)
+            }}>
           <TextInput
             placeholder="이메일 주소를 입력해주세요"
             inputType="email"
@@ -61,7 +63,7 @@ const TextHeader = styled.p`
   display: block;
   ${theme.typography.heading3};
 `
-const InputForm = styled.div`
+const InputForm = styled.form`
   margin: 2rem auto;
   display: flex;
   flex-direction: column;
