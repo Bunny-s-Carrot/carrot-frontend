@@ -1,8 +1,22 @@
+import { useEffect } from "react";
 import { useCustomContext } from "../../contexts/etc/customProvider";
 
 const useGeolocation = () => {
 
   const { setUserLatLng } = useCustomContext();
+
+  useEffect(() => {
+    window.OpenMap = new CustomEvent("mapEvent");
+    const mapEventCallback = () => {
+      console.log("HIHIHIHIHIHㅈ발");
+    }
+
+    window.addEventListener("mapEvent", mapEventCallback);
+
+    return () => {
+      window.removeEventListener("mapEvent", mapEventCallback);
+    }
+  })
 
   const geolocation = (callBack: Function) => {
     if (navigator.geolocation) {
