@@ -4,20 +4,18 @@ import { useCustomContext } from "../../contexts/etc/customProvider";
 const useGeolocation = () => {
 
   const { setUserLatLng } = useCustomContext();
+  
+  const mapEventCallback = (value: any) => {
+    alert(value.latitude);
+  }
 
   useEffect(() => {
-    const DoSomething1 = new CustomEvent("mapEvent");
-    window.DoSomething2 = new EventTarget;
-    window.DoSomething3 = new CustomEvent("mapEvent")
-    window.DoSomething4 = new CustomEvent(window.DoSomething2);
-    const mapEventCallback = () => {
-      alert("ㅗㅑㅗㅑㅗㅑㅗㅑㅗㅑ")
-    }
-    window.addEventListener(window.DoSomething2, mapEventCallback)
+
+    window.getCoords = new CustomEvent("mapEvent")
+
     window.addEventListener("mapEvent", mapEventCallback);
 
     return () => {
-      window.removeEventListener(window.DoSomething2, mapEventCallback)
       window.removeEventListener("mapEvent", mapEventCallback);
     }
   }, [])
@@ -40,7 +38,13 @@ const useGeolocation = () => {
           callBack(lat, lng)
         },
         (error) => {
-          console.log(error);
+          if (error.code === 1) {
+            console.log(error);
+            console.log("HIHIHIHIHI");
+          } else if (error.code === 2) {
+            console.log(error);
+            console.log("bububububububu");
+          }
         },
         {
           enableHighAccuracy: true,
