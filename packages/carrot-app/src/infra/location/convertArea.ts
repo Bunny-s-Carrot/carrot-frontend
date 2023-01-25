@@ -8,9 +8,9 @@ export const convertAreaToDistance = (area: number) => {
 
 export const convertAreaToLevel = (area: number) => {
 
-  if (area === 0) return 6;
-  else if (area === 1) return 7;
-  else if (area === 2) return 8;
-  else if (area === 3) return 9;
+  if (area === 0) return 15;
+  else if (area === 1) return 13;
+  else if (area === 2) return 12;
+  else if (area === 3) return 11;
   else return 6;
 }

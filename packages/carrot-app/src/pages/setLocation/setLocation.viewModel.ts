@@ -24,7 +24,7 @@ const useSetLocationViewModel = () => {
 
   const user_id = useMemo(() => getId(), [getId]);
 
-  const { kakao } = window;
+  const { naver } = window;
   const { data, isSuccess } = useQuery([`user/${user_id}/location`],
     () => userApi.getLocationById(user_id))
 
@@ -121,13 +121,13 @@ const useSetLocationViewModel = () => {
   }, [locationData?.active_location, locationData?.location_info?.x_coord, locationData?.location_info?.y_coord, locationData?.location_info2?.x_coord, locationData?.location_info2?.y_coord])
 
   const transCoords = useCallback(() => {
-    const coords: any = isSuccess && selectCoords();
+    const coords: any = selectCoords();
     return convertWgs84ToUTMK(coords[0], coords[1])
-  }, [isSuccess, selectCoords])
+  }, [selectCoords])
 
-  const createPolygon = useCallback(async () => {
+  const getArray = useCallback(async () => {
 
-    const [transCoordX, transCoordY] = isSuccess && transCoords();
+    const [transCoordX, transCoordY] =  transCoords();
 
     const minX = String(transCoordX - convertAreaToDistance(area));
     const maxX = String(transCoordX + convertAreaToDistance(area));
@@ -149,46 +149,37 @@ const useSetLocationViewModel = () => {
           coords[0] = coords[0].length > 1 ? coords[0][0] : coords[0];
           coords[1] = coords[1].length > 1 ? coords[1][1] : coords[1];
           const [lng, lat] = convertUTMKToWgs84(parseFloat(coords[0].toFixed(6)), parseFloat(coords[1].toFixed(6)));
-          return new kakao.maps.LatLng(lat, lng);
+          return [lng, lat];
         })
       ))
     )));
-    
     return array;
     } catch(e: any) {
       throw Error(e);
     }  
-  }, [area, isSuccess, kakao.maps.LatLng, transCoords])
+  }, [area, transCoords])
 
   useEffect(() => {
-    const coords: any = isSuccess && selectCoords();
-    const getArray = async (callBack: Function) => {
-      const array = await createPolygon();
-      callBack(array);
-      };
-
-    drawMap(coords[1], coords[0], convertAreaToLevel(area), false);
-    const myMap = map.current;
-    
-    isSuccess && getArray((array: any) => {
-      for (let i = 0; i < array.length; i++) {
-
-        new kakao.maps.Polygon({
-          map: myMap,
-          path: array[i][0],
-          strokeOpacity: 0,
-          fillColor: theme.colors.carrot,
-          fillOpacity: 0.4
-        })
-      }
-    }) 
-   
-    }, [isSuccess, createPolygon, area, drawMap, kakao.maps.Polygon, map, selectCoords])
+    if (area == 0 || area == 1 || area == 2 || area == 3) {
+      const coords: any = isSuccess && selectCoords();
+      drawMap(coords[1], coords[0], convertAreaToLevel(area), false);
+      const myMap = map.current;
+      isSuccess && getArray().then(array => {
+        for (let i = 0; i < array.length; i++) {
+          new naver.maps.Polygon({
+            map: myMap,
+            paths: array[i],
+            fillColor: theme.colors.carrot,
+            fillOpacity: 0.4,
+            strokeOpacity: 0,
+        })};
+      })      
+    }
+  }, [drawMap, area, getArray, isSuccess, map, naver.maps.Polygon, selectCoords])
 
   return {
     locationData,
     isSuccess,
-    createPolygon,
     handleClickBoxLeft,
     handleClickBoxRight,
     handleClickAddLocation,
