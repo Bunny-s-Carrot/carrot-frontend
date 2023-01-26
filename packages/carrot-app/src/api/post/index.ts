@@ -24,13 +24,14 @@ const getPostDetail = async (post_id: string) => {
 const createPost = async ({
   classif_id,
   content,
-  writer_id }: CreatePostType) => {
+  writer_id,
+}: CreatePostType) => {
     try {
       const result = await api.post('/post',
       {
         classif_id,
         content,
-        writer_id
+        writer_id,
       })
       
       return result;
@@ -38,6 +39,7 @@ const createPost = async ({
       throw Error(e);
     }
   }
+
 
 const postApi = {
     getPosts,
