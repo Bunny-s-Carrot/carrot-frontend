@@ -25,7 +25,6 @@ const useWritePostViewModel = () => {
     })
   }
 
-
     return {
         setContent,
         handleClickSubmit,

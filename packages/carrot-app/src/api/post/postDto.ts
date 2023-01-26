@@ -17,7 +17,7 @@ export interface PostType  {
 export interface CreatePostType {
     classif_id: number,
     writer_id: number,
-    content: string
+    content: string,
 }
 
 

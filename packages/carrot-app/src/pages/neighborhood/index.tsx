@@ -1,20 +1,21 @@
-import { useNavigate } from "react-router-dom";
+import { useState } from "react";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import NavBar from "../../components/navBar";
-// import PopularPost from "../../components/neighborhood/popularpost";
 
-import styled from 'styled-components';
-import theme from '@carrot/core/style/theme';
-import HeaderTemplate from '../../templates/headerTemplate';
+import styled from "styled-components";
+import theme from "@carrot/core/style/theme";
+import HeaderTemplate from "../../templates/headerTemplate";
 import TopicBar from "../../components/neighborhood/topicbar";
-import Post from '../../components/neighborhood/post'
-
-import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
-import searchIcon from '@carrot/core/assets/icon/search.svg';
-import profileIcon from '@carrot/core/assets/icon/profile.svg';
-import notiIcon from '@carrot/core/assets/icon/notification.svg';
-
-import usePostViewModel from './post.viewModel';
+import Post from "../../components/neighborhood/post";
 import FloatingButton from "../../components/floatingButton";
+import TopicModal from "../../components/neighborhood/modal";
+
+import backIcon from "@carrot/core/assets/icon/back-arrow.svg";
+import searchIcon from "@carrot/core/assets/icon/search.svg";
+import profileIcon from "@carrot/core/assets/icon/profile.svg";
+import notiIcon from "@carrot/core/assets/icon/notification.svg";
+
+import usePostViewModel from "./post.viewModel";
 
 const Neighborhood = () => {
   const navigate = useNavigate();
@@ -24,41 +25,49 @@ const Neighborhood = () => {
   let LeftContent = (
     <Locationdiv>
       <p>{postViewModel.activeLocation}</p>
-      <img className='down' src={backIcon} alt='backIcon' />
+      <img className="down" src={backIcon} alt="backIcon" />
     </Locationdiv>
-  )
+  );
 
   const RightContent = (
     <>
-      <img src={searchIcon} alt='searchIcon' />
-      <img src={profileIcon} alt='profileIcon' />
-      <img src={notiIcon} alt='notiIcon' />
+      <img src={searchIcon} alt="searchIcon" />
+      <img src={profileIcon} alt="profileIcon" />
+      <img src={notiIcon} alt="notiIcon" />
     </>
-  )
+  );
+
+  const [openModal, setOpenModal] = useState(false);
+  const controlModal = (props: boolean) => {
+    setOpenModal(props);
+  };
 
   return (
     <>
-      <HeaderTemplate 
+      <HeaderTemplate
         leftContent={LeftContent}
-        onClickLeft={() => {navigate('/setLocation')}}
+        onClickLeft={() => {
+          navigate("/setLocation");
+        }}
         rightContent={RightContent}
       >
-        <TopicBar />
+        <TopicBar controlModal={controlModal} />
         <PostContainer>
           {results?.map((item, index) => (
-            <Post 
-            key={index} 
-            title={item.title} 
-            category={item.category_name}
-            location={item.lowest_sect_name}
-            created_at={item.created_at} 
-            onClick = {() => navigate(`/post/${item.post_id}`)}
+            <Post
+              key={index}
+              title={item.title}
+              category={item.category_name}
+              location={item.lowest_sect_name}
+              created_at={item.created_at}
+              onClick={() => navigate(`/post/${item.post_id}`)}
             />
           ))}
         </PostContainer>
       </HeaderTemplate>
-      <FloatingButton pageType='NEIGHBORHOOD'/>
+      <FloatingButton pageType="NEIGHBORHOOD" />
       <NavBar pageType="NEIGHBORHOOD" />
+      <TopicModal openModal={openModal} controlModal={controlModal} />
     </>
   );
 };
@@ -66,17 +75,17 @@ const Neighborhood = () => {
 export default Neighborhood;
 
 const Locationdiv = styled.div`
-padding: 0.3rem;
-font-weight: 700;
-display: flex;
-align-items: center;
+  padding: 0.3rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
 
-&:hover {
-  background: ${theme.colors.grey30};
-  cursor: pointer;
-}
-`
-
+  &:hover {
+    background: ${theme.colors.grey30};
+    cursor: pointer;
+  }
+`;
 
 const PostContainer = styled.div`
-`
+  margin-bottom: 6.4rem;
+`;
