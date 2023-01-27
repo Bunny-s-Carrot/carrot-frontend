@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { convertUTMKToWgs84, convertWgs84ToUTMK } from "@carrot/util/coords";
 import { convertAreaToDistance, convertAreaToLevel } from '../../infra/location/convertArea'
 
@@ -14,13 +14,13 @@ import { setActiveLocation } from "../../infra/location/activeLocation";
 
 
 const useSetLocationViewModel = () => {
-
+  const [activeLocationAsNumber, setActiveLocationAsNumber] = useState(1);
   const navigate = useNavigate();
   const { getId } = useJwtDecode();
   const queryClient = useQueryClient();
 
   const { map, drawMap } = useMap();
-  const { area } = useCustomContext();
+  const { area, setArea } = useCustomContext();
 
   const user_id = useMemo(() => getId(), [getId]);
 
@@ -32,6 +32,11 @@ const useSetLocationViewModel = () => {
 
   const locationInfo = locationData?.location_info;
   const locationInfo2 = locationData?.location_info2;
+ 
+  const { data: areaData, isSuccess: getAreaSuccess } = useQuery([`user/${user_id}/area`],
+    () => userApi.getArea({ user_id, key: activeLocationAsNumber }));
+
+  const updateArea = useMutation(userApi.updateArea);
 
   const updateActiveLocation = useMutation(userApi.updateActiveLocation,
     {
@@ -57,6 +62,7 @@ const useSetLocationViewModel = () => {
   const handleClickBoxLeft = () => {
     if (locationData?.active_location === 1) {
       setActiveLocation(locationInfo.lowest_sect_name);
+      setActiveLocationAsNumber(1);
       updateActiveLocation.mutate({
         user_id,
         bit: 0
@@ -66,6 +72,7 @@ const useSetLocationViewModel = () => {
 
   const handleClickBoxRight = () => {
     setActiveLocation(locationInfo2.lowest_sect_name);
+    setActiveLocationAsNumber(2);
     updateActiveLocation.mutate({
       user_id,
       bit: 1
@@ -73,9 +80,13 @@ const useSetLocationViewModel = () => {
   }
 
   const handleClickAddLocation = () => {
+    setActiveLocationAsNumber(2);
     if (!locationData?.location_info2) {
+      setArea(0);
       navigate('/findlocation', { state: { from: 'setlocation' } })
     }
+
+
   }
 
   const handleClickDeleteLocation = (isLeft: boolean) => {
@@ -98,6 +109,24 @@ const useSetLocationViewModel = () => {
           user_id,
           key: 2
         })
+
+        getAreaSuccess && updateArea.mutate({
+          user_id,
+          key: 1,
+          area: areaData!.area,
+        },
+        {
+          onSuccess: () => {
+            updateArea.mutate({
+              user_id,
+              key: 2,
+              area: 0,
+            })
+          }
+        })
+
+        setActiveLocationAsNumber(1);
+
       }
     } else {
       updateActiveLocation.mutate({
@@ -109,6 +138,14 @@ const useSetLocationViewModel = () => {
         user_id,
         key: 2
       })
+
+      updateArea.mutate({
+        user_id,
+        key: 2,
+        area: 0,
+      })
+
+      setActiveLocationAsNumber(1);
 
     }
   }
@@ -160,7 +197,7 @@ const useSetLocationViewModel = () => {
   }, [area, transCoords])
 
   useEffect(() => {
-    if (area == 0 || area == 1 || area == 2 || area == 3) {
+    if (area === 0 || area === 1 || area === 2 || area === 3) {
       const coords: any = isSuccess && selectCoords();
       drawMap(coords[1], coords[0], convertAreaToLevel(area), false);
       const myMap = map.current;
@@ -173,13 +210,22 @@ const useSetLocationViewModel = () => {
             fillOpacity: 0.4,
             strokeOpacity: 0,
         })};
-      })      
+      })
+    getAreaSuccess && area !== areaData.area && updateArea.mutate(
+      {
+        user_id,
+        key: activeLocationAsNumber,
+        area,
+      }
+    )  
     }
-  }, [drawMap, area, getArray, isSuccess, map, naver.maps.Polygon, selectCoords])
+  }, [drawMap, area, getArray, isSuccess, map, naver.maps.Polygon, selectCoords, activeLocationAsNumber, areaData?.area, getAreaSuccess, updateArea, user_id])
 
   return {
     locationData,
     isSuccess,
+    areaData,
+    getAreaSuccess,
     handleClickBoxLeft,
     handleClickBoxRight,
     handleClickAddLocation,
