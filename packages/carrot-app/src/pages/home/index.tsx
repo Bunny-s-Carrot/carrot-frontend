@@ -45,7 +45,7 @@ const Home = () => {
         <Container>
           {productList && productList.map((item: ProductTypeWithLocation, index: number) => (
             <Product
-               thumbnail={baseUrl + 'product/' + item.product_id.toString() + '/0.jpg'}
+              thumbnail={baseUrl + 'product/' + item.product_id.toString() + '/0.jpg'}
               key={index}
               title={item.title}
               price={item.price}
@@ -69,6 +69,8 @@ export default Home;
 const Container = styled.div`
   position: relative;
   padding: 0 1.6rem;
+  overflow-y: scroll;
+  ${theme.option.hiddenScroll};
 `
 
 const LocationWrapper = styled.div`
