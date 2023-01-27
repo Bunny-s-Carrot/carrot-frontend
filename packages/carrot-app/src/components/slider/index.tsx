@@ -25,7 +25,7 @@ const Slider = (props: SliderProps) => {
   const { setArea } = useCustomContext();
 
   const handleSetPosition = useCallback((percentage: number) => {
-    if (percentage > 0 && percentage < 16) {
+    if (percentage >= 0 && percentage < 16) {
       thumbRef.current!.style.left = getLeft(0);
       setArea(0);
     } else if (percentage >= 16 && percentage < 50) {

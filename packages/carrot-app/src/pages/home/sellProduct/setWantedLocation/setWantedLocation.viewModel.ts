@@ -4,8 +4,6 @@ import { useCustomContext } from "../../../../contexts/etc/customProvider";
 import useGeolocation from "../../../../hooks/location/useGeolocation";
 import useMap from "../../../../hooks/map/useMap"
 
-
-
 const useSetWantedLocationViewModel = () => {
   const { naver } = window;
   const geolocation = useGeolocation();
