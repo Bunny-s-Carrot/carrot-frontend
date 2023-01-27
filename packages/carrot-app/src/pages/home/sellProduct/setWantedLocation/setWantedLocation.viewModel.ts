@@ -7,7 +7,7 @@ import useMap from "../../../../hooks/map/useMap"
 
 
 const useSetWantedLocationViewModel = () => {
-  const { kakao } = window;
+  const { naver } = window;
   const geolocation = useGeolocation();
   const { setUserLatLng } = useCustomContext();
   const{ map, drawMap } = useMap();
@@ -16,9 +16,12 @@ const useSetWantedLocationViewModel = () => {
 
   const from = location.state?.from?.pathname
   const data = location.state?.data;
+
+
   useEffect(() => {
     geolocation(drawMap)
-  }, [drawMap, geolocation])
+    // eslint-disable-next-line
+  }, [])
 
   const getCenter = async () => {
     const latlng = map.current.getCenter();
@@ -37,7 +40,7 @@ const useSetWantedLocationViewModel = () => {
     navigate(from, { state: { data } })
   }
   const panTo = (lat: number, lng: number) => {
-    const moveLatLng = new kakao.maps.LatLng(lat, lng);
+    const moveLatLng = new naver.maps.LatLng(lat, lng);
 
     map.current.panTo(moveLatLng)
   }

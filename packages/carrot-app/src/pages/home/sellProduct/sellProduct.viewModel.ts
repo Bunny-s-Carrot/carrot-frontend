@@ -64,7 +64,7 @@ const useSellProductViewModel = () => {
       wanted_location: JSON.stringify(userLatLng),
       price_suggest: priceSuggest,
       share,
-      classif_id: 1001
+      classif_id: Number(classifId),
     },
     {
       onSuccess: () => navigate('/home')
