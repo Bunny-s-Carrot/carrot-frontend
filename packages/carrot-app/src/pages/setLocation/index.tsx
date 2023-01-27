@@ -96,7 +96,7 @@ const SetLocationPage = () => {
               : locationInfo2?.lowest_sect_name}과 근처 동네
           </NeighborhoodLocation>
         <Slider
-          initial={setLocationViewModel.areaData?.area ?? 0}
+          initial={setLocationViewModel.areaData!.area ?? 0}
           min={0}
           max={3}
           onChange={value => console.log(value)}
@@ -122,12 +122,12 @@ export default SetLocationPage
 
 const Map = styled.div<{ bottomHeight: number | undefined }>`
   width: 100%;
-  height: ${props => `calc(100% - ${props.bottomHeight}px + 0.2rem)`};
+  min-height: calc(100% - 23.6rem);
 `
 
 const LocationSetWrapper = styled.div`
   width: 100%;
-  height: fit-content;
+  min-height: 24rem;
   position: absolute;
   bottom: 0;
   z-index: 5;

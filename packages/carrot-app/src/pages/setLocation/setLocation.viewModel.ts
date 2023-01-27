@@ -219,7 +219,7 @@ const useSetLocationViewModel = () => {
       }
     )  
     }
-  }, [area, activeLocationAsNumber, isSuccess, getAreaSuccess, selectCoords, user_id])
+  }, [area, activeLocationAsNumber, isSuccess, getAreaSuccess, selectCoords])
 
   return {
     locationData,
