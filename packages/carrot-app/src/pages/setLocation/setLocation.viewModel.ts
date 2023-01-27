@@ -219,7 +219,7 @@ const useSetLocationViewModel = () => {
       }
     )  
     }
-  }, [drawMap, area, getArray, isSuccess, map, naver.maps.Polygon, selectCoords, activeLocationAsNumber, areaData?.area, getAreaSuccess, updateArea, user_id])
+  }, [area, activeLocationAsNumber, isSuccess, getAreaSuccess, selectCoords, user_id])
 
   return {
     locationData,
