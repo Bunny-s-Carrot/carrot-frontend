@@ -16,6 +16,10 @@ const usePostViewModel = () => {
 
     const activeLocation = useMemo(() => getActiveLocation(), []);
 
+    const viewsUpdate = () => {
+      
+    }
+
     return {
       data,
       activeLocation

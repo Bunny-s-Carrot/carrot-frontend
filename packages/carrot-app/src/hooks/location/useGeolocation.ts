@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useCustomContext } from "../../contexts/etc/customProvider";
 
 const useGeolocation = () => {
