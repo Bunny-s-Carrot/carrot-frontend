@@ -1,3 +1,4 @@
+import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, {css} from "styled-components"
 
@@ -12,10 +13,12 @@ import closeIconWhite from '@carrot/core/assets/icon/close-white.svg';
 import addIcon from '@carrot/core/assets/icon/add.svg';
 import { getFrom } from '../../infra/from';
 
+
 const SetLocationPage = () => {
   const { area } = useCustomContext();
   const navigate = useNavigate();
-  
+  const bottomDivRef = useRef<HTMLDivElement>(null);
+  const bottomHeight = bottomDivRef.current?.offsetHeight;
   const setLocationViewModel = useSetLocationViewModel();
   const locationInfo = setLocationViewModel.locationData?.location_info;
   const locationInfo2 = setLocationViewModel.locationData?.location_info2;
@@ -33,9 +36,9 @@ const SetLocationPage = () => {
         const from = getFrom() ?? '/around';
         navigate(from)}}
     >
-      <Map id="map"></Map>
+      <Map id="map" bottomHeight={bottomHeight}></Map>
 
-      {setLocationViewModel.isSuccess && <LocationSetWrapper>
+      {setLocationViewModel.isSuccess && <LocationSetWrapper ref={bottomDivRef}>
         <Title>내 동네</Title>
         <MyLocations>
           <LocationBoxLeft 
@@ -68,8 +71,7 @@ const SetLocationPage = () => {
               e.stopPropagation()
               setLocationViewModel.handleClickAddLocation()}
             }>
-                <img
-                   
+                <img   
                   src={addIcon}
                   alt='addIcon' 
                 />
@@ -93,15 +95,20 @@ const SetLocationPage = () => {
               ? locationInfo.lowest_sect_name
               : locationInfo2?.lowest_sect_name}과 근처 동네
           </NeighborhoodLocation>
-        <Slider />
+        <Slider
+          initial={setLocationViewModel.areaData?.area ?? 0}
+          min={0}
+          max={3}
+          onChange={value => console.log(value)}
+        />
         <InfoWrapper>
           🥕
           <span>
-            {area >= 0 && area < 0.5
+            {area === 0
             ? '가까운 동네'
-            : area >= 0.5 && area < 1.5
+            : area === 1
             ? '조금 가까운 동네'
-            : area >= 1.5 && area < 2.5
+            : area === 2
             ? '조금 먼 동네'
             : '먼 동네'}
           </span> 게시글을 볼 수 있어요.
@@ -113,14 +120,14 @@ const SetLocationPage = () => {
 
 export default SetLocationPage
 
-const Map = styled.div`
+const Map = styled.div<{ bottomHeight: number | undefined }>`
   width: 100%;
-  height: 45rem;
+  height: ${props => `calc(100% - ${props.bottomHeight}px + 0.2rem)`};
 `
 
 const LocationSetWrapper = styled.div`
   width: 100%;
-  height: calc(100% - 42rem);
+  height: fit-content;
   position: absolute;
   bottom: 0;
   z-index: 5;

@@ -44,6 +44,25 @@ const deleteLocation = async ({ user_id, key }: DeleteLocationData) => {
   return response;
 }
 
+const getArea = async ({ user_id, key }: {user_id: number, key: number} ) => {
+  try {
+    const { data } = await api.get<{ payload: { area: number } }>(
+      `/user/${user_id}/area${key}`
+    )
+
+    return data.payload;
+  } catch (e: any) {
+    throw Error(e);
+  }
+}
+
+const updateArea = async ({ user_id, key, area }: { user_id: number, key: number, area: number }) => {
+  const response = await api.patch(`/user/${user_id}/area${key}/${area}`);
+  
+  return response;
+}
+
+
 const updateActiveLocation = async ({ user_id, bit}: ActiveLocationData) => {
   const response = await api.post(`/user/${user_id}/active-location/${bit}`)
 
@@ -54,6 +73,8 @@ const userApi = {
   getLocationById,
   updateLocation,
   deleteLocation,
+  getArea,
+  updateArea,
   updateActiveLocation,
 }
 

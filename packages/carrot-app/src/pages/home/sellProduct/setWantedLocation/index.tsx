@@ -68,7 +68,7 @@ const InstructionWrapper = styled.div`
 `
 const Map = styled.div`
   width: 100%;
-  height: 100%;
+  height: calc(100% - 11.2rem);
   position: relative;
 
   img {
@@ -87,7 +87,7 @@ const ButtonWrapper = styled.div`
   width: 100%;
   padding: 0 1.6rem;
   background: transparent;
-  z-index: 5;
+  z-index: 100;
 `
 const StyledButton = styled(Button)`
   width: 100%;
