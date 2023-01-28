@@ -21,6 +21,17 @@ const getPostDetail = async (post_id: string) => {
   }
 }
 
+const getPostsByCategory = async (classif_id: string) => {
+  try {
+        const { data } = await api.get<{ payload: PostType[] }>(
+        `post/category/${classif_id}`);
+    
+    return data;
+  } catch (e: any) {
+    throw Error(e);
+  }
+}
+
 const createPost = async ({
   classif_id,
   content,
@@ -44,6 +55,7 @@ const createPost = async ({
 const postApi = {
     getPosts,
     getPostDetail,
+    getPostsByCategory,
     createPost
 }
 
