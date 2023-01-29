@@ -52,7 +52,9 @@ const Container = styled.div`
   width: 100%;
   height: 100%;  
 `
-const HeaderWrapper = styled.div``
+const HeaderWrapper = styled.div`
+  position: relative;
+`
 const Title = styled.div`
   height: 6rem;
   width: 100%;
@@ -87,6 +89,13 @@ const MainContent = styled.div`
   ${theme.option.hiddenScroll};
 `
 const RightContent = styled.div`
+  display: flex;
+  gap: 2rem;
+
+  img.size-down {
+    padding: 0.2rem;
+  }
+
 `
 const BottomWrapper = styled.div`
   width: 100%;
