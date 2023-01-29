@@ -23,27 +23,27 @@ const Profile = () => {
 export default Profile;
 
 const Contain = styled.div`
-    height: 130px;
+    height: 13rem;
 `
 
 const Topbar = styled.div`
-    height: 50px;
+    height: 5rem;
     display: flex;
     justify-content: flex-end;
     align-items: center;
 `
 
 const Setting = styled.img`
-width: 30px;
-height: 30px;
-margin: 15px;`
+width: 3rem;
+height: 3rem;
+margin: 1.5rem;`
 
 const Prof = styled.div`
-height: 80px;
+height: 8rem;
 display: flex;
 align-items: center;
 justify-content: space-between;
-padding: 0 15px;
+padding: 0 1.5rem;
 &:hover {
     background: rgb(247,247,247);
 }
@@ -52,16 +52,16 @@ padding: 0 15px;
 const ProfR = styled.span`
 display: flex;
 align-items: center;
-font-size: 20px;
+font-size: 2rem;
 `
 
 const Profimg = styled.img`
-width: 45px;
-height: 45px;
-margin-right: 11px;`
+width: 4.5rem;
+height: 4.5rem;
+margin-right: 1.1rem;`
 
 const Btn = styled.button`
 background: #eeeeee;
-padding: 10px;
-border-radius: 5px;
+padding: 1rem;
+border-radius: 0.5rem;
 `

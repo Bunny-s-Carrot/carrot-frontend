@@ -50,18 +50,18 @@ export default SalesTemplate;
 
 const Container = styled.div`
   width: 100%;
-  height: 100%;  
+  height: 100%;
 `
 const HeaderWrapper = styled.div`
   position: relative;
 `
 const Title = styled.div`
-  height: 6rem;
+  min-height: 9.2rem;
   width: 100%;
-  background: linear-gradient(to bottom, #999 1%, transparent);
+  background: linear-gradient(to bottom, #999 2%, transparent);
   position: absolute;
   top: 0;
-  padding: 0 1.6rem;
+  padding: 3.2rem 1.6rem 0 1.6rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
