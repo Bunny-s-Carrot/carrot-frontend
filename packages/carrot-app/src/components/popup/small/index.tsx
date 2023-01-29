@@ -10,9 +10,9 @@ interface SmallPopupProps {
 const SmallPopup = React.forwardRef((props:SmallPopupProps, ref: ForwardedRef<HTMLDivElement> ) => {
   
   return (
-    <Wrapper className="HAHAH" ref={ref}>
+    <Wrapper ref={ref}>
       {props.content.map((item, index) => (
-        <Content key={index}>
+        <Content key={index} onClick={() => {}}>
           <span>{item}</span>
         </Content>
       ))}
