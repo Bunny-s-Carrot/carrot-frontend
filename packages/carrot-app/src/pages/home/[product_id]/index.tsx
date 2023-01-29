@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SalesTemplate from "../../../templates/salesTemplate"
@@ -6,6 +7,8 @@ import { categoryList } from "../../../infra/category/categoryList";
 
 import backIconWhite from '@carrot/core/assets/icon/back-arrow-white.svg';
 import homeIconWhite from '@carrot/core/assets/icon/home-outline-white.svg';
+import shareIconWhite from '@carrot/core/assets/icon/Share-white.svg';
+import dotsVerticalIconWhite from '@carrot/core/assets/icon/dots-vertical-white.svg';
 
 import useProductDetailViewModel from "./[product_id].viewModel";
 import theme from "@carrot/core/style/theme";
@@ -14,17 +17,35 @@ import Button from "@carrot/core/atoms/button";
 import MannerTemp from "../../../components/mannerTemp";
 import { convertDateToSimple } from "@carrot/util/format";
 import Swiper from "../../../components/swiper/swiper";
+import SmallPopup from "../../../components/popup/small";
+import useJwtDecode from "../../../hooks/auth/useJwtDecode";
 
 const ProductDetailPage = () => {
+
   const navigate = useNavigate();
   const location = useLocation();
+  const { getId } = useJwtDecode();
   const productDetailViewModel = useProductDetailViewModel();
+  const popupRef = productDetailViewModel.popupRef;
+  const dotsRef = productDetailViewModel.dotsRef;
   const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
+
 
   const leftContent = 
     <>
       <img src={backIconWhite} alt='backIcon' />
       <img src={homeIconWhite} alt='homeIcon' />
+    </>
+
+  const rightContent = 
+    <>
+      <img src={shareIconWhite} className='size-down' alt='shareIcon' />
+      <img
+        src={dotsVerticalIconWhite}
+        alt='dotsVerticalIcon'
+        ref={dotsRef}
+        onClick={productDetailViewModel.handleOpenPopup}
+      />
     </>
 
   const bottomLeftContent = 
@@ -44,10 +65,22 @@ const ProductDetailPage = () => {
     <SalesTemplate
       pageType="HOME"
       leftContent={leftContent}
+      rightContent={rightContent}
       onClickLeft={() => navigate(-1)}
       bottomLeftContent={bottomLeftContent}
       bottomRightContent={bottomRightContent}
-    >
+    > 
+      {productDetailViewModel.isOpenPopup &&
+        <SmallPopup
+          ref={popupRef}
+          content={
+            productDetailViewModel.data?.product.seller_id === getId()
+            ? ['게시글 수정', '끌어올리기', '숨기기', '삭제']
+            : ['신고하기', '이 사용자의 글 보지 않기']
+          }
+        />
+      }
+
       <Container>
         <ImageWrapper>
           {productDetailViewModel.getImageSuccess &&

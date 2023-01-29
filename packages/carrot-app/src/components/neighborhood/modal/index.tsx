@@ -6,49 +6,74 @@ import closeIcon from "@carrot/core/assets/icon/close.svg";
 import usePostViewModel from "../../../pages/neighborhood/post.viewModel";
 
 interface Props {
+  type: any;
   openModal: boolean;
   controlModal: any;
 }
 
-const TopicModal = ({ openModal, controlModal }: Props) => {
+const Modal = ({ type, openModal, controlModal }: Props) => {
   const postViewModel = usePostViewModel();
 
-  return (
-    <Wrapper>
-      <Background
-        open={openModal}
-        onClick={() => controlModal(false)}
-      ></Background>
-      <Container className={openModal ? "slideup" : "slidedown"}>
-        <Top>
-          <div className="top1">
-            <p>{postViewModel.activeLocation} 주제 목록</p>
-            <img
-              src={closeIcon}
-              alt="closeIcon"
-              onClick={() => controlModal(false)}
-            />
-          </div>
-          <p className="top2">주제에 참여하고 관심있는 게시글을 받아보세요.</p>
-        </Top>
-        <List>
-          {postcategoryList.map((item, index) => {
-            if (index != 0) {
-              return <Topicitem key={index}>{item.title}</Topicitem>;
-            }
-          })}
-        </List>
-      </Container>
-    </Wrapper>
-  );
+  if (type === "TopicModal") {
+    return (
+      <Wrapper>
+        <Background
+          open={openModal}
+          onClick={() => controlModal(false)}
+        ></Background>
+        <Container className={openModal ? "slideup" : "slidedown"}>
+          <Top>
+            <div className="top1">
+              <p>{postViewModel.activeLocation} 주제 목록</p>
+              <img
+                src={closeIcon}
+                alt="closeIcon"
+                onClick={() => controlModal(false)}
+              />
+            </div>
+            <p className="top2">
+              주제에 참여하고 관심있는 게시글을 받아보세요.
+            </p>
+          </Top>
+          <List>
+            {postcategoryList.map((item, index) => {
+              if (index != 0) {
+                return <Topicitem key={index}>{item.title}</Topicitem>;
+              }
+            })}
+          </List>
+        </Container>
+      </Wrapper>
+    );
+  } else {
+    return (
+      <Wrapper>
+        <Background
+          open={openModal}
+          onClick={() => controlModal(false)}
+        ></Background>
+        <Container className={openModal ? "slideup" : "slidedown"}>
+          <Top_c>게시글의 주제를 선택해주세요.</Top_c>
+          <List>
+            <div className="grey">기본 주제</div>
+            {postcategoryList.map((item, index) => {
+              if (index > 2) {
+                return <Topicitem key={index}>{item.title}</Topicitem>;
+              }
+            })}
+          </List>
+        </Container>
+      </Wrapper>
+    );
+  }
 };
 
-export default TopicModal;
+export default Modal;
 
 const Wrapper = styled.div`
   .slideup {
     transition: all 0.6s;
-    bottom: -5%;
+    bottom: 0%;
   }
 
   .slidedown {
@@ -71,17 +96,27 @@ const Container = styled.div`
   background: white;
   position: absolute;
   width: 100%;
-  height: 72%;
+  height: 73%;
+  padding-bottom: 1%;
+  transform: translateY(1%);
   border-radius: 10px;
-  padding: 13px;
   left: 0;
   z-index: 10;
-  margin-bottom: 5%;
+  display: flex;
+  flex-direction: column;
+
+  .grey {
+    background: ${theme.colors.grey20};
+    padding: 11px 14px;
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
 `;
 
 const Top = styled.div`
   font-size: 15px;
   border-bottom: 1px solid ${theme.colors.grey30};
+  padding: 20px 14px 4.5px 14px;
 
   .top1 {
     font-weight: 500;
@@ -98,15 +133,14 @@ const Top = styled.div`
   }
 
   .top2 {
-    font-size: 15px;
+    font-size: 16.5px;
     color: ${theme.colors.grey70};
     margin-bottom: 13px;
   }
 `;
 
 const List = styled.div`
-  height: 540px;
-  overflow: scroll;
+  overflow-y: scroll;
 
   ::-webkit-scrollbar {
     display: none;
@@ -115,5 +149,11 @@ const List = styled.div`
 
 const Topicitem = styled.div`
   font-size: 18px;
-  padding: 20px 0;
+  padding: 18px 14px;
+`;
+
+const Top_c = styled.div`
+  font-weight: 500;
+  font-size: 21px;
+  padding: 30px 14px 25px 14px;
 `;

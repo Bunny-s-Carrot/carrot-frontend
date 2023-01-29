@@ -71,8 +71,8 @@ const Container = styled.div`
   padding: 0 1.6rem;
   overflow-y: scroll;
   ${theme.option.hiddenScroll};
+  padding-bottom: 8rem;
 `
-
 const LocationWrapper = styled.div`
   padding: 0.3rem;
   display: flex;

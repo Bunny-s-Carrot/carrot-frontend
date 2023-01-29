@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import NavBar from "../../components/navBar";
 
 import styled from "styled-components";
@@ -8,7 +8,7 @@ import HeaderTemplate from "../../templates/headerTemplate";
 import TopicBar from "../../components/neighborhood/topicbar";
 import Post from "../../components/neighborhood/post";
 import FloatingButton from "../../components/floatingButton";
-import TopicModal from "../../components/neighborhood/modal";
+import Modal from "../../components/neighborhood/modal";
 
 import backIcon from "@carrot/core/assets/icon/back-arrow.svg";
 import searchIcon from "@carrot/core/assets/icon/search.svg";
@@ -67,7 +67,11 @@ const Neighborhood = () => {
       </HeaderTemplate>
       <FloatingButton pageType="NEIGHBORHOOD" />
       <NavBar pageType="NEIGHBORHOOD" />
-      <TopicModal openModal={openModal} controlModal={controlModal} />
+      <Modal
+        type="TopicModal"
+        openModal={openModal}
+        controlModal={controlModal}
+      />
     </>
   );
 };
