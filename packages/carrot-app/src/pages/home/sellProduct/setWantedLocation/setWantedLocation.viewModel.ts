@@ -25,8 +25,8 @@ const useSetWantedLocationViewModel = () => {
     const latlng = map.current.getCenter();
 
     await setUserLatLng((prev: any) => {
-      const lat = latlng.Ma;
-      const lng = latlng.La;
+      const lat = latlng.y;
+      const lng = latlng.x;
 
       return {
         ...prev,

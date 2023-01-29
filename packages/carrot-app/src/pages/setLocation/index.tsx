@@ -96,7 +96,7 @@ const SetLocationPage = () => {
               : locationInfo2?.lowest_sect_name}과 근처 동네
           </NeighborhoodLocation>
         <Slider
-          initial={setLocationViewModel.areaData!.area ?? 0}
+          initial={(setLocationViewModel.areaData && setLocationViewModel.areaData!.area) ?? 0}
           min={0}
           max={3}
           onChange={value => console.log(value)}
