@@ -42,6 +42,7 @@ const Wrapper = styled.div`
   width: 100%;
   height: 100%;
   background: white;
+  padding-top: 3.2rem;
   overflow: hidden;
 `
 const Title = styled.div<{ noBorderBottom?: boolean }>`

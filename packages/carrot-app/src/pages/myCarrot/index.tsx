@@ -6,23 +6,25 @@ import styled from 'styled-components';
 
 const MyCarrot = () => {
   return (
-    <AAA>
+    <Container>
       <Profile />
       <CarrotPay />
       <MycarrotList />
-      <Space>1</Space>
+      <Space></Space>
       <NavBar pageType='MYCARROT' />
-    </AAA>
+    </Container>
   )
 };
 
 export default MyCarrot;
 
-const AAA = styled.div`
-height: 100vh;
-box-sizing: border-box;
-overflow: scroll
+const Container = styled.div`
+  height: 100%;
+  box-sizing: border-box;
+  overflow: scroll;
+  padding-top: 3.2rem;
+  background: white;
 `
 
 const Space = styled.div`
-height: 6.4rem;`
+  height: 6.4rem;`
