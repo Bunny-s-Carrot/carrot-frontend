@@ -1,5 +1,6 @@
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
+import { useNavigate } from 'react-router-dom';
 import { postcategoryList } from "../../../infra/postcategory/postcategoryList";
 import closeIcon from "@carrot/core/assets/icon/close.svg";
 
@@ -13,6 +14,7 @@ interface Props {
 
 const Modal = ({ type, openModal, controlModal }: Props) => {
   const postViewModel = usePostViewModel();
+  const navigate = useNavigate();
 
   if (type === "TopicModal") {
     return (
@@ -37,8 +39,10 @@ const Modal = ({ type, openModal, controlModal }: Props) => {
           </Top>
           <List>
             {postcategoryList.map((item, index) => {
-              if (index != 0) {
-                return <Topicitem key={index}>{item.title}</Topicitem>;
+              if (index > 2) {
+                return <Topicitem key={index} onClick={() => navigate(`${item.path}`)}>{item.title}</Topicitem>;
+              } else {
+                return "";
               }
             })}
           </List>
@@ -53,12 +57,14 @@ const Modal = ({ type, openModal, controlModal }: Props) => {
           onClick={() => controlModal(false)}
         ></Background>
         <Container className={openModal ? "slideup" : "slidedown"}>
-          <Top_c>게시글의 주제를 선택해주세요.</Top_c>
+          <Topc>게시글의 주제를 선택해주세요.</Topc>
           <List>
             <div className="grey">기본 주제</div>
             {postcategoryList.map((item, index) => {
               if (index > 2) {
                 return <Topicitem key={index}>{item.title}</Topicitem>;
+              } else {
+                return "";
               }
             })}
           </List>
@@ -152,7 +158,7 @@ const Topicitem = styled.div`
   padding: 18px 14px;
 `;
 
-const Top_c = styled.div`
+const Topc = styled.div`
   font-weight: 500;
   font-size: 21px;
   padding: 30px 14px 25px 14px;

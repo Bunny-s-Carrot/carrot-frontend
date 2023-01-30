@@ -20,8 +20,18 @@ export interface CreatePostType {
     content: string,
 }
 
+export interface CommentType {
+    comment_id: number;
+    name: string;
+    lowest_sect_name: string;
+    created_at: any;
+    comment: string;
+    likes: number;
+    depth: number;
+}
 
 export interface PostDetailType {
     user: UserType;
     post: PostType;
+    comment: CommentType[];
 }

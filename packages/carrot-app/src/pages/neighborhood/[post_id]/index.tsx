@@ -3,6 +3,7 @@ import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
 import usePostDetailViewModel from "./[post_id].viewModel";
 import HeaderTemplate from "../../../templates/headerTemplate";
+import Comment from "../../../components/neighborhood/comment";
 import backIcon from "@carrot/core/assets/icon/back-arrow.svg";
 import homeIcon from "@carrot/core/assets/icon/home-outline.svg";
 import BellOffIcon from "@carrot/core/assets/icon/Notifications off.svg";
@@ -16,7 +17,15 @@ import { convertDateToSimple } from "@carrot/util/format";
 const PostDetailPage = () => {
   const navigate = useNavigate();
   const PostDetailViewModel = usePostDetailViewModel();
+  const results = PostDetailViewModel.data?.payload;
+  let exist = true;
+  let comment = results?.comment;
+  if (comment === undefined) {
+    comment = [];
+    exist = false;
+  };
 
+  
   const leftContent = (
     <>
       <IconHead src={backIcon} alt="backIcon" />
@@ -40,7 +49,7 @@ const PostDetailPage = () => {
     >
       <Container>
         <Category>
-          <Color>{PostDetailViewModel.data?.post.category_name}</Color>
+          <Color>{results?.post.category_name}</Color>
         </Category>
         <UserInfo>
           <img
@@ -48,19 +57,19 @@ const PostDetailPage = () => {
             alt=""
           />
           <div>
-            <p>{PostDetailViewModel.data?.user.name}</p>
-            <span>{PostDetailViewModel.data?.user.lowest_sect_name}</span>
+            <p>{results?.user.name}</p>
+            <span>{results?.user.lowest_sect_name}</span>
             <span>
               {" "}
-              · {convertDateToSimple(PostDetailViewModel.data?.post.created_at)}
+              · {convertDateToSimple(results?.post.created_at)}
             </span>
           </div>
         </UserInfo>
         <Content>
-          {PostDetailViewModel.data?.post.content}
+          {results?.post.content}
           <br />
           <br />
-          <Empa>조회 {PostDetailViewModel.data?.post.views}</Empa>
+          <Empa>조회 {results?.post.views}</Empa>
         </Content>
         <Buttons>
           <Btn>
@@ -76,12 +85,26 @@ const PostDetailPage = () => {
             &nbsp; 관심
           </Btn>
         </Buttons>
-        <Comment>
-          아직 댓글이 없어요.
-          <br />
-          <br />
-          가장 먼저 댓글을 남겨보세요.
-        </Comment>
+        <CommentContainer comment={exist}>
+          <Nocomment comment={exist}>
+            아직 댓글이 없어요.<br/>
+            가장 먼저 댓글을 남겨보세요.
+          </Nocomment>
+          {comment.map((item, index) => {
+            return (
+              <Comment 
+               key={index}
+               comment_id={item.comment_id}
+               writer={item.name}
+               location={item.lowest_sect_name}
+               created_at={item.created_at}
+               comment={item.comment}
+               likes={item.likes}
+               depth={item.depth}
+               />
+            )
+          })}
+        </CommentContainer>
       </Container>
     </HeaderTemplate>
   );
@@ -155,14 +178,6 @@ const Btn = styled.div`
   font-size: 12px;
 `;
 
-const Comment = styled.div`
-  text-align: center;
-  padding: 25px 0 35px 0;
-  color: ${theme.colors.grey50};
-  font-size: 18px;
-  border-bottom: 8.5px solid ${theme.colors.grey20};
-`;
-
 const IconHead = styled.img`
   max-height: 2.6rem;
 `;
@@ -171,3 +186,18 @@ const Icon = styled.img`
   width: 20px;
   height: 20px;
 `;
+
+const CommentContainer = styled.div<{ comment: boolean }>`
+height: ${props => props.comment? 'auto' : '15rem'};
+border-bottom: 7.5px solid${theme.colors.grey20};
+padding: 10px 0 15px 0;
+`
+
+const Nocomment = styled.div<{ comment: boolean }>`
+padding: 35px 0 20px 0;
+text-align: center;
+font-size: 17.5px;
+color: ${theme.colors.grey50};
+line-height: 24px;
+display: ${props => props.comment? 'none' : 'block'};
+`
