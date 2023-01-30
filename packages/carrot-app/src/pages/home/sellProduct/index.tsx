@@ -66,6 +66,9 @@ const SellProductPage = () => {
               accept="image/*"
               multiple
               onChange={sellProductViewModel.uploadImage}
+              onClick={() => {
+                window.OpenGallery?.postMessage("Open Gallery")
+              }}
             >
               <img src={cameraIcon} alt='cameraIcon' />
               <p><span>{sellProductViewModel.images.length}</span>/10</p>
