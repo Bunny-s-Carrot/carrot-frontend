@@ -1,17 +1,24 @@
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import iconSetting from '@carrot/core/assets/icon/mycarrot/Settings.svg';
+import useJwtDecode from '../../../hooks/auth/useJwtDecode';
+
 
 const Profile = () => {
-
+  const navigate = useNavigate();
+  const { getName } = useJwtDecode();
     return (
         <Contain>
             <Topbar>
-                <Setting src={iconSetting}></Setting>
+                <Setting
+                  src={iconSetting}
+                  onClick={() => navigate('setting')}
+                />
             </Topbar>
             <Prof>
                 <ProfR>
                     <Profimg src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Default_pfp.svg" alt="" />
-                    닉네임
+                    {getName()}
                 </ProfR>
                 <Btn>프로필 보기</Btn>
             </Prof>

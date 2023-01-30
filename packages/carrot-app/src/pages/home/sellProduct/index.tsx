@@ -17,7 +17,8 @@ import useSellProductViewModel from "./sellProduct.viewModel";
 import Dropbox from "@carrot/core/atoms/dropdown";
 import { category, categoryList, reverseCategoryList } from "../../../infra/category/categoryList";
 import { getFrom } from "../../../infra/from";
-
+import Lottie from 'lottie-react';
+import loadingAnimation from '@carrot/core/assets/lotties/loading.json';
 
 const SellProductPage = () => {
   const navigate = useNavigate();
@@ -37,7 +38,22 @@ const SellProductPage = () => {
   const rightContent = 
     <Complete onClick={sellProductViewModel.handleClickSubmit}>완료</Complete>
 
+  const animationDefaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: loadingAnimation,
+    rendererSettings: {
+      preserveAspectRatio: 'xMidYMid slice',
+    },
+  }
+
   return (
+    <>
+    {sellProductViewModel.isLoading && (
+      <LottieBackground>
+        <Lottie animationData={loadingAnimation} width={100} height={100} />
+      </LottieBackground>
+    )}
     <HeaderTemplate
       leftContent={leftContent}
       onClickLeft={() => navigate(from)}
@@ -149,13 +165,23 @@ const SellProductPage = () => {
           </WantedLocationPanel>
         </AdditionalInfoWrapper>
       </Container>
-      
     </HeaderTemplate>
+    </>
   )
 }
 
 export default SellProductPage;
 
+const LottieBackground = styled.div`
+  width: 100%;
+  height: calc(var(--vh, 1vh) * 100);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.12);
+  z-index: 10;
+  position: fixed;
+`
 const Complete = styled.span`
   color: ${theme.colors.carrot};
   ${theme.typography.body3};

@@ -21,7 +21,7 @@ const useSellProductViewModel = () => {
   const [contents, setContents] = useState(data ? data.contents : '');
   const [priceSuggest, setPriceSuggest] = useState(data ? data.priceSuggest : true);
   const [share, setShare] = useState(data ? data.share : false);
-  const [classifId, setClassifId] = useState<number | null>(data ? data.classifId : 0);
+  const [classifId, setClassifId] = useState<number>(data ? data.classifId : 0);
 
   const { userLatLng } = useCustomContext();
   const { getId, getLocation } = useJwtDecode();
@@ -30,7 +30,7 @@ const useSellProductViewModel = () => {
   const seller_location = useMemo(() => getLocation(), [getLocation]);
   const activeLocation = useMemo(() => getActiveLocation(), [])
 
-  const createPost = useMutation(productApi.createProduct);
+  const createProduct = useMutation(productApi.createProduct);
 
   const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
     const fileList = e.target.files;
@@ -54,17 +54,17 @@ const useSellProductViewModel = () => {
     const imageFiles = images.map(item => item.data);
 
     (title !== '' && classifId !== 0 && contents !== '')  &&
-    createPost.mutate({
+    createProduct.mutate({
       image: imageFiles,
       seller_id,
       seller_location,
       title,
-      price: price === '' ? 0 : Number(price),
+      price: price === '' ? 0 : parseInt(price),
       contents,
       wanted_location: JSON.stringify(userLatLng),
       price_suggest: priceSuggest,
       share,
-      classif_id: Number(classifId),
+      classif_id: classifId,
     },
     {
       onSuccess: () => navigate('/home')
@@ -89,6 +89,7 @@ const useSellProductViewModel = () => {
     uploadImage,
     deleteImage,
     handleClickSubmit,
+    isLoading: createProduct.isLoading,
   }
 }
 

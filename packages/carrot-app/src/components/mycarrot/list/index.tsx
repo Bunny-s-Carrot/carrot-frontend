@@ -91,12 +91,12 @@ const MycarrotList = () => {
     return (
         <Contain>
             
-            {listdata.map((item) => (
-                <OneList>
+            {listdata.map((item, index) => (
+                <OneList key={index}>
                     <Title>{item.title}</Title>
                     <ul>
-                        {item.list.map((item) => (
-                            <List>
+                        {item.list.map((item, index) => (
+                            <List key={index}>
                                 <Icon src={item.icon} alt='icon'/>
                                 <span>{item.name}</span>
                             </List>
