@@ -56,7 +56,7 @@ const PrimaryButtonWrapper = styled.button`
   text-align: center;
   outline: none;
   border: none;
-  border-radius: 0.8rem;
+  border-radius: 0.6rem;
 `
 const CarrotButton = styled(PrimaryButtonWrapper)`
   background: ${theme.colors.carrot};

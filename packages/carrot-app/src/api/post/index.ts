@@ -1,5 +1,5 @@
 import { api } from "../../infra/api";
-import { PostType, PostDetailType, CreatePostType } from "./postDto";
+import { PostType, PostDetailType, CreatePostType  } from "./postDto";
 
 const getPosts = async () => {
     try {

@@ -18,7 +18,8 @@ import TopicBarDetailPage from "./pages/neighborhood/category";
 import PostDetailPage from "./pages/neighborhood/[post_id]";
 import WritePostPage from "./pages/neighborhood/writePost";
 import SetLocationPage from "./pages/setLocation";
-import SetWantedLocation from "./pages/home/sellProduct/setWantedLocation";
+import SetWantedLocationPage from "./pages/home/sellProduct/setWantedLocation";
+import SettingPage from "./pages/myCarrot/setting";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -36,7 +37,7 @@ const App = () => {
             <Route path="/sell-product" element={<SellProductPage />} />
             <Route
               path="/sell-product/setwantedlocation"
-              element={<SetWantedLocation />}
+              element={<SetWantedLocationPage />}
             />
             <Route path="/neighborhood" element={<NeighborhoodPage />} />
             <Route
@@ -48,6 +49,7 @@ const App = () => {
             <Route path="/around" element={<AroundPage />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/mycarrot" element={<MyCarrotPage />} />
+            <Route path="/mycarrot/setting" element={<SettingPage />} />
             <Route path="/setlocation" element={<SetLocationPage />} />
           </Route>
         </Route>

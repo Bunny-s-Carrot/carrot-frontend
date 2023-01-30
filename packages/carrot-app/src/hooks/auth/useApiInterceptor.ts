@@ -1,6 +1,6 @@
 import { privateApi } from "../../infra/api";
 import { useEffect } from 'react';
-import useRefreshToken from "./useRefreshToken";
+import useRefreshToken from "./useToken";
 import { useAuth } from "../../contexts/auth/authProvider";
 // import { AxiosRequestConfig } from "axios";
 import authApi from "../../api/auth";

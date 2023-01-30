@@ -71,6 +71,14 @@ const createProduct = async ({
   }
 }
 
+const deleteProduct = async ({ product_id }: { product_id: number }) => {
+  const response = await api.delete(`/product/${product_id}/delete`).then(_ => {
+    api.get(`/product/image/${product_id}/delete`)  
+  })
+
+  return response;
+}
+
 const getImageList = async (productId: string) => {
   try {
     const { data } = await api.get(`/product/image/${productId}`);
@@ -93,6 +101,7 @@ const productApi = {
   getProducts,
   getProductDetail,
   createProduct,
+  deleteProduct,
   getImageList,
   getThumbnail,
 }

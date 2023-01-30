@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import styled, { ThemeConsumer } from "styled-components";
+import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
 import HeaderTemplate from "../../../templates/headerTemplate";
 import Panel from "../../../components/panel";

@@ -7,8 +7,9 @@ const usePostDetailViewModel = () => {
 
   const { data } = useQuery(['post', params.post_id], () => 
     postApi.getPostDetail(params.post_id!))
+
   return {
-    data: data?.payload
+    data
   }
 }
 

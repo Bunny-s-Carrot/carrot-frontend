@@ -1,4 +1,3 @@
-import { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SalesTemplate from "../../../templates/salesTemplate"
@@ -19,6 +18,7 @@ import { convertDateToSimple } from "@carrot/util/format";
 import Swiper from "../../../components/swiper/swiper";
 import SmallPopup from "../../../components/popup/small";
 import useJwtDecode from "../../../hooks/auth/useJwtDecode";
+import Modal from "../../../components/modal";
 
 const ProductDetailPage = () => {
 
@@ -62,6 +62,7 @@ const ProductDetailPage = () => {
     <ChatButton buttonType="CARROT" onClick={() => {}}>채팅하기</ChatButton>
 
   return (
+    <>
     <SalesTemplate
       pageType="HOME"
       leftContent={leftContent}
@@ -75,8 +76,12 @@ const ProductDetailPage = () => {
           ref={popupRef}
           content={
             productDetailViewModel.data?.product.seller_id === getId()
-            ? ['게시글 수정', '끌어올리기', '숨기기', '삭제']
-            : ['신고하기', '이 사용자의 글 보지 않기']
+            ? [{text:'게시글 수정'},
+               {text: '끌어올리기'},
+               {text: '숨기기'},
+               {text: '삭제', onClick: () => productDetailViewModel.openModal(true)}]
+            : [{text: '신고하기'},
+               {text: '이 사용자의 글 보지 않기'}]
           }
         />
       }
@@ -141,6 +146,22 @@ const ProductDetailPage = () => {
         <Panel type='SELLING' sellerName={productDetailViewModel.data?.user.name}/>
       </Container>
     </SalesTemplate>
+    {productDetailViewModel.isOpenModal &&
+    <Modal 
+      query='정말 삭제하시겠습니까?'
+      onClickLeft={() => {productDetailViewModel.openModal(false)}}
+      onClickRight={() => {productDetailViewModel.deleteProduct.mutate({
+        product_id: productDetailViewModel.data!.product.product_id,
+
+      },
+      {
+        onSuccess: () => navigate('/home')
+      }
+      )}}
+      buttonText='삭제'
+    />}
+    </>
+    
   )
 }
 

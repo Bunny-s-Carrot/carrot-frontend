@@ -48,7 +48,7 @@ export const reverseCategoryList = (categoryName: string) => {
     case '식물': return 1019;
     case '기타 중고물품': return 1020;
     case '삽니다': return 1021;
-    default: return null;
+    default: return 1001;
   }
 }
 
