@@ -11,7 +11,7 @@ import theme from "@carrot/core/style/theme";
 
 import useSetWantedLocationViewModel from './setWantedLocation.viewModel';
 
-const SetWantedLocation = () => {
+const SetWantedLocationPage = () => {
 
   const navigate = useNavigate();
   const setWantedLocationViewModel = useSetWantedLocationViewModel();
@@ -48,7 +48,7 @@ const SetWantedLocation = () => {
   )
 }
 
-export default SetWantedLocation;
+export default SetWantedLocationPage;
 
 const InstructionWrapper = styled.div`
   width: 100%;

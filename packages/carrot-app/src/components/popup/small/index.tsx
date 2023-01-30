@@ -4,7 +4,7 @@ import theme from "@carrot/core/style/theme";
 
 
 interface SmallPopupProps {
-  content: string[]
+  content: {text: string, onClick?: any}[]
 }
 
 const SmallPopup = React.forwardRef((props:SmallPopupProps, ref: ForwardedRef<HTMLDivElement> ) => {
@@ -12,8 +12,8 @@ const SmallPopup = React.forwardRef((props:SmallPopupProps, ref: ForwardedRef<HT
   return (
     <Wrapper ref={ref}>
       {props.content.map((item, index) => (
-        <Content key={index} onClick={() => {}}>
-          <span>{item}</span>
+        <Content key={index} onClick={item.onClick}>
+          <span>{item.text}</span>
         </Content>
       ))}
     </Wrapper>
@@ -27,8 +27,8 @@ const Wrapper = styled.div`
   padding: 0.8rem 0;
   position: absolute;
   background: white;
-  top: 1.6rem;
-  right: 0.4rem;
+  top: 4.8rem;
+  right: 0.8rem;
   z-index: 10;
   border-radius: 0.4rem;
 `

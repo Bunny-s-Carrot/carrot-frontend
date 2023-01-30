@@ -43,15 +43,6 @@ const login = async ({email, password}: LoginData) => {
   return response;
 }
 
-const logout = async () => {
-
-  const response = await api.post('/auth/logout', {
-    withCredentials: true
-  });
-
-  return response;
-
-}
 
 const refreshToken = async () => {
   const response = await api.get('/auth/refresh', {
@@ -65,7 +56,6 @@ const refreshToken = async () => {
 const authApi = {
   signup,
   login,
-  logout,
   refreshToken,
 }
 

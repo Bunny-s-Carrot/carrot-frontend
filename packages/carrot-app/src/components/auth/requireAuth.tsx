@@ -1,12 +1,12 @@
 import { useEffect } from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import { useAuth } from "../../contexts/auth/authProvider";
-import useRefreshToken from "../../hooks/auth/useRefreshToken";
+import useToken from "../../hooks/auth/useToken";
 
 
 const RequireAuth = () => {
   const { auth } = useAuth();
-  const refreshToken = useRefreshToken();
+  const { refreshToken } = useToken();
   const location = useLocation();
 
 
