@@ -1,11 +1,11 @@
 declare global {
   interface Window {
     naver: any
-    kakao: any
     flutter_inappwebview: any
+    OpenGallery: any
   }
 }
 
-declare const flutter_inappwebview = { callHandler }
+declare const OpenGallery = { postMessage }
 
 export {}
