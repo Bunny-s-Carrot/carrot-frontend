@@ -1,15 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-
 import Button from '@carrot/core/atoms/button';
-
 import HeaderTemplate from "../../../../templates/headerTemplate"
 import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
-import gpsOnIcon from '@carrot/core/assets/icon/gps-on.svg'
 import locationMarker from '@carrot/core/assets/icon/location-marker.svg'
 import theme from "@carrot/core/style/theme";
-
 import useSetWantedLocationViewModel from './setWantedLocation.viewModel';
+import GPSOn from "../../../../components/map/GPSOn";
 
 const SetWantedLocationPage = () => {
 
@@ -40,9 +37,7 @@ const SetWantedLocationPage = () => {
           선택 완료
         </StyledButton>
       </ButtonWrapper>
-      <GPSOn onClick={setWantedLocationViewModel.moveToCurrent}>
-        <img src={gpsOnIcon} alt='gpsOnIcon' />
-      </GPSOn>
+      <GPSOn map={setWantedLocationViewModel.map.current}/>
     </HeaderTemplate>
     
   )
@@ -91,23 +86,4 @@ const ButtonWrapper = styled.div`
 `
 const StyledButton = styled(Button)`
   width: 100%;
-`
-const GPSOn = styled.div`
-  width: 5rem;
-  height: 5rem;
-  background: white;
-  border-radius: 50%;
-  position: absolute;
-  z-index: 5;
-  bottom: 10%;
-  right: 4%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.5);
-
-  img {
-    width: 2.5rem;
-    height: 2.5rem; 
-  }
 `

@@ -5,7 +5,7 @@ const useMap = () => {
   const { naver } = window;
   const map = useRef<any>(null)
 
-  const drawMap = useCallback((lat?: number, lng?: number, zoom=13, draggable=true, scrollWheel=false) => {
+  const drawMap = useCallback((lat?: number, lng?: number, zoom=14, draggable=true, scrollWheel=true) => {
       try {
         map.current = new naver.maps.Map('map', { 
           center: new naver.maps.LatLng(lat, lng),

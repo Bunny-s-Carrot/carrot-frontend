@@ -4,7 +4,7 @@ export const formattedPrice = (price: number) => {
   return price.toLocaleString('ko-KR')
 }
 
-export const convertDateToSimple = (date: string) => {
+export const convertDateToSimple = (date: string | undefined) => {
   if (moment().diff(moment.utc(date), 'minute') < 2) {
     return '방금 전'
   } else if (moment().diff(moment.utc(date), 'day') >= 1) {

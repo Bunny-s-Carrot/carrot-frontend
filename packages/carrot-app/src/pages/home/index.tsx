@@ -49,6 +49,7 @@ const Home = () => {
               key={index}
               title={item.title}
               price={item.price}
+              share={item.share}
               created_at={item.created_at}
               seller_location={item.lowest_sect_name}
               heart={item.heart}

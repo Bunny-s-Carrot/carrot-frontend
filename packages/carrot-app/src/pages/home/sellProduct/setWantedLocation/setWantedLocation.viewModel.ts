@@ -5,7 +5,6 @@ import useGeolocation from "../../../../hooks/location/useGeolocation";
 import useMap from "../../../../hooks/map/useMap"
 
 const useSetWantedLocationViewModel = () => {
-  const { naver } = window;
   const geolocation = useGeolocation();
   const { setUserLatLng } = useCustomContext();
   const{ map, drawMap } = useMap();
@@ -37,20 +36,10 @@ const useSetWantedLocationViewModel = () => {
 
     navigate(from, { state: { data } })
   }
-  const panTo = (lat: number, lng: number) => {
-    const moveLatLng = new naver.maps.LatLng(lat, lng);
-
-    map.current.panTo(moveLatLng)
-  }
-
-  const moveToCurrent = () => {
-    geolocation(panTo)
-  }
-
 
   return {
+    map,
     getCenter,
-    moveToCurrent
   }
 }
 
