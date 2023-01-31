@@ -1,1 +1,1 @@
-# curly-clone
+# carrot-clone
