@@ -20,6 +20,7 @@ import WritePostPage from "./pages/neighborhood/writePost";
 import SetLocationPage from "./pages/setLocation";
 import SetWantedLocationPage from "./pages/home/sellProduct/setWantedLocation";
 import SettingPage from "./pages/myCarrot/setting";
+import WantedLocationPage from "./pages/watedLocation";
 
 const App = () => {
   const queryClient = new QueryClient();
@@ -33,6 +34,10 @@ const App = () => {
             <Route
               path="/product/:product_id"
               element={<ProductDetailPage />}
+            />
+            <Route
+              path="/product/:product_id/wantedlocation"
+              element={<WantedLocationPage />}
             />
             <Route path="/sell-product" element={<SellProductPage />} />
             <Route

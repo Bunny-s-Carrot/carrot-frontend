@@ -24,7 +24,6 @@ const useSetLocationViewModel = () => {
 
   const user_id = useMemo(() => getId(), [getId]);
 
-  const { naver } = window;
   const { data, isSuccess } = useQuery([`user/${user_id}/location`],
     () => userApi.getLocationById(user_id))
 
@@ -200,11 +199,10 @@ const useSetLocationViewModel = () => {
     if (area === 0 || area === 1 || area === 2 || area === 3) {
       const coords: any = isSuccess && selectCoords();
       drawMap(coords[1], coords[0], convertAreaToLevel(area), false);
-      const myMap = map.current;
       isSuccess && getArray().then(array => {
         for (let i = 0; i < array.length; i++) {
-          new naver.maps.Polygon({
-            map: myMap,
+          new window.naver.maps.Polygon({
+            map: map.current,
             paths: array[i],
             fillColor: theme.colors.carrot,
             fillOpacity: 0.4,

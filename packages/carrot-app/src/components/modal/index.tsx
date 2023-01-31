@@ -1,4 +1,4 @@
-import { ForwardedRef, useRef } from "react";
+import { ForwardedRef } from "react";
 import styled from "styled-components";
 import Button from "@carrot/core/atoms/button";
 import theme from "@carrot/core/style/theme";

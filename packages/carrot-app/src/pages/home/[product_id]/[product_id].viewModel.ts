@@ -10,7 +10,7 @@ const useProductDetailViewModel = () => {
   const params = useParams<{ product_id: string }>();
   const [isOpenPopup, openPopup] = useState(false);
   const [isOpenModal, openModal] = useState(false);
-  const { data } = useQuery(['product', params.product_id], () =>
+  const { data, isSuccess } = useQuery(['product', params.product_id], () =>
     productApi.getProductDetail(params.product_id!))
 
   const { data: imageData, isSuccess: getImageSuccess } = useQuery(['product/image', params.product_id], () =>
@@ -46,6 +46,7 @@ const useProductDetailViewModel = () => {
     dotsRef,
     popupRef,
     data: data?.payload,
+    isSuccess,
     imageData,
     getImageSuccess,
     deleteProduct,

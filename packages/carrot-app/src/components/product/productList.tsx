@@ -9,7 +9,8 @@ interface ProductProps {
   title: string;
   seller_location: string;
   price: number;
-  created_at: any;
+  created_at: string;
+  share: number
   chat?: number;
   heart?: number;
   onClick: () => void;
@@ -29,7 +30,10 @@ const Product = (props: ProductProps) => {
           <span>{props.seller_location} · {convertDateToSimple(props.created_at)}</span>
         </LocationAndCreatedAt>
         <Price>
-          <span>{props.price.toLocaleString()}원</span>
+          <span>
+            {props.share === 1
+            ? '나눔🧡'
+            : `${props.price.toLocaleString()}원`}</span>
         </Price>
         <ChatAndHeartCount>
           {(props.chat && props.chat > 0) &&

@@ -16,14 +16,14 @@ const TopicBar = ({ controlModal }: Props) => {
   return (
     <TopicContainer>
       {postcategoryList.map((item, index) => {
-        if (index == 0) {
+        if (index === 0) {
           return (
             <TopicItem key={index} onClick={() => controlModal(true)}>
               <Icon src={menuIcon} alt="" />
               {item.title}
             </TopicItem>
           );
-        } else if (index == 1) {
+        } else if (index === 1) {
           return (
             <TopicItem key={index} onClick={() => navigate(`${item.path}`)}>
               <Icon src={boltIcon} alt="" />
