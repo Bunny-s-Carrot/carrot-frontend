@@ -20,10 +20,10 @@ const LaunchPage = () => {
         <LogoWrapper>
           <img src={Logo} alt='로고 이미지'/>
         </LogoWrapper>
-        <p>당신 근처의 당근마켓</p>
+        <p>당신 근처의 바니마켓</p>
         <p>
           내 동네를 설정하고 <br />
-          당근마켓을 시작해보세요
+          바니마켓을 시작해보세요
         </p>
       </Welcome>
       <AuthArea>

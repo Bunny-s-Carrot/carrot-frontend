@@ -49,7 +49,7 @@ const navListData = [
   },
   {
     type: 'MYCARROT',
-    title: '나의 당근',
+    title: '프로필',
     icon: icMyCarrot,
     iconActive: icMyCarrotActive,
     path: '/mycarrot'
