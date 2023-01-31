@@ -29,7 +29,8 @@ const ProductDetailPage = () => {
   const popupRef = productDetailViewModel.popupRef;
   const dotsRef = productDetailViewModel.dotsRef;
   const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
-
+  const lat = productDetailViewModel.isSuccess && JSON.parse(productDetailViewModel.data!.product.wanted_location).lat;
+  const lng = productDetailViewModel.isSuccess && JSON.parse(productDetailViewModel.data!.product.wanted_location).lng;
 
   const leftContent = 
     <>
@@ -141,7 +142,17 @@ const ProductDetailPage = () => {
             </ContentBody>
           </div>
         </ContentWrapper>
-        <Panel type='WANTED_LOCATION' />
+        {(lat && lng) && 
+          <Panel
+            type='WANTED_LOCATION'
+            lat={lat}
+            lng={lng}
+            onClick={() => navigate('wantedlocation',
+            {
+              state: { lat, lng},
+            })}
+          />
+        }
         <Panel type='REPORT' />
         <Panel type='SELLING' sellerName={productDetailViewModel.data?.user.name}/>
       </Container>

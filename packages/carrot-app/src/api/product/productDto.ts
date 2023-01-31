@@ -10,11 +10,11 @@ export interface ProductType {
   wanted_location: string;
   price_suggest: number;
   views: number;
-  share: boolean;
+  share: number;
   heart: number;
   chat: number;
   classif_id: number;
-  created_at: any;
+  created_at: string;
 }
 
 export interface ProductTypeWithLocation extends ProductType{

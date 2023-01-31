@@ -23,6 +23,6 @@ const SwiperList = styled.li`
 
   img {
     width: 100%;
-    height: 100%;
+    height: 35rem;
   }
 `

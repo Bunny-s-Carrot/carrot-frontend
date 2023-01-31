@@ -38,15 +38,6 @@ const SellProductPage = () => {
   const rightContent = 
     <Complete onClick={sellProductViewModel.handleClickSubmit}>완료</Complete>
 
-  const animationDefaultOptions = {
-    loop: true,
-    autoplay: true,
-    animationData: loadingAnimation,
-    rendererSettings: {
-      preserveAspectRatio: 'xMidYMid slice',
-    },
-  }
-
   return (
     <>
     {sellProductViewModel.isLoading && (
@@ -295,7 +286,7 @@ const StyledDropbox = styled(Dropbox)`
 `
 const StyledPanel = styled(Panel)`
   border: none;
-  padding: 0;
+  padding: 0rem;
   border-bottom: 0.1rem solid ${theme.colors.grey20};
 
   span{
