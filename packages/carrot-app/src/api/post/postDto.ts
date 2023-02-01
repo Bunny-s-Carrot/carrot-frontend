@@ -28,10 +28,24 @@ export interface CommentType {
     comment: string;
     likes: number;
     depth: number;
+    mother_id: number;
 }
 
 export interface PostDetailType {
     user: UserType;
     post: PostType;
     comment: CommentType[];
+}
+
+export interface WriteCommentType {
+    post_id: number;
+    writer_id: number;
+    content: string;
+}
+
+export interface WriteRecommentType {
+    post_id: number;
+    writer_id: number;
+    content: string;
+    mother_id: number;
 }

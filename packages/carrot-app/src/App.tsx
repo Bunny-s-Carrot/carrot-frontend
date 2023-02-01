@@ -17,6 +17,7 @@ import SellProductPage from "./pages/home/sellProduct";
 import TopicBarDetailPage from "./pages/neighborhood/category";
 import PostDetailPage from "./pages/neighborhood/[post_id]";
 import WritePostPage from "./pages/neighborhood/writePost";
+import RecommentPage from './pages/neighborhood/[post_id]/recomment';
 import SetLocationPage from "./pages/setLocation";
 import SetWantedLocation from "./pages/home/sellProduct/setWantedLocation";
 
@@ -45,6 +46,7 @@ const App = () => {
             />
             <Route path="/post/:post_id" element={<PostDetailPage />} />
             <Route path="/write-post" element={<WritePostPage />} />
+            <Route path="/post/:post_id/comment/:comment_id" element={<RecommentPage />} />
             <Route path="/around" element={<AroundPage />} />
             <Route path="/chat" element={<ChatPage />} />
             <Route path="/mycarrot" element={<MyCarrotPage />} />
