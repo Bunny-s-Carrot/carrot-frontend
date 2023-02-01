@@ -1,5 +1,5 @@
 import { api } from "../../infra/api";
-import { PostType, PostDetailType, CreatePostType  } from "./postDto";
+import { PostType, PostDetailType, CreatePostType, WriteCommentType, WriteRecommentType  } from "./postDto";
 
 const getPosts = async () => {
     try {
@@ -51,12 +51,53 @@ const createPost = async ({
     }
   }
 
+const createComment = async ({
+  post_id,
+  writer_id,
+  content
+}: WriteCommentType) => {
+  try {
+    const result = await api.post('/post/:post_id',
+    {
+      post_id,
+      writer_id,
+      content
+    })
+
+    return result;
+  } catch (e: any) {
+    throw Error(e);
+  }
+}
+
+const createRecomment = async ({
+  post_id,
+  writer_id,
+  content,
+  mother_id
+}: WriteRecommentType) => {
+  try {
+    const result = await api.post('/post/:post_id/comment/:comment_id',
+    {
+      post_id,
+      writer_id,
+      content,
+      mother_id
+    })
+
+    return result;
+  } catch (e: any) {
+    throw Error(e);
+  }
+}
 
 const postApi = {
     getPosts,
     getPostDetail,
     getPostsByCategory,
-    createPost
+    createPost,
+    createComment,
+    createRecomment
 }
 
 export default postApi;

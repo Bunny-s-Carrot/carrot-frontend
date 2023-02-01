@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
@@ -15,23 +15,26 @@ const TopicBarDetailPage = () => {
   const categoryname = postcategory(useParams().classif_id);
   const [scrollTop, setScrollTop] = useState<number>(0);
 
+  const container = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
+
     const scrollfunction = () => {
-      const high = document.querySelector('.c')?.scrollTop;
+      const high = container.current?.scrollTop;
       if (high !== undefined) {
         setScrollTop(high);
       }
     }
 
-    document.querySelector('.c')?.addEventListener('scroll', scrollfunction);
+    container.current?.addEventListener('scroll', scrollfunction);
 
     return () => {
-      document.querySelector('.c')?.removeEventListener('scroll', scrollfunction);
+      container.current?.removeEventListener('scroll', scrollfunction);
     }
   }, [])
 
   return (
-    <Container className="c">
+    <Container ref={container}>
       <Title scrollTop={scrollTop}>
         <div className="left">
           <img src={backIcon} alt="backIcon" onClick={() => navigate(-1)} />
@@ -72,10 +75,10 @@ overflow: scroll;
 `
 
 const Title = styled.div<{ scrollTop?: number }>`
-  height: 6rem;
+  height: 9.2rem;
   background: ${props => props.scrollTop! >= 100 ? "white" : "none"};
   width: 100%;
-  padding: 0 1.6rem;
+  padding: 3.2rem 1.6rem 0 1.6rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -109,7 +112,7 @@ const Top = styled.div<{ scrollTop?: number }>`
   align-items: center;
   justify-content: space-between;
   transition: .5s ease-out;
-  opacity: ${(props) => (props.scrollTop! > 20) ? 0 : 1};
+  opacity: ${(props) => (props.scrollTop! > 1) ? 0 : 1};
 
   .top1 {
     display: flex;

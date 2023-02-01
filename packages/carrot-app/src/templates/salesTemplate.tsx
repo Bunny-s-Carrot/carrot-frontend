@@ -76,6 +76,7 @@ const Title = styled.div`
     border-radius: 18px;
   }
 `
+
 const LeftContent = styled.div`
   display: flex;
   gap: 2rem;
