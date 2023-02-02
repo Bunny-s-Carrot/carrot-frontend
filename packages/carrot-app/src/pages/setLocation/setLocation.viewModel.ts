@@ -77,9 +77,9 @@ const useSetLocationViewModel = () => {
 
   const handleClickBoxRight = () => {
     if (locationData?.active_location === 0) {
-      setActiveLocation(locationInfo2.addr_name);
+      setActiveLocation(locationInfo2!.addr_name);
       setActiveLocationAsNumber(1);
-      setActiveLocationId(locationInfo2.location_id);
+      setActiveLocationId(locationInfo2!.location_id);
       setArea(getArea2());
       updateActiveLocation.mutate({
         user_id,
@@ -101,6 +101,8 @@ const useSetLocationViewModel = () => {
       if (!locationInfo2) {
 
       } else {
+        setActiveLocation(locationInfo2!.addr_name);
+        setActiveLocationAsNumber(0);
         updateLocation.mutate({
           user_id,
           location: locationInfo2.location_id,
@@ -116,9 +118,11 @@ const useSetLocationViewModel = () => {
           user_id,
           key: 2
         })
-        setActiveLocationAsNumber(0);
+
       }
     } else {
+      setActiveLocation(locationInfo!.addr_name);
+      setActiveLocationAsNumber(0);
       updateActiveLocation.mutate({
         user_id,
         bit: 0
@@ -128,7 +132,7 @@ const useSetLocationViewModel = () => {
         user_id,
         key: 2
       })
-      setActiveLocationAsNumber(0);
+
     }
   };
 
@@ -136,7 +140,7 @@ const useSetLocationViewModel = () => {
     let xCoord = locationData?.active_location === 0 ? locationData?.location_info?.x_coord : locationData?.location_info2?.x_coord
     let yCoord = locationData?.active_location === 0 ? locationData?.location_info?.y_coord : locationData?.location_info2?.y_coord
 
-    return [xCoord, yCoord];
+    return [xCoord!, yCoord!];
   }, [locationData?.active_location, locationData?.location_info?.x_coord, locationData?.location_info?.y_coord, locationData?.location_info2?.x_coord, locationData?.location_info2?.y_coord])
 
 

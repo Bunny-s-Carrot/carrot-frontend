@@ -61,7 +61,7 @@ const SetLocationPage = () => {
           </LocationBoxLeft>
           <LocationBoxRight
             onClick={setLocationViewModel.handleClickBoxRight}
-            isMyLocation2={locationInfo2} 
+            isMyLocation2={!!locationInfo2} 
             active={setLocationViewModel.locationData?.active_location === 1}
           >
             {!locationInfo2
