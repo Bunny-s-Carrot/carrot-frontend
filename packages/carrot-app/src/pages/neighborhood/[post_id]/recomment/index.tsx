@@ -62,6 +62,7 @@ const RecommentPage = () => {
     )
 
     return (
+      <>
         <HeaderTemplate 
           leftContent={leftContent}
           onClickLeft={() => navigate(-1)}
@@ -86,7 +87,8 @@ const RecommentPage = () => {
               }
             })}
           </Container>
-          <Bottom commentopen={isOpenCommentbox}>
+        </HeaderTemplate>
+        <Bottom commentopen={isOpenCommentbox}>
               <img src={imageIcon} alt="" />
               <img src={locationIcon} alt="" />
               <Preinput ref={precommentRef} commentpreview={commentpreview}>
@@ -123,7 +125,7 @@ const RecommentPage = () => {
               </SubmitBtn>
             </div>
           </WriteComment>
-        </HeaderTemplate>
+      </>
     )
 }
 
