@@ -1,4 +1,4 @@
-import { api } from "../../infra/api";
+import { api, fileApi } from "../../infra/api";
 import { PostType, PostDetailType, CreatePostType, WriteCommentType, WriteRecommentType  } from "./postDto";
 
 const getPosts = async () => {
@@ -33,6 +33,7 @@ const getPostsByCategory = async (classif_id: string) => {
 }
 
 const createPost = async ({
+  image,
   classif_id,
   content,
   writer_id,
@@ -43,6 +44,12 @@ const createPost = async ({
         classif_id,
         content,
         writer_id,
+      }).then(res => {
+        fileApi.post(`/post/image/upload`,
+        {
+          payload: res,
+          image,
+        })
       })
       
       return result;
