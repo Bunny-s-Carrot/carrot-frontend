@@ -3,7 +3,7 @@ import AuthContext from "../../contexts/auth/authProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import authApi from "../../api/auth";
-import { setActiveLocation } from "../../infra/location/activeLocation";
+import { setActiveLocation } from "../../infra/location/locationData";
 
 const useLoginViewModel = () => {
 

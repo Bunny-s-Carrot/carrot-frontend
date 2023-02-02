@@ -51,7 +51,7 @@ const PostDetailPage = () => {
     return () => {
       window.removeEventListener('click', handleCommentbox)
     }
-  }, [handleCommentbox])
+  })
 
   const [buttonvisible, setButtonvisible] = useState<boolean>(false);
   
@@ -127,7 +127,7 @@ const PostDetailPage = () => {
                  key={index}
                  comment_id={item.comment_id}
                  writer={item.name}
-                 location={item.lowest_sect_name}
+                 location={item.addr_name}
                  created_at={item.created_at}
                  comment={item.comment}
                  likes={item.likes}

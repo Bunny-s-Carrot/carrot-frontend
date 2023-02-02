@@ -1,7 +1,7 @@
 import { useEffect, useMemo } from "react"
 import { useLocation } from "react-router-dom"
 import { useQuery } from '@tanstack/react-query';
-import { getActiveLocation } from "../../infra/location/activeLocation"
+import { getActiveLocation } from "../../infra/location/locationData"
 import postApi from '../../api/post';
 import { setFrom } from "../../infra/from"
 

@@ -29,11 +29,11 @@ const RecommentPage = () => {
     };
 
     const [isOpenCommentbox, OpenCommentbox] = useState<boolean>(false);
+    const [commentpreview, SetCommentpreview] = useState<boolean>(false);
+    const [buttonvisible, setButtonvisible] = useState<boolean>(false);
     const postcommentRef = useRef<HTMLDivElement>(null);
     const precommentRef = useRef<HTMLDivElement>(null);
     const commentinputRef = useRef<HTMLInputElement>(null);
-    const [commentpreview, SetCommentpreview] = useState<boolean>(false);
-  
 
     const handleCommentbox = (e: MouseEvent) => {
       const target = e.target as HTMLElement
@@ -50,10 +50,9 @@ const RecommentPage = () => {
       return () => {
         window.removeEventListener('click', handleCommentbox)
       }
-    }, [handleCommentbox])
+    })
 
-    const [buttonvisible, setButtonvisible] = useState<boolean>(false);
-  
+    
     const leftContent = (
       <>
         <img src={backIcon} alt="backIcon" />
@@ -75,7 +74,7 @@ const RecommentPage = () => {
                       key={index}
                       comment_id={item.comment_id}
                       writer={item.name}
-                      location={item.lowest_sect_name}
+                      location={item.addr_name}
                       created_at={item.created_at}
                       comment={item.comment}
                       likes={item.likes}
@@ -84,7 +83,7 @@ const RecommentPage = () => {
                       isdetailpage={true}
                     />
                 )
-              }
+              } else return null
             })}
           </Container>
         </HeaderTemplate>
@@ -92,7 +91,7 @@ const RecommentPage = () => {
               <img src={imageIcon} alt="" />
               <img src={locationIcon} alt="" />
               <Preinput ref={precommentRef} commentpreview={commentpreview}>
-                {PostDetailViewModel.content.length == 0 ? '댓글을 입력해주세요.' : PostDetailViewModel.content}</Preinput>
+                {PostDetailViewModel.content.length === 0 ? '댓글을 입력해주세요.' : PostDetailViewModel.content}</Preinput>
           </Bottom>
           <WriteComment commentopen={isOpenCommentbox} ref={postcommentRef}>
             <form 

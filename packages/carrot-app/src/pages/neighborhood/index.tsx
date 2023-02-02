@@ -58,7 +58,7 @@ const Neighborhood = () => {
               key={index}
               title={item.title}
               category={item.category_name}
-              location={item.lowest_sect_name}
+              location={item.addr_name}
               created_at={item.created_at}
               onClick={() => navigate(`/post/${item.post_id}`)}
             />

@@ -5,6 +5,7 @@ type ProductData = {
   image: File[]
   seller_id: number
   seller_location: number
+  seller_h_code: string
   title: string
   price: number
   contents: string
@@ -14,9 +15,12 @@ type ProductData = {
   classif_id: number
 }
 
-const getProducts = async () => {
+const getProducts = async (admCodes: string) => {
   try {
-    const { data } = await api.get<{ payload: ProductTypeWithLocation[] }>('/product');
+    const { data } = await api.get<{ payload: ProductTypeWithLocation[] }>('/product',
+    {
+      params: { admCodes },
+    });
     return data;
   } catch (e: any) {
     throw Error(e);
@@ -38,6 +42,7 @@ const createProduct = async ({
   image,
   seller_id,
   seller_location, 
+  seller_h_code,
   title,
   price,
   contents,
@@ -50,6 +55,7 @@ const createProduct = async ({
     {
       seller_id,
       seller_location,
+      seller_h_code,
       title,
       price,
       contents,

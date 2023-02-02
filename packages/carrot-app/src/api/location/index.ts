@@ -11,17 +11,21 @@ const getLocationList = async () => {
   }
 }
 
-const getLocationCoords = async (location_id: string) => {
+const getLocationHCode = async (location_id: number) => {
   try {
-    const { data } = await api.get(
-      '/location/coords',
-      {
-        params: {
-          location_id,
-        }
-      });
+    const { data } = await api.get<{ payload: { h_code: string } }>(`/location/${location_id}/h_code`);
 
-    return data;
+    return data.payload;
+  } catch (e: any) {
+    throw Error(e);
+  }
+}
+
+const getLocationCoords = async (location_id: number) => {
+  try {
+    const { data } = await api.get(`/location/${location_id}/coords`);
+
+    return data.payload;
   } catch (e: any) {
     throw Error(e);
   }
@@ -29,6 +33,7 @@ const getLocationCoords = async (location_id: string) => {
 
 const locationApi = {
   getLocationList,
+  getLocationHCode,
   getLocationCoords,
 }
 

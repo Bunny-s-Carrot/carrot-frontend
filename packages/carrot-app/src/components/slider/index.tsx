@@ -3,7 +3,7 @@ import theme from "@carrot/core/style/theme";
 import { useState } from 'react';
 import styled from "styled-components";
 import { getTouchEventData } from '../../infra/dom';
-import { useCustomContext } from '../../contexts/etc/customProvider';
+import { getArea1, getArea2, setArea1, setArea2 } from '../../infra/location/locationData';
 
 const getPercentage = (current: number, min: number, max: number) => 
   ((current - min) / (max - min)) * 100;
@@ -14,6 +14,7 @@ interface SliderProps {
   min: number
   max: number
   onChange: ChangeEventHandler<HTMLDivElement>
+  activeLocation: number
 }
 const Slider = (props: SliderProps) => {
   const [isTouching, setIsTouching] = useState(false);
@@ -22,24 +23,23 @@ const Slider = (props: SliderProps) => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
 
-  const { setArea } = useCustomContext();
 
   const handleSetPosition = useCallback((percentage: number) => {
     if (percentage >= 0 && percentage < 16) {
       thumbRef.current!.style.left = getLeft(0);
-      setArea(0);
+      props.activeLocation === 0 ? getArea1() !== 0 && setArea1(0) : getArea2() !== 0 && setArea2(0);
     } else if (percentage >= 16 && percentage < 50) {
       thumbRef.current!.style.left = getLeft(33);
-      setArea(1);
+      props.activeLocation === 0 ? getArea1() !== 1 &&setArea1(1) : getArea2() !== 1 &&setArea2(1);
     } else if (percentage >= 50 && percentage < 83) {
       thumbRef.current!.style.left = getLeft(66);
-      setArea(2);
+      props.activeLocation === 0 ? getArea1() !== 2 && setArea1(2) : getArea2() !== 2 && setArea2(2);
     } else {
       thumbRef.current!.style.left = getLeft(100);
-      setArea(3);
+      props.activeLocation === 0 ? getArea1() !== 3 && setArea1(3) : getArea2() !== 3 && setArea2(3);
     }
     
-  }, [setArea]);
+  }, [props.activeLocation]);
 
   const getNewPercentage = useCallback((e: MouseEvent | TouchEvent) => {
     let newX = getTouchEventData(e).clientX - sliderRef.current?.getBoundingClientRect().left!;

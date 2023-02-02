@@ -10,7 +10,7 @@ export interface PostType  {
     empa: number;
     heart: number;
     created_at: any;
-    lowest_sect_name: string;
+    addr_name: string;
     category_name: string;
 }   
 
@@ -24,7 +24,7 @@ export interface CreatePostType {
 export interface CommentType {
     comment_id: number;
     name: string;
-    lowest_sect_name: string;
+    addr_name: string;
     created_at: any;
     comment: string;
     likes: number;

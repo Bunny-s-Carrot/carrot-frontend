@@ -20,6 +20,7 @@ const Home = () => {
   const productViewModel = useProductViewModel();
   const productList = productViewModel.products?.payload;
   const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
+  
   const LeftContent = (
     <LocationWrapper>
       <p>{productViewModel.activeLocation}</p>
@@ -51,10 +52,10 @@ const Home = () => {
               price={item.price}
               share={item.share}
               created_at={item.created_at}
-              seller_location={item.lowest_sect_name}
+              seller_location={item.addr_name}
               heart={item.heart}
               chat={item.chat}
-              onClick={() => navigate(`/product/${item.product_id}`, { state: {locationName: item.lowest_sect_name} })}
+              onClick={() => navigate(`/product/${item.product_id}`, { state: {locationName: item.addr_name} })}
             />
           ))}
         </Container>

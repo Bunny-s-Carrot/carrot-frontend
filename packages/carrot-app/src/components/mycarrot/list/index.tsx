@@ -35,7 +35,7 @@ const listdata = [
         icon : iconView
     },
     {
-        name : '당근가계부',
+        name : '바니가계부',
         icon : iconBook
     }]
 },

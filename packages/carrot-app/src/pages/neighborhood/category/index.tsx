@@ -18,20 +18,19 @@ const TopicBarDetailPage = () => {
   const container = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-
+    const containerEl = container.current!;
     const scrollfunction = () => {
       const high = container.current?.scrollTop;
       if (high !== undefined) {
         setScrollTop(high);
       }
     }
-
-    container.current?.addEventListener('scroll', scrollfunction);
+    containerEl.addEventListener('scroll', scrollfunction);
 
     return () => {
-      container.current?.removeEventListener('scroll', scrollfunction);
+      containerEl.removeEventListener('scroll', scrollfunction);
     }
-  }, [])
+  })
 
   return (
     <Container ref={container}>
@@ -57,7 +56,7 @@ const TopicBarDetailPage = () => {
             key={index}
             title={item.title}
             category={item.category_name}
-            location={item.lowest_sect_name}
+            location={item.addr_name}
             created_at={item.created_at}
             onClick={() => navigate(`/post/${item.post_id}`)}
           />

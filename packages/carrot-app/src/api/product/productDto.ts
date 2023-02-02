@@ -19,7 +19,7 @@ export interface ProductType {
 
 export interface ProductTypeWithLocation extends ProductType{
   ProductType: ProductType;
-  lowest_sect_name: string;
+  addr_name: string;
 }
 
 export interface ProductDetailType {

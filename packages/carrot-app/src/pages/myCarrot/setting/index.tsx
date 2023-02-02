@@ -108,8 +108,6 @@ const SettingPage = () => {
           settingViewModel.openModal(false);
           logout().then(res => res.status === 200
             && navigate('/'));
-          
-          
         }}
         buttonText="로그아웃"
       />}
