@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import styled, {css} from "styled-components"
 
 import useSetLocationViewModel from "./setLocation.viewModel";
-import { useCustomContext } from "../../contexts/etc/customProvider";
 
 import HeaderTemplate from "../../templates/headerTemplate";
 import Slider from "../../components/slider";
@@ -12,10 +11,10 @@ import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
 import closeIconWhite from '@carrot/core/assets/icon/close-white.svg';
 import addIcon from '@carrot/core/assets/icon/add.svg';
 import { getFrom } from '../../infra/from';
+import { getArea1, getArea2 } from "../../infra/location/locationData";
 
 
 const SetLocationPage = () => {
-  const { area } = useCustomContext();
   const navigate = useNavigate();
   const bottomDivRef = useRef<HTMLDivElement>(null);
   const bottomHeight = bottomDivRef.current?.offsetHeight;
@@ -48,7 +47,7 @@ const SetLocationPage = () => {
               setLocationViewModel.handleClickBoxLeft()}
             }
           >
-            <span>{locationInfo.lowest_sect_name}</span>
+            <span>{locationInfo.addr_name}</span>
             <div>
               <img
                 src={closeIconWhite}
@@ -59,7 +58,6 @@ const SetLocationPage = () => {
                 }
               />
             </div>
-            
           </LocationBoxLeft>
           <LocationBoxRight
             onClick={setLocationViewModel.handleClickBoxRight}
@@ -77,7 +75,7 @@ const SetLocationPage = () => {
                 />
               </div>
             : <>
-                <span>{locationInfo2.lowest_sect_name}</span>
+                <span>{locationInfo2.addr_name}</span>
                 <div onClick={(e) => {
                   e.stopPropagation()
                   setLocationViewModel.handleClickDeleteLocation(false)}
@@ -92,11 +90,15 @@ const SetLocationPage = () => {
         </MyLocations>
         <NeighborhoodLocation>
             {setLocationViewModel.locationData?.active_location === 0 
-              ? locationInfo.lowest_sect_name
-              : locationInfo2?.lowest_sect_name}과 근처 동네
+              ? locationInfo.addr_name
+              : locationInfo2?.addr_name
+            }과 근처 동네 {setLocationViewModel.count}개 
           </NeighborhoodLocation>
         <Slider
-          initial={(setLocationViewModel.areaData && setLocationViewModel.areaData!.area) ?? 0}
+          initial={setLocationViewModel.activeLocationAsNumber === 0
+            ? getArea1()
+            : getArea2()}
+          activeLocation={setLocationViewModel.activeLocationAsNumber}
           min={0}
           max={3}
           onChange={value => console.log(value)}
@@ -104,11 +106,11 @@ const SetLocationPage = () => {
         <InfoWrapper>
           🥕
           <span>
-            {area === 0
+            {setLocationViewModel.area === 0
             ? '가까운 동네'
-            : area === 1
+            : setLocationViewModel.area === 1
             ? '조금 가까운 동네'
-            : area === 2
+            : setLocationViewModel.area === 2
             ? '조금 먼 동네'
             : '먼 동네'}
           </span> 게시글을 볼 수 있어요.

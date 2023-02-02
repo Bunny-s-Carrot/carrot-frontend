@@ -7,8 +7,8 @@ const getAccessToken = async () => {
     const data = await axios.get('https://sgisapi.kostat.go.kr/OpenAPI3/auth/authentication.json',
     {
       params: {
-        consumer_key: '995afab0415047559fb7',
-        consumer_secret: 'cb4c5f6756d84a388f8e'
+        consumer_key: 'a0e77a3d2ca24b5498d9',
+        consumer_secret: '87d10dedba3a4b8ab74e'
       }
     })
 

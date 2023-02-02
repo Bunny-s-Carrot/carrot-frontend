@@ -62,6 +62,13 @@ const updateArea = async ({ user_id, key, area }: { user_id: number, key: number
   return response;
 }
 
+const getActiveLocation = async (user_id: number) => {
+  const { data } = await api.get<{payload: { active_location: number } }>(
+    `/user/${user_id}/active-location`
+  )
+
+  return data.payload;
+}
 
 const updateActiveLocation = async ({ user_id, bit}: ActiveLocationData) => {
   const response = await api.post(`/user/${user_id}/active-location/${bit}`)
@@ -75,6 +82,7 @@ const userApi = {
   deleteLocation,
   getArea,
   updateArea,
+  getActiveLocation,
   updateActiveLocation,
 }
 

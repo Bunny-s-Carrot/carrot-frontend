@@ -5,7 +5,7 @@ import locationApi from "../../api/location";
 import { LocationDataType } from "../../api/location/locationDto";
 import userApi from "../../api/user";
 import useJwtDecode from "../../hooks/auth/useJwtDecode";
-
+import { setActiveLocation } from "../../infra/location/locationData";
 
 
 const useFindLocationViewModel = () => {
@@ -38,18 +38,19 @@ const useFindLocationViewModel = () => {
       updateActiveLocation.mutate({
         user_id,
         bit: 1
-      })
+      });
 
       updateLocation.mutate({
         user_id,
         location: params.location_id,
         key: 2
-      })
+      });
 
-      navigate('/setlocation')
+      setActiveLocation(params.addr_name);
+      navigate('/setlocation');
     } else {
       navigate('/auth/signup', 
-      { state: { id: params.location_id, fullName: params.full_name, name: params.lowest_sect_name } })
+      { state: { id: params.location_id, fullName: params.full_addr, name: params.addr_name } })
     }
   }
   
@@ -57,7 +58,7 @@ const useFindLocationViewModel = () => {
     if (address === undefined) return []
 
     return address.payload.filter(value => 
-      value.full_name?.includes(inputValue)
+      value.full_addr?.includes(inputValue)
     );
   }
 

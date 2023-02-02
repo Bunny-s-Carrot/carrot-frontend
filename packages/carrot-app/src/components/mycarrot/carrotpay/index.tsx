@@ -5,7 +5,7 @@ const CarrotPay = () => {
     return ( 
         <Contain>
             <Comment>
-                <span>당근하는  새로운  방법  ,  당근페이!</span>
+                <span>바니하는  새로운  방법  ,  바니페이!</span>
                 <Next src= {iconNext} alt="" />
 
             </Comment> 
