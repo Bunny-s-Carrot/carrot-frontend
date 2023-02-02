@@ -5,7 +5,7 @@ import locationApi from "../../api/location";
 import { LocationDataType } from "../../api/location/locationDto";
 import userApi from "../../api/user";
 import useJwtDecode from "../../hooks/auth/useJwtDecode";
-import { setActiveLocation } from "../../infra/location/locationData";
+import { setActiveLocation, setActiveLocationId } from "../../infra/location/locationData";
 
 
 const useFindLocationViewModel = () => {
@@ -47,6 +47,7 @@ const useFindLocationViewModel = () => {
       });
 
       setActiveLocation(params.addr_name);
+      setActiveLocationId(params.location_id);
       navigate('/setlocation');
     } else {
       navigate('/auth/signup', 
