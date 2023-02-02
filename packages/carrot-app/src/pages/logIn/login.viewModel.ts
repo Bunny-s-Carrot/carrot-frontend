@@ -3,7 +3,7 @@ import AuthContext from "../../contexts/auth/authProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import authApi from "../../api/auth";
-import { getAdmCodes, getArea1, setActiveLocation, setAdmCodes, setArea1 } from "../../infra/location/locationData";
+import { getAdmCodes, getArea1, setActiveLocation, setActiveLocationId, setAdmCodes, setArea1 } from "../../infra/location/locationData";
 
 const useLoginViewModel = () => {
 
@@ -28,7 +28,12 @@ const useLoginViewModel = () => {
       setActiveLocation(
         locationData.active_location === 1
         ? locationData.location_name2
-        : locationData.location_name)
+        : locationData.location_name);
+      setActiveLocationId(
+        locationData.active_location === 1
+        ? locationData.location2
+        : locationData.location
+      );
       navigate(from, { replace: true });
 
     }

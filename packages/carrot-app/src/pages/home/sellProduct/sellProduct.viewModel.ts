@@ -29,7 +29,7 @@ const useSellProductViewModel = () => {
 
   const seller_id = useMemo(() => getId(), [getId]);
   const seller_location = useMemo(() => getActiveLocationId() as string, [])
-  const { data: hCodeData, isSuccess: getHCodeSuccess } = useQuery([`location/${seller_location}/h_code`],
+  const { data: hCodeData, isSuccess: getHCodeSuccess } = useQuery([`location/${seller_location}/adm_cd`],
     () => locationApi.getLocationHCode(parseInt(seller_location)));
 
   const activeLocation = useMemo(() => getActiveLocation(), []);
@@ -62,7 +62,7 @@ const useSellProductViewModel = () => {
       image: imageFiles,
       seller_id,
       seller_location: Number(seller_location),
-      seller_h_code: (getHCodeSuccess && hCodeData?.h_code) as string,
+      seller_adm_cd: (getHCodeSuccess && hCodeData?.adm_cd) as string,
       title,
       price: price === '' ? 0 : parseInt(price),
       contents,
