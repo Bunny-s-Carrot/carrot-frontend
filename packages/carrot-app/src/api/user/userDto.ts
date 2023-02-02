@@ -21,5 +21,12 @@ export interface UserLocationType {
     x_coord: number
     y_coord: number
   }
-  location_info2: any
+  location_info2: {
+    addr_name: string
+    adm_cd: number
+    full_addr: string
+    location_id: number
+    x_coord: number
+    y_coord: number
+  }
 }
