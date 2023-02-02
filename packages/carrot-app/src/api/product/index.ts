@@ -5,7 +5,7 @@ type ProductData = {
   image: File[]
   seller_id: number
   seller_location: number
-  seller_h_code: string
+  seller_adm_cd: string
   title: string
   price: number
   contents: string
@@ -42,7 +42,7 @@ const createProduct = async ({
   image,
   seller_id,
   seller_location, 
-  seller_h_code,
+  seller_adm_cd,
   title,
   price,
   contents,
@@ -55,7 +55,7 @@ const createProduct = async ({
     {
       seller_id,
       seller_location,
-      seller_h_code,
+      seller_adm_cd,
       title,
       price,
       contents,
