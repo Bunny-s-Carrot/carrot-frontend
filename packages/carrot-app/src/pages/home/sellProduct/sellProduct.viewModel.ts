@@ -1,10 +1,11 @@
 import { useMemo, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCustomContext } from "../../../contexts/etc/customProvider";
-import { getActiveLocation } from "../../../infra/location/activeLocation";
-import { useMutation } from "@tanstack/react-query";
+import { getActiveLocation, getActiveLocationId } from "../../../infra/location/locationData";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import productApi from "../../../api/product";
 import useJwtDecode from "../../../hooks/auth/useJwtDecode";
+import locationApi from "../../../api/location";
 
 interface ImageType {
   data: File,
@@ -24,11 +25,14 @@ const useSellProductViewModel = () => {
   const [classifId, setClassifId] = useState<number>(data ? data.classifId : 0);
 
   const { userLatLng } = useCustomContext();
-  const { getId, getLocation } = useJwtDecode();
+  const { getId } = useJwtDecode();
 
   const seller_id = useMemo(() => getId(), [getId]);
-  const seller_location = useMemo(() => getLocation(), [getLocation]);
-  const activeLocation = useMemo(() => getActiveLocation(), [])
+  const seller_location = useMemo(() => getActiveLocationId() as string, [])
+  const { data: hCodeData, isSuccess: getHCodeSuccess } = useQuery([`location/${seller_location}/h_code`],
+    () => locationApi.getLocationHCode(parseInt(seller_location)));
+
+  const activeLocation = useMemo(() => getActiveLocation(), []);
 
   const createProduct = useMutation(productApi.createProduct);
 
@@ -57,7 +61,8 @@ const useSellProductViewModel = () => {
     createProduct.mutate({
       image: imageFiles,
       seller_id,
-      seller_location,
+      seller_location: Number(seller_location),
+      seller_h_code: (getHCodeSuccess && hCodeData?.h_code) as string,
       title,
       price: price === '' ? 0 : parseInt(price),
       contents,

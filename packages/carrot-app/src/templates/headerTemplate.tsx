@@ -57,7 +57,7 @@ const Title = styled.div<{ noBorderBottom?: boolean }>`
 
 const LeftContent = styled.div`
   display: flex;
-  ${theme.typography.body2};
+  ${theme.typography.body1};
   font-weight: bold;
   gap: 2rem;
 

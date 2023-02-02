@@ -52,7 +52,7 @@ const FindLocationPage = () => {
                   findLocationViewModel.handleClickAddress(item)
                 }}
               >
-                <span>{item.full_name}</span>
+                <span>{item.full_addr}</span>
               </li>
               ))}
             </ul>
@@ -68,7 +68,7 @@ export default FindLocationPage;
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  padding: 1.6rem;
+  padding: 3.2rem 1.6rem;
   background: white;
 `
 const SearchWrapper = styled.div`
