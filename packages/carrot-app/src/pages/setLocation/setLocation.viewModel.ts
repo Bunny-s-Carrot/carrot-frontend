@@ -64,9 +64,9 @@ const useSetLocationViewModel = () => {
 
   const handleClickBoxLeft = () => {
     if (locationData?.active_location === 1) {
-      setActiveLocation(locationInfo.addr_name);
+      setActiveLocation(locationInfo!.addr_name);
       setActiveLocationAsNumber(0);
-      setActiveLocationId(locationInfo.location_id);
+      setActiveLocationId(locationInfo!.location_id);
       setArea(getArea1());
       updateActiveLocation.mutate({
         user_id,
@@ -135,6 +135,7 @@ const useSetLocationViewModel = () => {
   const selectCoords = useCallback((): number[] => {
     let xCoord = locationData?.active_location === 0 ? locationData?.location_info?.x_coord : locationData?.location_info2?.x_coord
     let yCoord = locationData?.active_location === 0 ? locationData?.location_info?.y_coord : locationData?.location_info2?.y_coord
+
     return [xCoord, yCoord];
   }, [locationData?.active_location, locationData?.location_info?.x_coord, locationData?.location_info?.y_coord, locationData?.location_info2?.x_coord, locationData?.location_info2?.y_coord])
 

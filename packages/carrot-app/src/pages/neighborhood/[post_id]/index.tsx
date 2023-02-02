@@ -145,7 +145,7 @@ const PostDetailPage = () => {
       <img src={imageIcon} alt="" />
       <img src={locationIcon} alt="" />
       <Preinput ref={precommentRef} commentpreview={commentpreview}>
-        {PostDetailViewModel.content.length == 0 ? '댓글을 입력해주세요.' : PostDetailViewModel.content}</Preinput>
+        {PostDetailViewModel.content.length === 0 ? '댓글을 입력해주세요.' : PostDetailViewModel.content}</Preinput>
 </Bottom>
 <WriteComment commentopen={isOpenCommentbox} ref={postcommentRef}>
   <form 

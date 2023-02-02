@@ -47,7 +47,7 @@ const SetLocationPage = () => {
               setLocationViewModel.handleClickBoxLeft()}
             }
           >
-            <span>{locationInfo.addr_name}</span>
+            <span>{locationInfo!.addr_name}</span>
             <div>
               <img
                 src={closeIconWhite}
@@ -90,7 +90,7 @@ const SetLocationPage = () => {
         </MyLocations>
         <NeighborhoodLocation>
             {setLocationViewModel.locationData?.active_location === 0 
-              ? locationInfo.addr_name
+              ? locationInfo!.addr_name
               : locationInfo2?.addr_name
             }과 근처 동네 {setLocationViewModel.count}개 
           </NeighborhoodLocation>

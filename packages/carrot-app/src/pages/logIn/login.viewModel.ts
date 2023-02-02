@@ -3,7 +3,7 @@ import AuthContext from "../../contexts/auth/authProvider";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import authApi from "../../api/auth";
-import { setActiveLocation } from "../../infra/location/locationData";
+import { getAdmCodes, getArea1, setActiveLocation, setAdmCodes, setArea1 } from "../../infra/location/locationData";
 
 const useLoginViewModel = () => {
 
@@ -18,11 +18,13 @@ const useLoginViewModel = () => {
     onSuccess: ({ data }) => {
       const token = { token: data?.token }
       const locationData = data?.locationData;
-      
       setAuth(token);
-
       setEmail('');
       setPassword('');
+      if (!getAdmCodes()) {
+        setAdmCodes(["'" + locationData.admCode + "'"]);
+      }
+      if (!getArea1()) setArea1(0)
       setActiveLocation(
         locationData.active_location === 1
         ? locationData.location_name2
@@ -50,3 +52,7 @@ const useLoginViewModel = () => {
 }
 
 export default useLoginViewModel
+
+function getArea() {
+  throw new Error("Function not implemented.");
+}

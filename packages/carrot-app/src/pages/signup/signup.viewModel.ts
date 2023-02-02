@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query"
 import authApi from "../../api/auth";
-import { setActiveLocation } from "../../infra/location/locationData";
+import { setActiveLocation, setAdmCodes, setArea1 } from "../../infra/location/locationData";
 
 
 
@@ -30,6 +30,8 @@ const useSignupViewModel = () => {
         onSuccess: () => {
           alert('등록 성공');
           setActiveLocation(locationData.name)
+          setArea1(0)
+          setAdmCodes(["'" + locationData.admCode + "'"])
           navigate('/home');
 
         }

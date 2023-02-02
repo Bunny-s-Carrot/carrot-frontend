@@ -50,7 +50,7 @@ const useFindLocationViewModel = () => {
       navigate('/setlocation');
     } else {
       navigate('/auth/signup', 
-      { state: { id: params.location_id, fullName: params.full_addr, name: params.addr_name } })
+      { state: { id: params.location_id, fullName: params.full_addr, name: params.addr_name, admCode: params.adm_cd } })
     }
   }
   

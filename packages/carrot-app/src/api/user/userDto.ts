@@ -13,6 +13,13 @@ export interface UserLocationType {
   location: number
   location2: number
   active_location: number
-  location_info: any
+  location_info: {
+    addr_name: string
+    adm_cd: number
+    full_addr: string
+    location_id: number
+    x_coord: number
+    y_coord: number
+  }
   location_info2: any
 }
