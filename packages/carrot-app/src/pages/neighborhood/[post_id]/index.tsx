@@ -72,6 +72,7 @@ const PostDetailPage = () => {
 
 
   return (
+    <>
       <HeaderTemplate
       leftContent={leftContent}
       onClickLeft={() => navigate(-1)}
@@ -138,46 +139,46 @@ const PostDetailPage = () => {
             }
           )}
         </CommentContainer>
-        </Container>
-        <Bottom commentopen={isOpenCommentbox}>
-              <img src={imageIcon} alt="" />
-              <img src={locationIcon} alt="" />
-              <Preinput ref={precommentRef} commentpreview={commentpreview}>
-                {PostDetailViewModel.content.length === 0 ? '댓글을 입력해주세요.' : PostDetailViewModel.content}</Preinput>
-        </Bottom>
-        <WriteComment commentopen={isOpenCommentbox} ref={postcommentRef}>
-          <form 
-            id="content"
-            onSubmit={(e) => {
-              e.preventDefault();
-              PostDetailViewModel.commmentSubmit();
-            }}
-            >
-            <input 
-              type="text" 
-              placeholder='댓글을 입력해주세요.' 
-              ref={commentinputRef}
-              onChange={(e) => {
-                PostDetailViewModel.setContent(e.target.value)
-                if (e.target.value.length !== 0) {
-                  setButtonvisible(true);
-                  SetCommentpreview(true);
-                } else {
-                  setButtonvisible(false);
-                  SetCommentpreview(false);
-                }
-                }}/>
-          </form>
-          <div className="sub">
-            <Img src={imageIcon} alt="" />
-            <Img src={locationIcon} alt="" />
-            <SubmitBtn type="submit" form="content" visible={buttonvisible}>
-              <img src={uparrowIcon} alt="" className='submitlogo'/>
-            </SubmitBtn>
-          </div>
-        </WriteComment>
-        
+        </Container>        
       </HeaderTemplate>
+      <Bottom commentopen={isOpenCommentbox}>
+      <img src={imageIcon} alt="" />
+      <img src={locationIcon} alt="" />
+      <Preinput ref={precommentRef} commentpreview={commentpreview}>
+        {PostDetailViewModel.content.length == 0 ? '댓글을 입력해주세요.' : PostDetailViewModel.content}</Preinput>
+</Bottom>
+<WriteComment commentopen={isOpenCommentbox} ref={postcommentRef}>
+  <form 
+    id="content"
+    onSubmit={(e) => {
+      e.preventDefault();
+      PostDetailViewModel.commmentSubmit();
+    }}
+    >
+    <input 
+      type="text" 
+      placeholder='댓글을 입력해주세요.' 
+      ref={commentinputRef}
+      onChange={(e) => {
+        PostDetailViewModel.setContent(e.target.value)
+        if (e.target.value.length !== 0) {
+          setButtonvisible(true);
+          SetCommentpreview(true);
+        } else {
+          setButtonvisible(false);
+          SetCommentpreview(false);
+        }
+        }}/>
+  </form>
+  <div className="sub">
+    <Img src={imageIcon} alt="" />
+    <Img src={locationIcon} alt="" />
+    <SubmitBtn type="submit" form="content" visible={buttonvisible}>
+      <img src={uparrowIcon} alt="" className='submitlogo'/>
+    </SubmitBtn>
+  </div>
+  </WriteComment>
+</>
   );
 };
 
@@ -186,6 +187,7 @@ export default PostDetailPage;
 const Container = styled.div`
 height: 100%;
 overflow: scroll;
+padding-bottom: 6.4rem;
 `;
 
 const Category = styled.div`
@@ -281,7 +283,7 @@ width: 100%;
 height: 6.4rem;
 padding: 0 4px; 
 background: white;
-position: sticky;
+position: absolute;
 bottom: 0;
 border-top: 1px solid ${theme.colors.grey30};
 display: ${props => props.commentopen ? 'none' : 'flex'};

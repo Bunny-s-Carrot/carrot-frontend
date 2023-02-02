@@ -61,6 +61,7 @@ const RecommentPage = () => {
     )
 
     return (
+      <>
         <HeaderTemplate 
           leftContent={leftContent}
           onClickLeft={() => navigate(-1)}
@@ -85,7 +86,8 @@ const RecommentPage = () => {
               } else return null
             })}
           </Container>
-          <Bottom commentopen={isOpenCommentbox}>
+        </HeaderTemplate>
+        <Bottom commentopen={isOpenCommentbox}>
               <img src={imageIcon} alt="" />
               <img src={locationIcon} alt="" />
               <Preinput ref={precommentRef} commentpreview={commentpreview}>
@@ -122,7 +124,7 @@ const RecommentPage = () => {
               </SubmitBtn>
             </div>
           </WriteComment>
-        </HeaderTemplate>
+      </>
     )
 }
 
@@ -144,7 +146,7 @@ width: 100%;
 height: 6.4rem;
 padding: 0 4px; 
 background: white;
-position: sticky;
+position: absolute;
 bottom: 0;
 border-top: 1px solid ${theme.colors.grey30};
 display: ${props => props.commentopen ? 'none' : 'flex'};

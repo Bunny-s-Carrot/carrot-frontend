@@ -18,6 +18,7 @@ export interface CreatePostType {
     classif_id: number,
     writer_id: number,
     content: string,
+    image: File[]
 }
 
 export interface CommentType {

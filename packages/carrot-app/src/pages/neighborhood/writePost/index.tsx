@@ -5,8 +5,10 @@ import theme from "@carrot/core/style/theme";
 import HeaderTemplate from "../../../templates/headerTemplate";
 import Panel from "../../../components/panel";
 import backIcon from "@carrot/core/assets/icon/back-arrow.svg";
+import cancelIcon from '@carrot/core/assets/icon/cancel.svg';
 import useWritePostViewModel from "./writePost.viewModel";
 import Modal from "../../../components/neighborhood/modal";
+import FileInput from "@carrot/core/atoms/input/fileInput";
 
 const WritePostPage = () => {
   const navigate = useNavigate();
@@ -36,6 +38,7 @@ const WritePostPage = () => {
     controlModal(true);
   }, []);
 
+
   return (
     <>
       <HeaderTemplate leftContent={leftContent} rightContent={rightContent}>
@@ -52,6 +55,18 @@ const WritePostPage = () => {
             placeholder="연희동 관련된 질문이나 이야기를 해보세요."
             onChange={(e) => writePostViewModel.setContent(e.target.value)}
           />
+          <ThumbnailsWrapper>
+              {writePostViewModel.images.length > 0 &&
+                writePostViewModel.images.map((image, index) => (
+                  <Thumbnail key={index}>
+                    <img src={image.url} alt='uploadedImage'/>
+                    <img
+                      src={cancelIcon}
+                      alt='cancelIcon'
+                      onClick={() => writePostViewModel.deleteImage(index)} />
+                  </Thumbnail>
+              ))}
+            </ThumbnailsWrapper>
         </form>
       </HeaderTemplate>
       <Modal
@@ -59,7 +74,16 @@ const WritePostPage = () => {
         openModal={openModal}
         controlModal={controlModal}
       />
+      <Bottom>
+        <FileInput
+          accept="image/*"
+          multiple
+          onChange={writePostViewModel.uploadImage}>
+          사진
+        </FileInput>
+      </Bottom>
     </>
+    
   );
 };
 
@@ -104,3 +128,60 @@ const Content = styled.textarea`
     outline: none;
   }
 `;
+
+const Bottom = styled.div`
+background: white;
+border-top: 1px solid ${theme.colors.grey30};
+width: 100%;
+height: 5rem;
+position: absolute;
+bottom: 0;
+z-index: 4;
+display: flex;
+align-items: center;
+
+span {
+  font-size: 18px;
+  background: skyblue;
+  margin: 10px;
+  padding: 10px;
+}
+`
+
+const ThumbnailsWrapper = styled.div`
+  width: 100%;
+  height: 10rem;
+  padding: 0.8rem 1.4rem;
+  display: flex;
+  gap: 1.4rem;
+  overflow-x: scroll;
+  ${theme.option.hiddenScroll};
+  position: absolute;
+  bottom: 0;
+`
+const Thumbnail = styled.div`
+  position: relative;
+  width: 7rem;
+  height: 7rem;
+  flex-shrink: 0;
+  background: ${theme.colors.grey10};
+  border-radius: 0.4rem;
+
+  img {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.4rem;
+
+    :last-of-type {
+      position: absolute;
+      top: -0.6rem;
+      right: -0.6rem;
+      z-index: 10;
+      width: 2rem;
+      height: 2rem;
+      background: white;
+      border-radius: 50%;
+    }
+  }
+`
