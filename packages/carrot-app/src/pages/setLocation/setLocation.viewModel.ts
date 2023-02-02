@@ -102,6 +102,7 @@ const useSetLocationViewModel = () => {
 
       } else {
         setActiveLocation(locationInfo2!.addr_name);
+        setActiveLocationId(locationInfo2!.location_id);
         setActiveLocationAsNumber(0);
         updateLocation.mutate({
           user_id,
@@ -122,6 +123,7 @@ const useSetLocationViewModel = () => {
       }
     } else {
       setActiveLocation(locationInfo!.addr_name);
+      setActiveLocationId(locationInfo!.location_id);
       setActiveLocationAsNumber(0);
       updateActiveLocation.mutate({
         user_id,
