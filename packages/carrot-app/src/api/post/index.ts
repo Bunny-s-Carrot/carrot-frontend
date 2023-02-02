@@ -57,7 +57,7 @@ const createComment = async ({
   content
 }: WriteCommentType) => {
   try {
-    const result = await api.post('/post/:post_id',
+    const result = await api.post('/post/:post_id/comment',
     {
       post_id,
       writer_id,

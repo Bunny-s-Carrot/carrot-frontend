@@ -186,6 +186,7 @@ export default PostDetailPage;
 const Container = styled.div`
 height: 100%;
 overflow: scroll;
+padding-bottom: 6.4rem;
 `;
 
 const Category = styled.div`
@@ -281,7 +282,7 @@ width: 100%;
 height: 6.4rem;
 padding: 0 4px; 
 background: white;
-position: sticky;
+position: absolute;
 bottom: 0;
 border-top: 1px solid ${theme.colors.grey30};
 display: ${props => props.commentopen ? 'none' : 'flex'};
