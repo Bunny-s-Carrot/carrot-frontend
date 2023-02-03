@@ -44,13 +44,12 @@ const usePostDetailViewModel = () => {
     })
   }
 
-
   return {
     data,
     content,
     setContent,
     commmentSubmit,
-    recommmentSubmit
+    recommmentSubmit,
   }
 }
 

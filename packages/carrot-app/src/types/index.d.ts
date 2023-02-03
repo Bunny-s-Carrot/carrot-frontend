@@ -7,5 +7,6 @@ declare global {
 }
 
 declare const OpenGallery = { postMessage }
+declare const flutter_inappwebview = { claaHandler }
 
 export {}
