@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
@@ -7,12 +7,16 @@ import Panel from "../../../components/panel";
 import backIcon from "@carrot/core/assets/icon/back-arrow.svg";
 import cancelIcon from '@carrot/core/assets/icon/cancel.svg';
 import useWritePostViewModel from "./writePost.viewModel";
+import usePostViewModel from "../post.viewModel";
 import Modal from "../../../components/neighborhood/modal";
 import FileInput from "@carrot/core/atoms/input/fileInput";
 
 const WritePostPage = () => {
   const navigate = useNavigate();
   const writePostViewModel = useWritePostViewModel();
+  const PostViewModel = usePostViewModel();
+  const locationnow = PostViewModel.activeLocation;
+  const inputquery = `${locationnow} 관련된 질문이나 이야기를 해보세요.`
 
   const leftContent = (
     <>
@@ -38,11 +42,17 @@ const WritePostPage = () => {
     controlModal(true);
   }, []);
 
+  const [categorynow, setCategorynow] = useState(null);
+  // const [orange, setOrange] = useState(null);
+  // if (orange !== null && document.querySelector(`.${orange}`) !== null) {
+  //   document.querySelector(`.${orange}`).style.color = 
+  // }
+  
 
   return (
     <>
       <HeaderTemplate leftContent={leftContent} rightContent={rightContent}>
-        <StyledPanel type="CUSTOM">게시글의 주제를 선택해주세요</StyledPanel>
+        <StyledPanel type="CUSTOM" onClick={() => controlModal(true)}>{categorynow === null ? '게시글의 주제를 선택해주세요' : categorynow }</StyledPanel>
         <form
           id="content"
           onSubmit={(e) => {
@@ -52,7 +62,7 @@ const WritePostPage = () => {
         >
           <Content
             name="content"
-            placeholder="연희동 관련된 질문이나 이야기를 해보세요."
+            placeholder={inputquery}
             onChange={(e) => writePostViewModel.setContent(e.target.value)}
           />
           <ThumbnailsWrapper>
@@ -73,6 +83,11 @@ const WritePostPage = () => {
         type="CategoryModal"
         openModal={openModal}
         controlModal={controlModal}
+        optionClick={(e:any) => {
+          setCategorynow(e.target.innerHTML);
+          console.log(e.target.style.className="click")
+          controlModal(false);
+        }}
       />
       <Bottom>
         <FileInput
