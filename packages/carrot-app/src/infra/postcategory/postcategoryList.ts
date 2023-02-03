@@ -15,6 +15,22 @@ export const postcategory = (categoryNumber: string | undefined) => {
   }
 }
 
+export const reversePostcategory = (categoryName: string) => {
+  switch (categoryName) {
+    case "동네질문": return 2001;
+    case "동네사건사고": return 2002;
+    case "겨울간식": return 2003;
+    case "동네소식": return 2004;
+    case "동네맛집": return 2005;
+    case "취미생활": return 2006;
+    case "일상": return 2007;
+    case "분실/실종센터": return 2008;
+    case "해주세요": return 2009;
+    case "동네사진전": return 2010;
+    default: return 2001;
+  }
+}
+
 export const postcategoryList = [
   {
     title: "주제",
