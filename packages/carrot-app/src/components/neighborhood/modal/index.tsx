@@ -1,3 +1,4 @@
+import { useState } from "react";
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
 import { useNavigate } from 'react-router-dom';
@@ -10,11 +11,13 @@ interface Props {
   type: any;
   openModal: boolean;
   controlModal: any;
+  optionClick?: any;
 }
 
-const Modal = ({ type, openModal, controlModal }: Props) => {
+const Modal = ({ type, openModal, controlModal, optionClick }: Props) => {
   const postViewModel = usePostViewModel();
   const navigate = useNavigate();
+  const [orange, setOrange] = useState<number>(0);
 
   if (type === "TopicModal") {
     return (
@@ -62,7 +65,13 @@ const Modal = ({ type, openModal, controlModal }: Props) => {
             <div className="grey">기본 주제</div>
             {postcategoryList.map((item, index) => {
               if (index > 2) {
-                return <Topicitem key={index}>{item.title}</Topicitem>;
+                return <Topicitem 
+                key={index} 
+                onClick={(e:any) => {
+                  setOrange(index)
+                  console.log(orange)
+                }}
+                ref={null}>{index === orange ? `✔${item.title}` : `${item.title}`}</Topicitem>;
               } else {
                 return "";
               }
