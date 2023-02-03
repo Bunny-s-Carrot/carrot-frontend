@@ -6,7 +6,7 @@ export interface UserType {
   location2: number
   active_location: number
   manner_temp: number
-  lowest_sect_name: string
+  addr_name: string
 }
 
 export interface UserLocationType {
