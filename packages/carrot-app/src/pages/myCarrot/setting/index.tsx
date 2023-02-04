@@ -1,16 +1,14 @@
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 import HeaderTemplate from "../../../templates/headerTemplate";
 import backIcon from '@carrot/core/assets/icon/back-arrow.svg';
 import Modal from "../../../components/modal";
 import useSettingViewModel from "./setting.viewModel";
-import useToken from "../../../hooks/auth/useToken";
-import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
 
 const SettingPage = () => {
   const navigate = useNavigate();
   const settingViewModel = useSettingViewModel();
-  const { logout } = useToken();
   const leftContent = 
   <>
     <img src={backIcon} alt='backIcon' />
@@ -90,11 +88,18 @@ const SettingPage = () => {
               <span>오픈소스 라이선스</span>
             </ListItem>
             <ListItem
-              onClick={() => settingViewModel.openModal(true)}
+              onClick={() => {
+                settingViewModel.setClickOn('logout')
+                settingViewModel.openModal(true)}}
             >
               <span>로그아웃</span>
             </ListItem>
-            <ListItem>
+            <ListItem
+              onClick={() => {
+                settingViewModel.setClickOn('withdraw')
+                settingViewModel.openModal(true);
+              }}
+            >
               <span>틸퇴하기</span>
             </ListItem> 
           </ul>
@@ -102,13 +107,11 @@ const SettingPage = () => {
       </HeaderTemplate>
       {settingViewModel.isOpenModal &&
       <Modal
-        query='로그아웃 하시겠습니까?'
+        query={settingViewModel.clickOn === 'logout'
+          ? '로그아웃 하시겠습니까?'
+          : '정말 탈퇴하시겠습니까?'}
         onClickLeft={() => settingViewModel.openModal(false)}
-        onClickRight={() => {
-          settingViewModel.openModal(false);
-          logout().then(res => res.status === 200
-            && navigate('/'));
-        }}
+        onClickRight={settingViewModel.handleClickModalRight}
         buttonText="로그아웃"
       />}
     </>

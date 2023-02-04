@@ -1,28 +1,16 @@
 import styled from "styled-components";
 import FloatingButton from "../../components/floatingButton";
 import NavBar from "../../components/navBar"
-import { useEffect, useState } from "react";
 import Button from "@carrot/core/atoms/button";
-
+import { ToastContainer } from "react-toastify";
+import useAroundViewModel from "./around.viewModel";
 const AroundPage = () => {
-  const [isAppReady, setIsAppReady] = useState(false)
-  useEffect(() => {
-    window.addEventListener('flutterInAppWebViewPlatformReady', () => {
-      setIsAppReady(true);
-    })
-  })
-
-  const handleClickInput = () => {
-    if (!isAppReady) {
-      window.flutter_inappwebview.callHandler('keyboardHeight')
-        .then((res: any) => alert(JSON.stringify(res)))
-    }
-  }
+  const aroundViewModel = useAroundViewModel();
   return (
     <Wrapper>
       <StyledButton
         buttonType="CARROT"
-        onClick={handleClickInput}
+        onClick={aroundViewModel.handleClickInput}
       >
         테스트
       </StyledButton>

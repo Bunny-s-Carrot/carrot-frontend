@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 import reset from 'styled-reset'
+import 'react-toastify/dist/ReactToastify.css';
 
 const GlobalStyle = createGlobalStyle`
 @font-face {
@@ -46,77 +47,21 @@ button{
         cursor: pointer;
     }
 }
-.transition-group {
-  position: relative;
-  height: calc(var(--vh, 1vh) * 100);
+.Toastify__toast-container {
+  width: 70%;
+  left: 50%;
+  top: 2rem;
+  transform: translateX(-50%);
 }
-
-.pageSlider-enter {
-  opacity: 0;
-  transform: scale(1.1);
+.Toastify__toast {
+  min-height: 3.2rem;
+  font-size: 1.4rem;
 }
-
-.pageSlider-enter-active {
-  opacity: 1;
-  transform: scale(1);
-  transition: opacity 300ms, transform 300ms;
-
+.Toastify__toast-body {
+  div:last-of-type {
+    display: flex;
+    align-items: center;
+  }
 }
-
-.pageSlider-exit {
-  opacity: 1;
-  transform: scale(1);
-}
-
-.pageSlider-exit-active {
-  opacity: 0;
-  transform: scale(0.9);
-  transition: opacity 300ms, transform 300ms;
-}
-.right-to-left-enter {
-  transform: translateX(100%);
-}
-.right-to-left-enter-active {
-  transform: translateX(0); 
-  transition: transform 200ms;
-  -webkit-transition: transform 200ms;
-  -webkit-transition: -webkit-transform 200ms;
-}      
-.right-to-left-exit {
-  transform: translateX(100%);
-}
-.right-to-left-exit-active {
-  transform: translateX(0); 
-  transition: transform 200ms;
-  -webkit-transition: transform 200ms;
-  -webkit-transition: -webkit-transform 200ms;
-}
-
-.right-to-left-exit {
-    transform: translateX(0);
-}
-.right-to-left-exit-active { 
-    transform: translateX(-100%);
-    transition:transform 200ms;
-
-    -webkit-transition: transform 200ms;
-    -webkit-transition: -webkit-transform 200ms;
-}      
-
-.left-to-right-enter { 
-    transform: translateX(-100%);
-}
-.left-to-right-enter-active {
-    transform: translateX(0);
-    transition:all 1s ease;
-}      
-
-.left-to-right-exit {
-    transform: translateX(0);
-}
-.left-to-right-exit-active {
-    transform: translateX(100%);
-    transition:all 1s ease;
-}      
 `
 export default GlobalStyle
