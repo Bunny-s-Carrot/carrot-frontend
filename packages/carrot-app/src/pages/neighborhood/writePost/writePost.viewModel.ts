@@ -1,5 +1,5 @@
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import postApi from '../../../api/post';
 import useJwtDecode from '../../../hooks/auth/useJwtDecode';
@@ -14,6 +14,7 @@ const useWritePostViewModel = () => {
 
   const [content, setContent] = useState("");
   const [category, setCategory] = useState<number | null>(null);
+  const fileInputRef = useRef<HTMLInputElement | null>(null)
   const { getId } = useJwtDecode();
   const writer_id = getId();
     
@@ -35,8 +36,8 @@ const useWritePostViewModel = () => {
 
   const [images, setImages] = useState<ImageType[]>([]);
 
-  const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileList = e.target.files;
+  const uploadImage = () => {
+    const fileList = fileInputRef.current?.files;
     
     if (fileList && fileList[0]) {
       for (let file of fileList) {
@@ -55,6 +56,7 @@ const useWritePostViewModel = () => {
 
     return {
         images,
+        fileInputRef,
         setContent,
         setCategory,
         handleClickSubmit,

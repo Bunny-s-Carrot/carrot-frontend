@@ -5,7 +5,7 @@ interface FileInputProps extends PropsWithChildren {
   className?: string
   accept?: string
   multiple?: boolean
-  onChange?: ChangeEventHandler<HTMLInputElement>
+  onChange?: () => void
   onClick?: () => void
 }
 
@@ -16,7 +16,8 @@ const FileInput = React.forwardRef<HTMLInputElement, FileInputProps>((props, ref
       htmlFor='file-input'
       onClick={props.onClick}>
       <input
-        name='file-input'
+        name='file-iput'
+        id='file-input'
         type='file'
         accept={props.accept}
         multiple={props.multiple}

@@ -104,6 +104,7 @@ const WritePostPage = () => {
         <FileInput
           accept="image/*"
           multiple
+          ref={writePostViewModel.fileInputRef}
           onChange={writePostViewModel.uploadImage}>
           사진
         </FileInput>

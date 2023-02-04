@@ -55,6 +55,8 @@ const SellProductPage = () => {
           <ImgaeWrapper>
             <StyledFileInput
               accept="image/*"
+              multiple
+              ref={sellProductViewModel.fileInputRef}
               onChange={sellProductViewModel.uploadImage}
               onClick={() => {
                 window.OpenGallery?.postMessage("Open Gallery")
