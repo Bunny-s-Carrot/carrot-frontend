@@ -32,6 +32,7 @@ const PostDetailPage = () => {
   const [isOpenCommentbox, OpenCommentbox] = useState<boolean>(false);
   const postcommentRef = useRef<HTMLDivElement>(null);
   const precommentRef = useRef<HTMLDivElement>(null);
+  const precommentRef1 = useRef<HTMLDivElement>(null);
   const commentinputRef = useRef<HTMLInputElement>(null);
   const [commentpreview, SetCommentpreview] = useState<boolean>(false);
   
@@ -41,8 +42,13 @@ const PostDetailPage = () => {
     if (isOpenCommentbox && !postcommentRef.current?.contains(target)) {
       OpenCommentbox(false);
     }
+
     if (e.target === precommentRef.current) {
       OpenCommentbox(true);
+      setTimeout(() => commentinputRef.current?.focus(),1);
+    } else if (e.target === precommentRef1.current) {
+      OpenCommentbox(true)
+      setTimeout(() => commentinputRef.current?.focus(),1);
     }
   }
 
@@ -89,7 +95,7 @@ const PostDetailPage = () => {
           />
           <div>
             <p>{results?.user.name}</p>
-            <span>{results?.user.lowest_sect_name}</span>
+            <span>{results?.user.addr_name}</span>
             <span>
               {" "}
               · {convertDateToSimple(results?.post.created_at)}
@@ -107,7 +113,7 @@ const PostDetailPage = () => {
             <Icon src={thumbIcon} />
             &nbsp; 공감하기
           </Btn>
-          <Btn>
+          <Btn ref={precommentRef1}>
             <Icon src={chatIcon} />
             &nbsp; 댓글쓰기
           </Btn>
@@ -323,6 +329,7 @@ input {
   border: none;
   padding: 0 5px;
   font-size: 18px;
+  caret-color: #ff6f00;
 
   :focus {
     outline: none;

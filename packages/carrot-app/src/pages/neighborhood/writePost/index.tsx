@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
@@ -7,12 +7,18 @@ import Panel from "../../../components/panel";
 import backIcon from "@carrot/core/assets/icon/back-arrow.svg";
 import cancelIcon from '@carrot/core/assets/icon/cancel.svg';
 import useWritePostViewModel from "./writePost.viewModel";
+import usePostViewModel from "../post.viewModel";
 import Modal from "../../../components/neighborhood/modal";
 import FileInput from "@carrot/core/atoms/input/fileInput";
+import { reversePostcategory } from '../../../infra/postcategory/postcategoryList';
+import { text } from 'node:stream/consumers';
 
 const WritePostPage = () => {
   const navigate = useNavigate();
   const writePostViewModel = useWritePostViewModel();
+  const PostViewModel = usePostViewModel();
+  const locationnow = PostViewModel.activeLocation;
+  const inputquery = `${locationnow} 관련된 질문이나 이야기를 해보세요.`
 
   const leftContent = (
     <>
@@ -38,11 +44,29 @@ const WritePostPage = () => {
     controlModal(true);
   }, []);
 
+  const [categorynow, setCategorynow] = useState(null);
+ 
+  const optionClick = (e: any) => {
+    setCategorynow(e.target.innerHTML)
+    controlModal(false);
+    writePostViewModel.setCategory(reversePostcategory(e.target.innerHTML));
+  }
+
+  const textarea = useRef<HTMLTextAreaElement>(null);
+  textarea.current?.addEventListener('keyup', () => {
+    let height = textarea.current!.scrollHeight;
+    textarea.current!.style.height = `${height}px`
+  })
 
   return (
     <>
-      <HeaderTemplate leftContent={leftContent} rightContent={rightContent}>
-        <StyledPanel type="CUSTOM">게시글의 주제를 선택해주세요</StyledPanel>
+      <StyledHeaderTemplate leftContent={leftContent} rightContent={rightContent}>
+        <StyledPanel 
+          type="CUSTOM" 
+          onClick={() => controlModal(true)}
+          >
+            {categorynow === null ? '게시글의 주제를 선택해주세요' : categorynow }
+        </StyledPanel>
         <form
           id="content"
           onSubmit={(e) => {
@@ -52,7 +76,8 @@ const WritePostPage = () => {
         >
           <Content
             name="content"
-            placeholder="연희동 관련된 질문이나 이야기를 해보세요."
+            ref={textarea}
+            placeholder={inputquery}
             onChange={(e) => writePostViewModel.setContent(e.target.value)}
           />
           <ThumbnailsWrapper>
@@ -68,11 +93,12 @@ const WritePostPage = () => {
               ))}
             </ThumbnailsWrapper>
         </form>
-      </HeaderTemplate>
+      </StyledHeaderTemplate>
       <Modal
         type="CategoryModal"
         openModal={openModal}
         controlModal={controlModal}
+        optionClick={optionClick}
       />
       <Bottom>
         <FileInput
@@ -88,6 +114,12 @@ const WritePostPage = () => {
 };
 
 export default WritePostPage;
+
+const StyledHeaderTemplate = styled(HeaderTemplate)`
+#content {
+  margin-bottom: 5rem;
+}
+`
 
 const Head = styled.span`
   font-size: 21px;
@@ -115,7 +147,7 @@ const StyledPanel = styled(Panel)`
 
 const Content = styled.textarea`
   width: 100%;
-  height: 100vh;
+  height: auto;
   border: none;
   padding: 18px 13px;
   font-size: 16.5px;
@@ -127,6 +159,10 @@ const Content = styled.textarea`
   :focus {
     outline: none;
   }
+
+  ::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
 const Bottom = styled.div`
@@ -136,7 +172,7 @@ width: 100%;
 height: 5rem;
 position: absolute;
 bottom: 0;
-z-index: 4;
+z-index: 11;
 display: flex;
 align-items: center;
 
@@ -156,8 +192,6 @@ const ThumbnailsWrapper = styled.div`
   gap: 1.4rem;
   overflow-x: scroll;
   ${theme.option.hiddenScroll};
-  position: absolute;
-  bottom: 0;
 `
 const Thumbnail = styled.div`
   position: relative;

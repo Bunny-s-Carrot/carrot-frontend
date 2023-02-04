@@ -13,6 +13,7 @@ const useWritePostViewModel = () => {
   const navigate = useNavigate();
 
   const [content, setContent] = useState("");
+  const [category, setCategory] = useState<number | null>(null);
   const { getId } = useJwtDecode();
   const writer_id = getId();
     
@@ -21,11 +22,11 @@ const useWritePostViewModel = () => {
   const handleClickSubmit = () =>  {
     const imageFiles = images.map(item => item.data);
 
-    content !== '' && writePost.mutate({
+    content !== '' && category !== null && writePost.mutate({
       image: imageFiles,
       writer_id,
       content,
-      classif_id: 2001
+      classif_id: category
     },
     {
         onSuccess: () => navigate('/neighborhood')
@@ -55,6 +56,7 @@ const useWritePostViewModel = () => {
     return {
         images,
         setContent,
+        setCategory,
         handleClickSubmit,
         uploadImage,
         deleteImage

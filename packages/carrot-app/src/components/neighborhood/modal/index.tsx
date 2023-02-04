@@ -1,20 +1,23 @@
+import { useState} from "react";
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
 import { useNavigate } from 'react-router-dom';
 import { postcategoryList } from "../../../infra/postcategory/postcategoryList";
 import closeIcon from "@carrot/core/assets/icon/close.svg";
-
 import usePostViewModel from "../../../pages/neighborhood/post.viewModel";
 
 interface Props {
   type: any;
   openModal: boolean;
   controlModal: any;
+  optionClick?: any;
 }
 
-const Modal = ({ type, openModal, controlModal }: Props) => {
+const Modal = ({ type, openModal, controlModal, optionClick }: Props) => {
   const postViewModel = usePostViewModel();
   const navigate = useNavigate();
+  const [orange, setOrange] = useState<number>(0);
+  
 
   if (type === "TopicModal") {
     return (
@@ -62,7 +65,14 @@ const Modal = ({ type, openModal, controlModal }: Props) => {
             <div className="grey">기본 주제</div>
             {postcategoryList.map((item, index) => {
               if (index > 2) {
-                return <Topicitem key={index}>{item.title}</Topicitem>;
+                return <Topicitem
+                key={index} 
+                className = {index === orange? 'orange' : 'black'}
+                onClick={(e:any) => {
+                  optionClick(e);
+                  setOrange(index);
+                }}
+                >{index === orange ? `✓ ${item.title}` : `${item.title}`}</Topicitem>;
               } else {
                 return "";
               }
@@ -107,7 +117,7 @@ const Container = styled.div`
   transform: translateY(1%);
   border-radius: 10px;
   left: 0;
-  z-index: 10;
+  z-index: 15;
   display: flex;
   flex-direction: column;
 
@@ -151,6 +161,14 @@ const List = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
+
+  .orange {
+    color : #ff6f00;
+  }
+
+  .black {
+    color: black;
+  }
 `;
 
 const Topicitem = styled.div`
@@ -163,3 +181,4 @@ const Topc = styled.div`
   font-size: 21px;
   padding: 30px 14px 25px 14px;
 `;
+

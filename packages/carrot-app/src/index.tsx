@@ -7,12 +7,18 @@ import GlobalStyle from "@carrot/core/style/globalStyle";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/auth/authProvider";
 import { CustomProvider } from "./contexts/etc/customProvider";
+import { ToastContainer } from "react-toastify";
 const root = ReactDOM.createRoot(
   document.getElementById("App") as HTMLElement
 );
 root.render(
   <React.StrictMode>
     <GlobalStyle />
+    <ToastContainer 
+      position="top-center"
+      hideProgressBar={true}
+      autoClose={2000}
+    />
     <ThemeProvider theme={theme}>
       <BrowserRouter basename="/">
         <AuthProvider>

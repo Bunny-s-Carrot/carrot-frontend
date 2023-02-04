@@ -3,7 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query"
 import authApi from "../../api/auth";
 import { setActiveLocation, setActiveLocationId, setAdmCodes, setArea1 } from "../../infra/location/locationData";
-
+import { toast } from 'react-toastify'
 
 
 const useSignupViewModel = () => {
@@ -28,7 +28,7 @@ const useSignupViewModel = () => {
       {email, password, name, locationId: locationData.id},
       {
         onSuccess: () => {
-          alert('등록 성공');
+          toast.success("회원가입이 완료되었습니다")
           setActiveLocation(locationData.name);
           setActiveLocationId(locationData.id);
           setArea1(0);
