@@ -47,12 +47,7 @@ const usePostDetailViewModel = () => {
     })
   }
 
-  const [heartnow, setHeartnow] = useState(false);
-
-
-
-  
-  const heart = useMutation(postApi.Heart);
+  const heart = useMutation(postApi.updateHeart);
   
   const Upheart = () => {
     heart.mutate({
@@ -70,6 +65,25 @@ const usePostDetailViewModel = () => {
     })
   }
 
+  const [empanow, setEmpanow] = useState(false);
+  const empa = useMutation(postApi.updateEmpa);
+  
+  const UpEmpa = () => {
+    empa.mutate({
+      user_id: writer_id,
+      post_id,
+      plus: true
+    })
+  }
+
+  const DownEmpa = () => {
+    empa.mutate({
+      user_id: writer_id,
+      post_id,
+      plus: false
+    })
+  }
+
   return {
     data,
     content,
@@ -80,8 +94,10 @@ const usePostDetailViewModel = () => {
     recommmentSubmit,
     Upheart,
     Downheart,
-    heartnow,
-    setHeartnow
+    UpEmpa,
+    DownEmpa,
+    empanow,
+    setEmpanow
   }
 }
 

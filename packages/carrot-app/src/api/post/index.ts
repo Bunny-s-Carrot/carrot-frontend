@@ -107,13 +107,31 @@ const getImageList = async (postId: string) => {
   }
 }
 
-const Heart = async ({
+const updateHeart = async ({
   post_id,
   user_id,
   plus
 }:HeartType) => {
   try {
     const result = await api.post(`/post/${post_id}/heart`,
+    {
+      post_id,
+      user_id,
+      plus
+    });
+    return result;
+  } catch (e:any) {
+    throw Error(e);
+  }
+}
+
+const updateEmpa = async ({
+  post_id,
+  user_id,
+  plus
+}:HeartType) => {
+  try {
+    const result = await api.post(`/post/${post_id}/empa`,
     {
       post_id,
       user_id,
@@ -133,7 +151,8 @@ const postApi = {
     createComment,
     createRecomment,
     getImageList,
-    Heart
+    updateHeart,
+    updateEmpa
 }
 
 export default postApi;
