@@ -11,16 +11,19 @@ import BellOffIcon from "@carrot/core/assets/icon/Notifications off.svg";
 import ShareIcon from "@carrot/core/assets/icon/Share.svg";
 import MoreIcon from "@carrot/core/assets/icon/More vert.svg";
 import thumbIcon from "@carrot/core/assets/icon/Thumb.svg";
-import heartIcon from "@carrot/core/assets/icon/heart-grey.svg";
+import heartgreyIcon from "@carrot/core/assets/icon/heart-grey.svg";
+import heartorangeIcon from "@carrot/core/assets/icon/heart-orange.svg";
 import chatIcon from "@carrot/core/assets/icon/chat-outline-grey.svg";
 import imageIcon from "@carrot/core/assets/icon/image-grey.svg";
 import locationIcon from "@carrot/core/assets/icon/location-grey.svg";
 import uparrowIcon from "@carrot/core/assets/icon/Arrow upward-white.svg";
+import Swiper from "../../../components/swiper/swiper";
 import { convertDateToSimple } from "@carrot/util/format";
 
 const PostDetailPage = () => {
   const navigate = useNavigate();
   const PostDetailViewModel = usePostDetailViewModel();
+  const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
   const results = PostDetailViewModel.data?.payload;
   let exist = true;
   let comment = results?.comment;
@@ -53,11 +56,13 @@ const PostDetailPage = () => {
   }
 
   useEffect(() => {
-    window.addEventListener('click', handleCommentbox);
-    return () => {
-      window.removeEventListener('click', handleCommentbox)
+    if (results?.heart === 1 && !PostDetailViewModel.heartnow) {
+      PostDetailViewModel.setHeartnow(true);
     }
-  })
+    window.removeEventListener('click',handleCommentbox);
+  },[])
+
+  window.addEventListener('click', handleCommentbox);
 
   const [buttonvisible, setButtonvisible] = useState<boolean>(false);
   
@@ -75,7 +80,6 @@ const PostDetailPage = () => {
       <img src={MoreIcon} alt="moreIcon" />
     </>
   );
-
 
   return (
     <>
@@ -106,6 +110,15 @@ const PostDetailPage = () => {
           {results?.post.content}
           <br />
           <br />
+          <ImageWrapper>
+            {PostDetailViewModel.getImageSuccess &&
+              <Swiper
+                items={PostDetailViewModel.ImageData.names.map((item: string) => 
+                  baseUrl + item
+                )} 
+              />
+            }  
+          </ImageWrapper>
           <Empa>조회 {results?.post.views}</Empa>
         </Content>
         <Buttons>
@@ -117,9 +130,19 @@ const PostDetailPage = () => {
             <Icon src={chatIcon} />
             &nbsp; 댓글쓰기
           </Btn>
-          <Btn>
-            <Icon src={heartIcon} />
-            &nbsp; 관심
+          <Btn 
+            now={PostDetailViewModel.heartnow}
+            onClick={() => {
+              if (PostDetailViewModel.heartnow) {
+                PostDetailViewModel.setHeartnow(false);
+                PostDetailViewModel.Downheart();
+              } else {
+                PostDetailViewModel.setHeartnow(true);
+                PostDetailViewModel.Upheart();
+              }
+            }}>
+            <Icon src={PostDetailViewModel.heartnow? heartorangeIcon : heartgreyIcon}/>
+            &nbsp; 관심 {PostDetailViewModel.heartnow? 1 : ""}
           </Btn>
         </Buttons>
         <CommentContainer comment={exist}>
@@ -239,6 +262,9 @@ const Content = styled.div`
   white-space: pre-line;
 `;
 
+const ImageWrapper = styled.div`
+`
+
 const Empa = styled.p`
   color: ${theme.colors.grey50};
   font-size: 13px;
@@ -251,13 +277,14 @@ const Buttons = styled.div`
   align-items: center;
 `;
 
-const Btn = styled.div`
+const Btn = styled.div<{ now?:boolean }>`
   width: 33%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 7px 0;
   font-size: 12px;
+  color: ${props => props.now ? '#f57f17' : '#9e9e9e'};
 `;
 
 const IconHead = styled.img`

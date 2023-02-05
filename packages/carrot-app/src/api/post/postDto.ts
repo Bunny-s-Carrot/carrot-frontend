@@ -36,6 +36,7 @@ export interface PostDetailType {
     user: UserType;
     post: PostType;
     comment: CommentType[];
+    heart: any;
 }
 
 export interface WriteCommentType {
@@ -49,4 +50,10 @@ export interface WriteRecommentType {
     writer_id: number;
     content: string;
     mother_id: number;
+}
+
+export interface HeartType {
+    user_id: number;
+    post_id: number;
+    plus: boolean;
 }

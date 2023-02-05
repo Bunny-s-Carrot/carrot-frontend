@@ -1,5 +1,5 @@
 import { api, fileApi } from "../../infra/api";
-import { PostType, PostDetailType, CreatePostType, WriteCommentType, WriteRecommentType  } from "./postDto";
+import { PostType, PostDetailType, CreatePostType, WriteCommentType, WriteRecommentType, HeartType  } from "./postDto";
 
 const getPosts = async () => {
     try {
@@ -98,13 +98,42 @@ const createRecomment = async ({
   }
 }
 
+const getImageList = async (postId: string) => {
+  try {
+    const { data } = await api.get(`/post/image/${postId}`);
+    return data.payload;
+  } catch (e: any) {
+    throw Error(e);
+  }
+}
+
+const Heart = async ({
+  post_id,
+  user_id,
+  plus
+}:HeartType) => {
+  try {
+    const result = await api.post(`/post/${post_id}/heart`,
+    {
+      post_id,
+      user_id,
+      plus
+    });
+    return result;
+  } catch (e:any) {
+    throw Error(e);
+  }
+}
+
 const postApi = {
     getPosts,
     getPostDetail,
     getPostsByCategory,
     createPost,
     createComment,
-    createRecomment
+    createRecomment,
+    getImageList,
+    Heart
 }
 
 export default postApi;
