@@ -36,7 +36,9 @@ export interface PostDetailType {
     user: UserType;
     post: PostType;
     comment: CommentType[];
-    heart: any;
+    heart: boolean;
+    empaOne: boolean;
+    empaAll: number;
 }
 
 export interface WriteCommentType {

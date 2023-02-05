@@ -5,14 +5,12 @@ import theme from "@carrot/core/style/theme";
 import usePostDetailViewModel from "./[post_id].viewModel";
 import HeaderTemplate from "../../../templates/headerTemplate";
 import Comment from "../../../components/neighborhood/comment";
+import Button from "../../../components/neighborhood/Btn";
 import backIcon from "@carrot/core/assets/icon/back-arrow.svg";
 import homeIcon from "@carrot/core/assets/icon/home-outline.svg";
 import BellOffIcon from "@carrot/core/assets/icon/Notifications off.svg";
 import ShareIcon from "@carrot/core/assets/icon/Share.svg";
 import MoreIcon from "@carrot/core/assets/icon/More vert.svg";
-import thumbIcon from "@carrot/core/assets/icon/Thumb.svg";
-import heartgreyIcon from "@carrot/core/assets/icon/heart-grey.svg";
-import heartorangeIcon from "@carrot/core/assets/icon/heart-orange.svg";
 import chatIcon from "@carrot/core/assets/icon/chat-outline-grey.svg";
 import imageIcon from "@carrot/core/assets/icon/image-grey.svg";
 import locationIcon from "@carrot/core/assets/icon/location-grey.svg";
@@ -21,10 +19,16 @@ import Swiper from "../../../components/swiper/swiper";
 import { convertDateToSimple } from "@carrot/util/format";
 
 const PostDetailPage = () => {
+  
   const navigate = useNavigate();
   const PostDetailViewModel = usePostDetailViewModel();
   const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
   const results = PostDetailViewModel.data?.payload;
+  const [heartnow, setHeartnow] = useState<boolean>(false);
+  const [thumbnow, setThumbnow] = useState<boolean>(false);
+  const [heartchange, setHeartchange] = useState(false);
+  const [thumbchange, setThumbchange] = useState(false);
+  
   let exist = true;
   let comment = results?.comment;
   if (comment === undefined) {
@@ -39,7 +43,6 @@ const PostDetailPage = () => {
   const commentinputRef = useRef<HTMLInputElement>(null);
   const [commentpreview, SetCommentpreview] = useState<boolean>(false);
   
-
   const handleCommentbox = (e: MouseEvent) => {
     const target = e.target as HTMLElement
     if (isOpenCommentbox && !postcommentRef.current?.contains(target)) {
@@ -54,18 +57,15 @@ const PostDetailPage = () => {
       setTimeout(() => commentinputRef.current?.focus(),1);
     }
   }
-
+  
   useEffect(() => {
-    if (results?.heart === 1 && !PostDetailViewModel.heartnow) {
-      PostDetailViewModel.setHeartnow(true);
-    }
     window.removeEventListener('click',handleCommentbox);
   },[])
 
   window.addEventListener('click', handleCommentbox);
 
   const [buttonvisible, setButtonvisible] = useState<boolean>(false);
-  
+
   const leftContent = (
     <>
       <IconHead src={backIcon} alt="backIcon" />
@@ -119,31 +119,62 @@ const PostDetailPage = () => {
               />
             }  
           </ImageWrapper>
-          <Empa>조회 {results?.post.views}</Empa>
+          <Empa>{results?.empaAll !== 0 ? `공감 ${results?.empaAll} 조회` : "조회"} {results?.post.views}</Empa>
         </Content>
         <Buttons>
-          <Btn>
-            <Icon src={thumbIcon} />
-            &nbsp; 공감하기
-          </Btn>
+          <Button 
+            type="empa"
+            now={!thumbchange ? results?.empaOne : thumbnow}
+            onClick={() => {
+              if (!thumbchange) {
+                setThumbchange(true);
+                if (results?.empaOne) {
+                  setThumbnow(false);
+                  PostDetailViewModel.DownEmpa();
+                } else {
+                  setThumbnow(true);
+                  PostDetailViewModel.UpEmpa();
+                }
+              } else {
+                if (thumbnow) {
+                  setThumbnow(false);
+                  PostDetailViewModel.DownEmpa();
+                } else {
+                  setThumbnow(true);
+                  PostDetailViewModel.UpEmpa();
+                }
+              }
+            }} 
+          />
           <Btn ref={precommentRef1}>
             <Icon src={chatIcon} />
             &nbsp; 댓글쓰기
           </Btn>
-          <Btn 
-            now={PostDetailViewModel.heartnow}
+          <Button 
+            type="heart"
+            now={!heartchange ? results?.heart : heartnow}
             onClick={() => {
-              if (PostDetailViewModel.heartnow) {
-                PostDetailViewModel.setHeartnow(false);
-                PostDetailViewModel.Downheart();
+              if (!heartchange) {
+                setHeartchange(true);
+                if (results?.heart) {
+                  setHeartnow(false);
+                  PostDetailViewModel.Downheart();
+                } else {
+                  setHeartnow(true);
+                  PostDetailViewModel.Upheart();
+                }
               } else {
-                PostDetailViewModel.setHeartnow(true);
-                PostDetailViewModel.Upheart();
+                if (heartnow) {
+                  setHeartnow(false);
+                  PostDetailViewModel.Downheart();
+                } else {
+                  setHeartnow(true);
+                  PostDetailViewModel.Upheart();
+                }
+                console.log('후'+ heartnow)
               }
-            }}>
-            <Icon src={PostDetailViewModel.heartnow? heartorangeIcon : heartgreyIcon}/>
-            &nbsp; 관심 {PostDetailViewModel.heartnow? 1 : ""}
-          </Btn>
+          }}
+        />
         </Buttons>
         <CommentContainer comment={exist}>
           <Nocomment comment={exist}>
