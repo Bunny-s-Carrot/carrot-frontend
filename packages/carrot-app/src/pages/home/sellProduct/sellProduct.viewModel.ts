@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useCustomContext } from "../../../contexts/etc/customProvider";
 import { getActiveLocation, getActiveLocationId } from "../../../infra/location/locationData";
@@ -23,7 +23,7 @@ const useSellProductViewModel = () => {
   const [priceSuggest, setPriceSuggest] = useState(data ? data.priceSuggest : true);
   const [share, setShare] = useState(data ? data.share : false);
   const [classifId, setClassifId] = useState<number>(data ? data.classifId : 0);
-
+  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const { userLatLng } = useCustomContext();
   const { getId } = useJwtDecode();
 
@@ -36,8 +36,8 @@ const useSellProductViewModel = () => {
 
   const createProduct = useMutation(productApi.createProduct);
 
-  const uploadImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const fileList = e.target.files;
+  const uploadImage = () => {
+    const fileList = fileInputRef.current?.files;
     
     if (fileList && fileList[0]) {
       for (let file of fileList) {
@@ -90,6 +90,7 @@ const useSellProductViewModel = () => {
     setShare,
     classifId,
     setClassifId,
+    fileInputRef,
     activeLocation,
     uploadImage,
     deleteImage,

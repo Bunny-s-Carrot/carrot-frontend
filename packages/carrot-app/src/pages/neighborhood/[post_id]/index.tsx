@@ -5,23 +5,30 @@ import theme from "@carrot/core/style/theme";
 import usePostDetailViewModel from "./[post_id].viewModel";
 import HeaderTemplate from "../../../templates/headerTemplate";
 import Comment from "../../../components/neighborhood/comment";
+import Button from "../../../components/neighborhood/Btn";
 import backIcon from "@carrot/core/assets/icon/back-arrow.svg";
 import homeIcon from "@carrot/core/assets/icon/home-outline.svg";
 import BellOffIcon from "@carrot/core/assets/icon/Notifications off.svg";
 import ShareIcon from "@carrot/core/assets/icon/Share.svg";
 import MoreIcon from "@carrot/core/assets/icon/More vert.svg";
-import thumbIcon from "@carrot/core/assets/icon/Thumb.svg";
-import heartIcon from "@carrot/core/assets/icon/heart-grey.svg";
 import chatIcon from "@carrot/core/assets/icon/chat-outline-grey.svg";
 import imageIcon from "@carrot/core/assets/icon/image-grey.svg";
 import locationIcon from "@carrot/core/assets/icon/location-grey.svg";
 import uparrowIcon from "@carrot/core/assets/icon/Arrow upward-white.svg";
+import Swiper from "../../../components/swiper/swiper";
 import { convertDateToSimple } from "@carrot/util/format";
 
 const PostDetailPage = () => {
+  
   const navigate = useNavigate();
   const PostDetailViewModel = usePostDetailViewModel();
+  const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
   const results = PostDetailViewModel.data?.payload;
+  const [heartnow, setHeartnow] = useState<boolean>(false);
+  const [thumbnow, setThumbnow] = useState<boolean>(false);
+  const [heartchange, setHeartchange] = useState(false);
+  const [thumbchange, setThumbchange] = useState(false);
+  
   let exist = true;
   let comment = results?.comment;
   if (comment === undefined) {
@@ -36,7 +43,6 @@ const PostDetailPage = () => {
   const commentinputRef = useRef<HTMLInputElement>(null);
   const [commentpreview, SetCommentpreview] = useState<boolean>(false);
   
-
   const handleCommentbox = (e: MouseEvent) => {
     const target = e.target as HTMLElement
     if (isOpenCommentbox && !postcommentRef.current?.contains(target)) {
@@ -51,16 +57,15 @@ const PostDetailPage = () => {
       setTimeout(() => commentinputRef.current?.focus(),1);
     }
   }
-
+  
   useEffect(() => {
-    window.addEventListener('click', handleCommentbox);
-    return () => {
-      window.removeEventListener('click', handleCommentbox)
-    }
-  })
+    window.removeEventListener('click',handleCommentbox);
+  },[])
+
+  window.addEventListener('click', handleCommentbox);
 
   const [buttonvisible, setButtonvisible] = useState<boolean>(false);
-  
+
   const leftContent = (
     <>
       <IconHead src={backIcon} alt="backIcon" />
@@ -75,7 +80,6 @@ const PostDetailPage = () => {
       <img src={MoreIcon} alt="moreIcon" />
     </>
   );
-
 
   return (
     <>
@@ -106,21 +110,71 @@ const PostDetailPage = () => {
           {results?.post.content}
           <br />
           <br />
-          <Empa>조회 {results?.post.views}</Empa>
+          <ImageWrapper>
+            {PostDetailViewModel.getImageSuccess &&
+              <Swiper
+                items={PostDetailViewModel.ImageData.names.map((item: string) => 
+                  baseUrl + item
+                )} 
+              />
+            }  
+          </ImageWrapper>
+          <Empa>{results?.empaAll !== 0 ? `공감 ${results?.empaAll} 조회` : "조회"} {results?.post.views}</Empa>
         </Content>
         <Buttons>
-          <Btn>
-            <Icon src={thumbIcon} />
-            &nbsp; 공감하기
-          </Btn>
+          <Button 
+            type="empa"
+            now={!thumbchange ? results?.empaOne : thumbnow}
+            onClick={() => {
+              if (!thumbchange) {
+                setThumbchange(true);
+                if (results?.empaOne) {
+                  setThumbnow(false);
+                  PostDetailViewModel.DownEmpa();
+                } else {
+                  setThumbnow(true);
+                  PostDetailViewModel.UpEmpa();
+                }
+              } else {
+                if (thumbnow) {
+                  setThumbnow(false);
+                  PostDetailViewModel.DownEmpa();
+                } else {
+                  setThumbnow(true);
+                  PostDetailViewModel.UpEmpa();
+                }
+              }
+            }} 
+          />
           <Btn ref={precommentRef1}>
             <Icon src={chatIcon} />
             &nbsp; 댓글쓰기
           </Btn>
-          <Btn>
-            <Icon src={heartIcon} />
-            &nbsp; 관심
-          </Btn>
+          <Button 
+            type="heart"
+            now={!heartchange ? results?.heart : heartnow}
+            onClick={() => {
+              if (!heartchange) {
+                setHeartchange(true);
+                if (results?.heart) {
+                  setHeartnow(false);
+                  PostDetailViewModel.Downheart();
+                } else {
+                  setHeartnow(true);
+                  PostDetailViewModel.Upheart();
+                }
+              } else {
+                if (heartnow) {
+                  setHeartnow(false);
+                  PostDetailViewModel.Downheart();
+                } else {
+                  setHeartnow(true);
+                  PostDetailViewModel.Upheart();
+                }
+                console.log('후'+ heartnow)
+              }
+          }}
+        />
         </Buttons>
         <CommentContainer comment={exist}>
           <Nocomment comment={exist}>
@@ -239,6 +293,9 @@ const Content = styled.div`
   white-space: pre-line;
 `;
 
+const ImageWrapper = styled.div`
+`
+
 const Empa = styled.p`
   color: ${theme.colors.grey50};
   font-size: 13px;
@@ -251,13 +308,14 @@ const Buttons = styled.div`
   align-items: center;
 `;
 
-const Btn = styled.div`
+const Btn = styled.div<{ now?:boolean }>`
   width: 33%;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 7px 0;
   font-size: 12px;
+  color: ${props => props.now ? '#f57f17' : '#9e9e9e'};
 `;
 
 const IconHead = styled.img`

@@ -11,7 +11,8 @@ import usePostViewModel from "../post.viewModel";
 import Modal from "../../../components/neighborhood/modal";
 import FileInput from "@carrot/core/atoms/input/fileInput";
 import { reversePostcategory } from '../../../infra/postcategory/postcategoryList';
-import { text } from 'node:stream/consumers';
+import imageIcon from "@carrot/core/assets/icon/image-black.svg";
+import locationIcon from "@carrot/core/assets/icon/location-pin-outline.svg";
 
 const WritePostPage = () => {
   const navigate = useNavigate();
@@ -101,12 +102,19 @@ const WritePostPage = () => {
         optionClick={optionClick}
       />
       <Bottom>
-        <FileInput
+        <StyledFileInput
           accept="image/*"
           multiple
+          ref={writePostViewModel.fileInputRef}
           onChange={writePostViewModel.uploadImage}>
+          <img src={imageIcon} alt="" />
           사진
-        </FileInput>
+        </StyledFileInput>
+        <div className="loc">
+          <img src={locationIcon} alt="" />
+          장소
+        </div>
+        
       </Bottom>
     </>
     
@@ -182,6 +190,23 @@ span {
   margin: 10px;
   padding: 10px;
 }
+
+img {
+  width: 20px;
+  height: 20px;
+}
+
+.loc {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  padding: 10px;
+  height: 100%;
+
+  img {
+    margin-right: 4px;
+  }
+}
 `
 
 const ThumbnailsWrapper = styled.div`
@@ -219,3 +244,16 @@ const Thumbnail = styled.div`
     }
   }
 `
+
+const StyledFileInput = styled(FileInput)`
+display: flex;
+align-items: center;
+padding: 10px;
+font-size: 13px;
+height: 100%;
+
+img {
+  margin-right: 4px;
+}
+`
+

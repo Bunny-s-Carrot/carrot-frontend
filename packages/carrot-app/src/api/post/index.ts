@@ -1,5 +1,5 @@
 import { api, fileApi } from "../../infra/api";
-import { PostType, PostDetailType, CreatePostType, WriteCommentType, WriteRecommentType  } from "./postDto";
+import { PostType, PostDetailType, CreatePostType, WriteCommentType, WriteRecommentType, HeartType  } from "./postDto";
 
 const getPosts = async () => {
     try {
@@ -10,10 +10,13 @@ const getPosts = async () => {
     }
 }
 
-const getPostDetail = async (post_id: string) => {
+const getPostDetail = async (post_id: string, writer_id: string) => {
   try {
     const { data } = await api.get<{ payload: PostDetailType }>(
-        `post/${post_id}`);
+        `post/${post_id}`,
+        {
+          params : { loginId: writer_id }
+        });
     
     return data;
   } catch (e: any) {
@@ -98,13 +101,61 @@ const createRecomment = async ({
   }
 }
 
+const getImageList = async (postId: string) => {
+  try {
+    const { data } = await api.get(`/post/image/${postId}`);
+    return data.payload;
+  } catch (e: any) {
+    throw Error(e);
+  }
+}
+
+const updateHeart = async ({
+  post_id,
+  user_id,
+  plus
+}:HeartType) => {
+  try {
+    const result = await api.post(`/post/${post_id}/heart`,
+    {
+      post_id,
+      user_id,
+      plus
+    });
+    return result;
+  } catch (e:any) {
+    throw Error(e);
+  }
+}
+
+const updateEmpa = async ({
+  post_id,
+  user_id,
+  plus
+}:HeartType) => {
+  try {
+    const result = await api.post(`/post/${post_id}/empa`,
+    {
+      post_id,
+      user_id,
+      plus
+    });
+    return result;
+  } catch (e:any) {
+    throw Error(e);
+  }
+}
+
 const postApi = {
     getPosts,
     getPostDetail,
     getPostsByCategory,
     createPost,
     createComment,
-    createRecomment
+    createRecomment,
+    getImageList,
+    updateHeart,
+    updateEmpa
 }
 
 export default postApi;
