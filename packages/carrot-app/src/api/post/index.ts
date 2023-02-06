@@ -13,10 +13,13 @@ const getPosts = async (admCodes: string) => {
     }
 }
 
-const getPostDetail = async (post_id: string) => {
+const getPostDetail = async (post_id: string, writer_id: string) => {
   try {
     const { data } = await api.get<{ payload: PostDetailType }>(
-        `post/${post_id}`);
+        `post/${post_id}`,
+        {
+          params : { loginId: writer_id }
+        });
     
     return data;
   } catch (e: any) {
