@@ -19,6 +19,7 @@ export interface CreatePostType {
     writer_id: number,
     content: string,
     image: File[]
+    writer_location: string
 }
 
 export interface CommentType {

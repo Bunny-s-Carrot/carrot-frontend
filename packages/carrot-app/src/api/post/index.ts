@@ -1,9 +1,12 @@
 import { api, fileApi } from "../../infra/api";
 import { PostType, PostDetailType, CreatePostType, WriteCommentType, WriteRecommentType, HeartType  } from "./postDto";
 
-const getPosts = async () => {
+const getPosts = async (admCodes: string) => {
     try {
-        const { data } = await api.get<{ payload: PostType[] }>('/post');
+        const { data } = await api.get<{ payload: PostType[] }>('/post',
+        {
+          params: { admCodes },
+        });
         return data;
     } catch (e: any) {
       throw Error(e);
@@ -37,6 +40,7 @@ const createPost = async ({
   classif_id,
   content,
   writer_id,
+  writer_location,
 }: CreatePostType) => {
     try {
       const result = await api.post('/post',
@@ -44,6 +48,7 @@ const createPost = async ({
         classif_id,
         content,
         writer_id,
+        writer_location,
       }).then(res => {
         fileApi.post(`/post/image/upload`,
         {

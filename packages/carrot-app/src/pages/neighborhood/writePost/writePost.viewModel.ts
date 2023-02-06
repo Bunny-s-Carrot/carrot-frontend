@@ -3,6 +3,7 @@ import { useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import postApi from '../../../api/post';
 import useJwtDecode from '../../../hooks/auth/useJwtDecode';
+import { getActiveLocationId } from '../../../infra/location/locationData';
 
 interface ImageType {
   data: File,
@@ -17,6 +18,7 @@ const useWritePostViewModel = () => {
   const fileInputRef = useRef<HTMLInputElement | null>(null)
   const { getId } = useJwtDecode();
   const writer_id = getId();
+  const writer_location = getActiveLocationId() as string;
     
   const writePost = useMutation(postApi.createPost);
 
@@ -27,7 +29,8 @@ const useWritePostViewModel = () => {
       image: imageFiles,
       writer_id,
       content,
-      classif_id: category
+      classif_id: category,
+      writer_location
     },
     {
         onSuccess: () => navigate('/neighborhood')
