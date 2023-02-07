@@ -36,16 +36,21 @@ const Product = (props: ProductProps) => {
             : `${props.price.toLocaleString()}원`}</span>
         </Price>
         <ChatAndHeartCount>
-          {(props.chat && props.chat > 0) &&
+          {(props.chat && props.chat > 0)
+          ?
             <div>
               <img src={chatIcon} alt='chatIcon' />
               <span>{props.chat}</span>
-            </div>}
-            {(props.heart && props.heart > 0) &&
-            <div>
-              <img src={heartIcon} alt='chatIcon' />
-              <span>{props.heart}</span>
-            </div>}
+            </div>
+          : <></>
+          }
+            {(props.heart && props.heart > 0)
+            ? <div>
+                <img src={heartIcon} alt='chatIcon' />
+                <span>{props.heart}</span>
+              </div>
+            : <></>
+            }
         </ChatAndHeartCount>
       </ContentWrapper>
     </Container>

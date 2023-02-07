@@ -39,21 +39,19 @@ const useProductDetailViewModel = () => {
   }
 
   const handleClickHeart = () => {
-    setHeartOn((prev: boolean) => {
-      updateHeart.mutate({
-        type: 'product',
-        user_id: loginId,
-        id: params.product_id as string,
-        plus: !prev
-      },
-      {
-        onSuccess: () => {
-          queryClient.invalidateQueries([`heart`])
-        } 
-      })
-
-      return !prev;
+    updateHeart.mutate({
+      type: 'product',
+      user_id: loginId,
+      id: params.product_id as string,
+      plus: !isHeartOn
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries([`heart`])
+        queryClient.invalidateQueries(['product', params.product_id])
+      } 
     })
+    setHeartOn(!isHeartOn)
 
   }
 
