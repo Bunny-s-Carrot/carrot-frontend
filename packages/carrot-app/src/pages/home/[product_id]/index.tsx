@@ -71,6 +71,8 @@ const ProductDetailPage = () => {
       onClickLeft={() => navigate(-1)}
       bottomLeftContent={bottomLeftContent}
       bottomRightContent={bottomRightContent}
+      isHeartOn={productDetailViewModel.isHeartOn}
+      onClickHeart={productDetailViewModel.handleClickHeart}
     > 
       {productDetailViewModel.isOpenPopup &&
         <SmallPopup
@@ -103,13 +105,13 @@ const ProductDetailPage = () => {
               <ProfileImage>
               </ProfileImage>
               <SellerInfo>
-                <p>{productDetailViewModel.data?.user.name}</p>
+                <p>{productDetailViewModel.data?.seller.name}</p>
                 <span>{location.state?.locationName}</span>
               </SellerInfo>
             </div>
             <div>
-              {productDetailViewModel.data?.user.manner_temp &&
-                <MannerTemp value={productDetailViewModel.data?.user.manner_temp} type='SMALL'/>}
+              {productDetailViewModel.data?.seller.manner_temp &&
+                <MannerTemp value={productDetailViewModel.data?.seller.manner_temp} type='SMALL'/>}
             </div>
           </SellerInfoWrapper>
           <div>
@@ -154,7 +156,7 @@ const ProductDetailPage = () => {
           />
         }
         <Panel type='REPORT' />
-        <Panel type='SELLING' sellerName={productDetailViewModel.data?.user.name}/>
+        <Panel type='SELLING' sellerName={productDetailViewModel.data?.seller.name}/>
       </Container>
     </SalesTemplate>
     {productDetailViewModel.isOpenModal &&
