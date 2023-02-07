@@ -99,52 +99,70 @@ const ProductDetailPage = () => {
             />
           }          
         </ImageWrapper>
-        <ContentWrapper>
-          <SellerInfoWrapper>
+        {
+          productDetailViewModel.data &&
+          <ContentWrapper>
+            <SellerInfoWrapper>
+              <div>
+                <ProfileImage>
+                </ProfileImage>
+                <SellerInfo>
+                  <p>{productDetailViewModel.data?.seller.name}</p>
+                  <span>{location.state?.locationName}</span>
+                </SellerInfo>
+              </div>
+              <div>
+                {productDetailViewModel.data?.seller.manner_temp &&
+                  <MannerTemp value={productDetailViewModel.data?.seller.manner_temp} type='SMALL'/>}
+              </div>
+            </SellerInfoWrapper>
             <div>
-              <ProfileImage>
-              </ProfileImage>
-              <SellerInfo>
-                <p>{productDetailViewModel.data?.seller.name}</p>
-                <span>{location.state?.locationName}</span>
-              </SellerInfo>
-            </div>
-            <div>
-              {productDetailViewModel.data?.seller.manner_temp &&
-                <MannerTemp value={productDetailViewModel.data?.seller.manner_temp} type='SMALL'/>}
-            </div>
-          </SellerInfoWrapper>
-          <div>
-            <ContentHeader>
-              <p>{productDetailViewModel.data?.product.title}</p>
-              <span onClick={() => {}}>
-                {productDetailViewModel.data?.product.classif_id && 
-                categoryList(productDetailViewModel.data?.product.classif_id)}
-              </span>
-              <span>
-                {' · '} 
-                {convertDateToSimple(productDetailViewModel.data?.product.created_at)}
+              <ContentHeader>
+                <p>{productDetailViewModel.data?.product.title}</p>
+                <span onClick={() => {}}>
+                  {productDetailViewModel.data?.product.classif_id && 
+                  categoryList(productDetailViewModel.data?.product.classif_id)}
                 </span>
-            </ContentHeader>
-            <ContentBody>
-              <p>
-                {productDetailViewModel.data?.product.contents}
-              </p>
-              <span>
-                {productDetailViewModel.data?.product.chat && 
-                productDetailViewModel.data?.product.chat > 0 && 
-                `채팅 ${productDetailViewModel.data?.product.chat}`}
-                {productDetailViewModel.data?.product.heart && 
-                productDetailViewModel.data?.product.heart > 0 && 
-                ` · 관심 ${productDetailViewModel.data?.product.heart}`}
-                {productDetailViewModel.data?.product.views && 
-                productDetailViewModel.data?.product.views > 0 && 
-                ` · 조회 ${productDetailViewModel.data?.product.views}`}
-              </span>
-            </ContentBody>
-          </div>
-        </ContentWrapper>
-        {(lat && lng) && 
+                <span>
+                  {' · '} 
+                  {convertDateToSimple(productDetailViewModel.data?.product.created_at)}
+                  </span>
+              </ContentHeader>
+              <ContentBody>
+                <p>
+                  {productDetailViewModel.data?.product.contents}
+                </p>
+                <span>
+                  {productDetailViewModel.data?.product.chat > 0 
+                    ? `채팅 ${productDetailViewModel.data?.product.chat}`
+                    : ''
+                  }
+                  {(productDetailViewModel.data!.product.chat > 0 &&
+                  productDetailViewModel.data!.product.heart > 0)
+                    ? ' · '
+                    : ''
+                  }
+                  {productDetailViewModel.data?.product.heart > 0 
+                    ? `관심 ${productDetailViewModel.data?.product.heart}`
+                    : ''
+                  }
+                  {(productDetailViewModel.data?.product.heart > 0 &&
+                  productDetailViewModel.data?.product.views > 0)
+                    ? ' · '
+                    : ''
+                  }
+                  {productDetailViewModel.data?.product.views > 0
+                    ? `조회 ${productDetailViewModel.data?.product.views}`
+                    : ''
+                  }
+                </span>
+              </ContentBody>
+            </div>
+          </ContentWrapper>
+        }
+        
+        {(lat && lng)
+        ? 
           <Panel
             type='WANTED_LOCATION'
             lat={lat}
@@ -154,6 +172,7 @@ const ProductDetailPage = () => {
               state: { lat, lng},
             })}
           />
+        : <></>
         }
         <Panel type='REPORT' />
         <Panel type='SELLING' sellerName={productDetailViewModel.data?.seller.name}/>

@@ -11,7 +11,7 @@ const updateHeart = async ({
     const result = await api.post(`/heart`,
     {
       type,
-      product_id: type === 'product' ? id :null,
+      product_id: type === 'product' ? id : null,
       post_id: type === 'post' ? id : null,
       user_id,
       plus
