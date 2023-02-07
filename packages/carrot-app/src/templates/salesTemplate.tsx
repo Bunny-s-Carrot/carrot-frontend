@@ -2,19 +2,21 @@ import { PropsWithChildren, ReactNode } from 'react'
 import styled from 'styled-components';
 import theme from '@carrot/core/style/theme';
 import heartIconOutline from '@carrot/core/assets/icon/heart-outline.svg'
-
+import heartIconFilledRed from '@carrot/core/assets/icon/heart-filled-red.svg'
 type PageType = 'HOME' | 'AROUND'
 
 interface SalesTemplateProps extends PropsWithChildren {
-  pageType: PageType;
-  className?: string;
-  title?: string;
-  leftContent?: ReactNode;
-  onClickLeft?: () => void;
-  rightContent?: ReactNode;
-  onClickRight?: () => void;
-  bottomLeftContent?: ReactNode;
-  bottomRightContent?: ReactNode;
+  pageType: PageType
+  className?: string
+  title?: string
+  leftContent?: ReactNode
+  onClickLeft?: () => void
+  rightContent?: ReactNode
+  onClickRight?: () => void
+  bottomLeftContent?: ReactNode
+  bottomRightContent?: ReactNode
+  isHeartOn: boolean | undefined
+  onClickHeart: () => void
 }
 
 const SalesTemplate = (props: SalesTemplateProps) => {
@@ -34,7 +36,13 @@ const SalesTemplate = (props: SalesTemplateProps) => {
       <BottomWrapper>
         <BottomLeftContent>
           <HeartWrapper>
-            <img src={heartIconOutline} alt='heartIcon' />
+            <img
+              src={props.isHeartOn 
+                ? heartIconFilledRed
+                : heartIconOutline}
+              alt='heartIcon'
+                onClick={props.onClickHeart}
+            />
           </HeartWrapper>
           {props.bottomLeftContent}
         </BottomLeftContent>
