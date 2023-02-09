@@ -1,9 +1,7 @@
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, {css} from "styled-components"
-
 import useSetLocationViewModel from "./setLocation.viewModel";
-
 import HeaderTemplate from "../../templates/headerTemplate";
 import Slider from "../../components/slider";
 import theme from "@carrot/core/style/theme";

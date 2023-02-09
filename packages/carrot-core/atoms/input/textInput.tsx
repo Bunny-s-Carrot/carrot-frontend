@@ -1,12 +1,13 @@
 import styled from 'styled-components'
 import theme from '../../style/theme'
-import { ChangeEventHandler, KeyboardEventHandler } from 'react'
+import { forwardRef, ChangeEventHandler, KeyboardEventHandler } from 'react'
 
 interface TextInputProps {
   value?: string;
+  rows?: number;
   inputType?: string;
   placeholder: string;
-  onChange?: ChangeEventHandler<HTMLInputElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   onChangeValue?: (value: string) => void;
   onFocus?: () => void;
   disabled?: boolean;
@@ -17,7 +18,7 @@ interface TextInputProps {
   disableBorder?: boolean;
 }
 
-function TextInput(props: TextInputProps) {
+const TextInput = forwardRef<HTMLTextAreaElement, TextInputProps>((props, ref) => {
   if (props.isMultiLine) {
     return (
       <TextInputWrapper
@@ -31,13 +32,13 @@ function TextInput(props: TextInputProps) {
         <textarea
           value={props.value}
           placeholder={props.placeholder}
-          onChange={(e) => {
-            props.onChangeValue && props.onChangeValue(e.target.value)
-          }}
+          onChange={props.onChange}
           required={props.required}
           onFocus={props.onFocus}
           onKeyUp={props.onKeyup}
           disabled={props.disabled}
+          rows={props.rows}
+          ref={ref}
         />
       </TextInputWrapper>
     )
@@ -64,7 +65,8 @@ function TextInput(props: TextInputProps) {
       />
     </TextInputWrapper>
   )
-}
+})
+
 export default TextInput
 
 const TextInputWrapper = styled.div<{ disableBorder: boolean | undefined}>`
@@ -79,7 +81,6 @@ const TextInputWrapper = styled.div<{ disableBorder: boolean | undefined}>`
     width: 100%;
     min-height: 4.2rem;
     border: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey30}`};
-    border-radius: 0.8rem;
 
     outline: none;
     ::placeholder {
@@ -101,27 +102,24 @@ const TextInputWrapper = styled.div<{ disableBorder: boolean | undefined}>`
     }
   }
   textarea {
-    padding: 0.4rem 1.6rem;
+    padding: 0 1.6rem;
     ${theme.typography.body3};
     box-sizing: border-box;
     width: 100%;
-    height: 15rem;
     border: none;
     border-bottom: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey40}`};
     outline: none;
-    ${theme.colors.grey90};
-    ${theme.typography.body3};
     ::placeholder {
       color: ${theme.colors.grey40};
       ${theme.typography.body3};
     }
     :focus {
       border: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey90}`};
-      border-radius: 0.8rem;
+
     }
     :active {
       border: ${props => props.disableBorder ? 'none' : `0.1rem solid ${theme.colors.grey90}`};
-      border-radius: 0.8rem;
+
     }
     :disabled {
       background-color: white;
