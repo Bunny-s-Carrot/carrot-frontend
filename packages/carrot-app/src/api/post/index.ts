@@ -46,12 +46,20 @@ const createPost = async ({
   writer_location,
 }: CreatePostType) => {
     try {
+      let img;
+      if (image.length === 0) {
+        img = false;
+      } else {
+        img = true;
+      }
+
       const result = await api.post('/post',
       {
         classif_id,
         content,
         writer_id,
         writer_location,
+        img
       }).then(res => {
         fileApi.post(`/post/image/upload`,
         {
@@ -59,7 +67,7 @@ const createPost = async ({
           image,
         })
       })
-      
+
       return result;
     } catch (e: any) {
       throw Error(e);

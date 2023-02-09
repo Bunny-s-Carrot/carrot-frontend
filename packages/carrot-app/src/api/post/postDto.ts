@@ -12,6 +12,7 @@ export interface PostType  {
     created_at: any;
     addr_name: string;
     category_name: string;
+    image: number;
 }   
 
 export interface CreatePostType {
@@ -24,6 +25,7 @@ export interface CreatePostType {
 
 export interface CommentType {
     comment_id: number;
+    writer_id: number;
     name: string;
     addr_name: string;
     created_at: any;

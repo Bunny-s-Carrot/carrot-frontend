@@ -5,7 +5,7 @@ import theme from "@carrot/core/style/theme";
 import Post from "../../../components/neighborhood/post";
 import backIcon from "@carrot/core/assets/icon/back-arrow.svg";
 import usetopicViewModel from "./topicbar.viewModel";
-import { postcategory } from "../../../infra/postcategory/postcategoryList";
+import { postcategory, postcategoryList } from "../../../infra/postcategory/postcategoryList";
 
 const TopicBarDetailPage = () => {
 
@@ -13,6 +13,7 @@ const TopicBarDetailPage = () => {
   const topicViewModel = usetopicViewModel();
   const results = topicViewModel.data?.payload;
   const categoryname = postcategory(useParams().classif_id);
+  const categoryimage = postcategoryList.filter( category => category.title === `${categoryname}`)[0].img;
   const [scrollTop, setScrollTop] = useState<number>(0);
 
   const container = useRef<HTMLDivElement>(null);
@@ -44,7 +45,7 @@ const TopicBarDetailPage = () => {
         <Top className="top" scrollTop={scrollTop}>
           <div className="top1">
             <img
-              src="https://mblogthumb-phinf.pstatic.net/MjAxOTExMTRfNjEg/MDAxNTczNjk0NDQ1Njg1.ngZvdPRL1BpgtvzpzKaoYpPvNbghef-eCIGEjjJNnlIg.fPwLwjKtnbAcVHm0yQ1X6tDCc3m1rF2PwSANfhSqonAg.JPEG.msinvestment/%EA%B3%A0%EA%B5%AC%EB%A7%88_%EC%82%AC%EC%A7%84_(8).jpg?type=w800"
+              src={categoryimage}
               alt=""
             />
             <div>{categoryname}</div>
@@ -58,6 +59,9 @@ const TopicBarDetailPage = () => {
             category={item.category_name}
             location={item.addr_name}
             created_at={item.created_at}
+            comment={item.chat}
+            thumb={item.empa}
+            image={item.image}
             onClick={() => navigate(`/post/${item.post_id}`)}
           />
         ))}
