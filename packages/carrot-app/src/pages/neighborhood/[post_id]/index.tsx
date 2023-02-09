@@ -16,6 +16,8 @@ import imageIcon from "@carrot/core/assets/icon/image-grey.svg";
 import locationIcon from "@carrot/core/assets/icon/location-grey.svg";
 import uparrowIcon from "@carrot/core/assets/icon/Arrow upward-white.svg";
 import Swiper from "../../../components/swiper/swiper";
+import Modal from "../../../components/neighborhood/modal";
+import useJwtDecode from "../../../hooks/auth/useJwtDecode";
 import { convertDateToSimple } from "@carrot/util/format";
 
 const PostDetailPage = () => {
@@ -28,7 +30,8 @@ const PostDetailPage = () => {
   const [thumbnow, setThumbnow] = useState<boolean>(false);
   const [heartchange, setHeartchange] = useState(false);
   const [thumbchange, setThumbchange] = useState(false);
-  
+  const { getId } = useJwtDecode();
+
   let exist = true;
   let comment = results?.comment;
   if (comment === undefined) {
@@ -77,9 +80,14 @@ const PostDetailPage = () => {
     <>
       <img src={BellOffIcon} alt="bellonIcon" />
       <img src={ShareIcon} alt="shareIcon" />
-      <img src={MoreIcon} alt="moreIcon" />
+      <img src={MoreIcon} alt="moreIcon" onClick={() => controlModal(true)}/>
     </>
   );
+
+  const [openModal, setOpenModal] = useState(false);
+  const controlModal = (props: boolean) => {
+    setOpenModal(props);
+  };
 
   return (
     <>
@@ -99,7 +107,7 @@ const PostDetailPage = () => {
           />
           <div>
             <p>{results?.user.name}</p>
-            <span>{results?.user.addr_name}</span>
+            <span>{results?.post.addr_name}</span>
             <span>
               {" "}
               · {convertDateToSimple(results?.post.created_at)}
@@ -110,7 +118,7 @@ const PostDetailPage = () => {
           {results?.post.content}
           <br />
           <br />
-          <ImageWrapper>
+          <ImageWrapper visible={results?.post.image}>
             {PostDetailViewModel.getImageSuccess &&
               <Swiper
                 items={PostDetailViewModel.ImageData.names.map((item: string) => 
@@ -193,6 +201,7 @@ const PostDetailPage = () => {
                  likes={item.likes}
                  depth={item.depth}
                  mother_id={item.mother_id}
+                 writersame={item.writer_id === results?.user.user_id}
                  isdetailpage = {false}
                  />
               )
@@ -238,6 +247,11 @@ const PostDetailPage = () => {
     </SubmitBtn>
   </div>
   </WriteComment>
+  <Modal
+        type={results?.user.user_id === getId() ? 'postdetail_w' : 'postdetail'}
+        openModal={openModal}
+        controlModal={controlModal}
+  />
 </>
   );
 };
@@ -293,7 +307,18 @@ const Content = styled.div`
   white-space: pre-line;
 `;
 
-const ImageWrapper = styled.div`
+const ImageWrapper = styled.div<{ visible: number | undefined }>`
+overflow: hidden;
+border-radius: 10px;
+width: 100%;
+height: 230px;
+margin-bottom: 15px;
+display: ${props => props.visible === 1 ? 'block' : 'none'};
+
+img {
+  width: 100%;
+  height: 100%;
+}
 `
 
 const Empa = styled.p`

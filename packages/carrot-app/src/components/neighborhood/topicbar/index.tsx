@@ -2,7 +2,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
 import { postcategoryList } from "../../../infra/postcategory/postcategoryList";
-
 import menuIcon from "@carrot/core/assets/icon/menu.svg";
 import boltIcon from "@carrot/core/assets/icon/Bolt.svg";
 
@@ -56,7 +55,7 @@ const TopicContainer = styled.div`
   ::-webkit-scrollbar {
     display: none;
   }
-`;
+`
 
 const TopicItem = styled.div`
   display: inline-block;
@@ -67,10 +66,10 @@ const TopicItem = styled.div`
   border: 1px solid ${theme.colors.grey30};
   display: flex;
   align-items: center;
-`;
+`
 
 const Icon = styled.img`
   width: 16px;
   height: 16px;
   margin-right: 2px;
-`;
+`
