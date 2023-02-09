@@ -5,6 +5,7 @@ import HomePage from "./pages/home";
 import NeighborhoodPage from "./pages/neighborhood";
 import AroundPage from "./pages/around";
 import ChatPage from "./pages/chat";
+import ChatRoomDetailPage from './pages/chat/[chatRoom_id]'
 import MyCarrotPage from "./pages/myCarrot";
 import LaunchPage from "./pages/launch";
 import LoginPage from "./pages/logIn";
@@ -55,6 +56,7 @@ const App = () => {
             <Route path="/post/:post_id/comment/:comment_id" element={<RecommentPage />} />
             <Route path="/around" element={<AroundPage />} />
             <Route path="/chat" element={<ChatPage />} />
+            <Route path="/chat/:id" element={<ChatRoomDetailPage />} />
             <Route path="/mycarrot" element={<MyCarrotPage />} />
             <Route path="/mycarrot/setting" element={<SettingPage />} />
             <Route path="/setlocation" element={<SetLocationPage />} />

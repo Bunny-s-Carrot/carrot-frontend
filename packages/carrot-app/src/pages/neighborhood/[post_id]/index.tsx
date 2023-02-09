@@ -62,10 +62,13 @@ const PostDetailPage = () => {
   }
   
   useEffect(() => {
-    window.removeEventListener('click',handleCommentbox);
-  },[])
+    window.addEventListener('click', handleCommentbox);
+    return () => {
+      window.removeEventListener('click',handleCommentbox);
+    }
+  },[handleCommentbox])
 
-  window.addEventListener('click', handleCommentbox);
+
 
   const [buttonvisible, setButtonvisible] = useState<boolean>(false);
 
