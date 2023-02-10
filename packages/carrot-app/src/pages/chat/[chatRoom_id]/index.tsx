@@ -1,3 +1,4 @@
+import { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
 import { converHexToRGB } from "@carrot/util/color";
@@ -15,7 +16,25 @@ import sendIconActive from '@carrot/core/assets/icon/send-carrot.svg';
 import useChatRoomDetailViewModel from "./chatRoomDetail.viewModel";
 import MyChat from "../../../components/chat/myChat";
 import SellerChat from "../../../components/chat/sellerChat";
+import io, { Socket } from 'socket.io-client'
+
 const ChatRoomDetailPage = () => {
+
+  const ws = useRef<Socket>();
+  useEffect(() => {
+    ws.current = io('http://localhost:5000');
+    ws.current.on('connect', () => {
+      console.log("Connected with ID: ", ws.current!.id);
+    })
+
+    ws.current?.emit('message', 'Hello World');
+
+    return () => {
+      ws.current?.disconnect();
+    }
+
+  });
+
   const chatRoomDetailViewModel = useChatRoomDetailViewModel();
 
   const fontColor = colorAndEmoji(37);
