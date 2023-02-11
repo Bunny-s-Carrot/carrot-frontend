@@ -1,4 +1,5 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
 import { converHexToRGB } from "@carrot/util/color";
@@ -16,27 +17,14 @@ import sendIconActive from '@carrot/core/assets/icon/send-carrot.svg';
 import useChatRoomDetailViewModel from "./chatRoomDetail.viewModel";
 import MyChat from "../../../components/chat/myChat";
 import SellerChat from "../../../components/chat/sellerChat";
-import io, { Socket } from 'socket.io-client'
+import useWebSocket from "../../../hooks/useWebSocket";
+import { MessageDto } from "../../../api/chat/chatDto";
 
 const ChatRoomDetailPage = () => {
 
-  const ws = useRef<Socket>();
-  useEffect(() => {
-    ws.current = io('http://localhost:5000');
-    ws.current.on('connect', () => {
-      console.log("Connected with ID: ", ws.current!.id);
-    })
-
-    ws.current?.emit('message', 'Hello World');
-
-    return () => {
-      ws.current?.disconnect();
-    }
-
-  });
-
   const chatRoomDetailViewModel = useChatRoomDetailViewModel();
-
+  const navigate = useNavigate();
+  const userId = chatRoomDetailViewModel.userId;
   const fontColor = colorAndEmoji(37);
   const rgb = converHexToRGB(fontColor[0]);
 
@@ -60,13 +48,26 @@ const ChatRoomDetailPage = () => {
       <HeaderTemplate
         leftContent={leftContent}
         rightContent={rightContent}
+        onClickLeft={() => navigate(-1)}
       >
         <MessageWrapper>
-          <MyChat
-            createdAt="2022-07-16T16:10"
-          />
-          <MyChat />
-          <SellerChat />
+          {chatRoomDetailViewModel.getMessagesSuccess &&
+            chatRoomDetailViewModel.messages?.map((message: MessageDto, index: number) => {
+              if (userId === message.message_from) {
+                return (
+                  <MyChat
+                    message={message.content}
+                    createdAt={message.created_at}
+                  />
+                )
+              } else return (
+                <SellerChat
+                  message={message.content}
+                  createdAt={message.created_at}
+                />
+              )
+            })
+          }
         </MessageWrapper>
       </HeaderTemplate>
       <BottomWrapper>

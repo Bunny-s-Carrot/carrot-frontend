@@ -2,9 +2,9 @@ import styled from "styled-components";
 import FloatingButton from "../../components/floatingButton";
 import NavBar from "../../components/navBar"
 import Button from "@carrot/core/atoms/button";
-import { ToastContainer } from "react-toastify";
 import useAroundViewModel from "./around.viewModel";
-const AroundPage = () => {
+
+const Around = () => {
   const aroundViewModel = useAroundViewModel();
   return (
     <Wrapper>
@@ -21,7 +21,7 @@ const AroundPage = () => {
   )
 };
 
-export default AroundPage;
+export default Around;
 
 const Wrapper = styled.div`
 

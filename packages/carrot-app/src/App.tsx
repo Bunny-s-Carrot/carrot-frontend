@@ -24,6 +24,7 @@ import SetWantedLocationPage from "./pages/home/sellProduct/setWantedLocation";
 import SettingPage from "./pages/myCarrot/setting";
 import WantedLocationPage from "./pages/watedLocation";
 
+
 const App = () => {
   const queryClient = new QueryClient();
   return (
@@ -56,7 +57,9 @@ const App = () => {
             <Route path="/post/:post_id/comment/:comment_id" element={<RecommentPage />} />
             <Route path="/around" element={<AroundPage />} />
             <Route path="/chat" element={<ChatPage />} />
-            <Route path="/chat/:id" element={<ChatRoomDetailPage />} />
+            
+              <Route path="/chat/chatroom/:chatRoom_id" element={<ChatRoomDetailPage />} />
+
             <Route path="/mycarrot" element={<MyCarrotPage />} />
             <Route path="/mycarrot/setting" element={<SettingPage />} />
             <Route path="/setlocation" element={<SetLocationPage />} />
