@@ -44,7 +44,9 @@ const usePostDetailViewModel = () => {
       mother_id
     },
     {
-      onSuccess: () => window.location.reload()
+      onSuccess: () => {
+        window.location.reload();
+      }
     })
   }
 

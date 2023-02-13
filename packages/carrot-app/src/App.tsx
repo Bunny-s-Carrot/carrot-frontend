@@ -58,7 +58,7 @@ const App = () => {
             <Route path="/around" element={<AroundPage />} />
             <Route path="/chat" element={<ChatPage />} />
             
-              <Route path="/chat/chatroom/:chatRoom_id" element={<ChatRoomDetailPage />} />
+              <Route path="/chat/chatroom/:uuid" element={<ChatRoomDetailPage />} />
 
             <Route path="/mycarrot" element={<MyCarrotPage />} />
             <Route path="/mycarrot/setting" element={<SettingPage />} />

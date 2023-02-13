@@ -20,7 +20,7 @@ const useWebSocket = (url: string) => {
       })
       ws.current?.disconnect();
     }
-  }, [ws, setIsReady]);
+  }, [ws, setIsReady, url]);
 
   return {
     ws,

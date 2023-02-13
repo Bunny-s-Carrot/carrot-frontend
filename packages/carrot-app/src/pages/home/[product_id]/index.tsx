@@ -35,7 +35,7 @@ const ProductDetailPage = () => {
   const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
   const lat = useMemo(() => productDetailViewModel.isSuccess && JSON.parse(productData?.wanted_location as string).lat, [productData?.wanted_location, productDetailViewModel.isSuccess]);
   const lng = useMemo(() => productDetailViewModel.isSuccess && JSON.parse(productData?.wanted_location as string).lng, [productData?.wanted_location, productDetailViewModel.isSuccess]);
-  const uuid = useMemo(() => productData?.product_id.toString()! + productData?.seller_id.toString()! + userId, [])
+  const uuid = useMemo(() => productData?.product_id.toString()! + productData?.seller_id.toString()! + userId, [productData?.product_id, productData?.seller_id, userId])
   const leftContent = 
     <>
       <img src={backIconWhite} alt='backIcon' />

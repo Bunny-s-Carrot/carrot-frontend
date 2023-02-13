@@ -182,7 +182,6 @@ const PostDetailPage = () => {
                   setHeartnow(true);
                   PostDetailViewModel.Upheart();
                 }
-                console.log('후'+ heartnow)
               }
           }}
         />
