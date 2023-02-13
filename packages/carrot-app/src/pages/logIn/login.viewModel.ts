@@ -57,7 +57,3 @@ const useLoginViewModel = () => {
 }
 
 export default useLoginViewModel
-
-function getArea() {
-  throw new Error("Function not implemented.");
-}

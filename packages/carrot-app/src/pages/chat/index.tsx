@@ -3,9 +3,11 @@ import HeaderTemplate from "../../templates/headerTemplate";
 import notiIcon from '@carrot/core/assets/icon/notification.svg';
 import useChatViewModel from "./chat.viewModel";
 import ChatRoom from "../../components/chat/chatRoomList";
+import { useNavigate } from "react-router-dom";
 
 const Chat = () => {
   const chatViewModel = useChatViewModel();
+  const navigate = useNavigate();
   const leftContent = 
     <div>채팅</div>
 
@@ -25,7 +27,7 @@ const Chat = () => {
           location='상암동'
           lastMessageDate="1주 전"
           lastMessage="하하하하하하"
-          onClick={() => {}}
+          onClick={() => navigate('chatroom/1')}
         />
       </HeaderTemplate>
       <NavBar pageType='CHAT' />

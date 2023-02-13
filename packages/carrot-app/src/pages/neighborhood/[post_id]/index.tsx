@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
@@ -46,8 +46,8 @@ const PostDetailPage = () => {
   const commentinputRef = useRef<HTMLInputElement>(null);
   const [commentpreview, SetCommentpreview] = useState<boolean>(false);
   
-  const handleCommentbox = (e: MouseEvent) => {
-    const target = e.target as HTMLElement
+  const handleCommentbox = useCallback((e: MouseEvent) => {
+    const target = e.target as HTMLElement;
     if (isOpenCommentbox && !postcommentRef.current?.contains(target)) {
       OpenCommentbox(false);
     }
@@ -59,7 +59,7 @@ const PostDetailPage = () => {
       OpenCommentbox(true)
       setTimeout(() => commentinputRef.current?.focus(),1);
     }
-  }
+  }, [isOpenCommentbox])
   
   useEffect(() => {
     window.addEventListener('click', handleCommentbox);

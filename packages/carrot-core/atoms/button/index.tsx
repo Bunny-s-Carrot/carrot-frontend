@@ -57,6 +57,7 @@ const PrimaryButtonWrapper = styled.button`
   outline: none;
   border: none;
   border-radius: 0.6rem;
+  padding: 0 1.2rem;
 `
 const CarrotButton = styled(PrimaryButtonWrapper)`
   background: ${theme.colors.carrot};
