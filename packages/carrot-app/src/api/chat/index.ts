@@ -7,10 +7,20 @@ const createChatRoom = async ({uuid, seller_id, buyer_id, product_id}: CreateCha
     uuid,
     seller_id,
     buyer_id,
-    product_id
+    product_id,
   });
 
   return response;
+}
+
+const getChatRoomByUuid = async (uuid: string) => {
+  try {
+    const { data } = await api.get<{ payload: { uuid: string } }>(`chat/chatroom/uuid/${uuid}`);
+
+    return data.payload;
+  } catch (e: any) {
+    throw Error(e);
+  }
 }
 
 const getChatRoomById = async (chatRoomIds: string) => {
@@ -28,7 +38,7 @@ const getChatRoomById = async (chatRoomIds: string) => {
 
 const getChatRoomByBuyerId = async (user_id: number) => {
   try {
-    const { data } = await api.get<{ payload: GetChatRoomByBuyerIdDto }>(`chat/chatroom/${user_id}`)
+    const { data } = await api.get<{ payload: GetChatRoomByBuyerIdDto[] }>(`chat/chatroom/${user_id}`)
 
     return data.payload;
   } catch (e: any) {
@@ -39,8 +49,33 @@ const getChatRoomByBuyerId = async (user_id: number) => {
 const getMessages = async (uuid: string) => {
   try {
     const { data } = await api.get<{ payload: MessageDto[] }>(`/chat/chatroom/${uuid}/message`);
-    console.log(data.payload)
+
     return data.payload;
+  } catch (e: any) {
+    throw Error(e);
+  }
+}
+
+const createMessage = async ({
+  chatroom_id,
+  message_id,
+  message_from,
+  message_to,
+  content,
+  created_at
+}: MessageDto) => {
+  try {
+    const result = await api.post('/chat/chatroom/1',
+    {
+      chatroom_id,
+      message_id,
+      message_from,
+      message_to,
+      content,
+      created_at
+    })
+
+    return result;
   } catch (e: any) {
     throw Error(e);
   }
@@ -50,7 +85,9 @@ const chatApi = {
   createChatRoom,
   getChatRoomById,
   getChatRoomByBuyerId,
+  getChatRoomByUuid,
   getMessages,
+  createMessage
 }
 
 export default chatApi;

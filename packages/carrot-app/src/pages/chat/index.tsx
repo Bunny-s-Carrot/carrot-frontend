@@ -22,6 +22,18 @@ const Chat = () => {
         rightContent={rightContent}
         onClickRight={() => {}}
       >
+        {chatViewModel.getMessageListSuccess &&
+          chatViewModel.messageList?.map((item, index) => {
+            if (chatViewModel.messageList) {
+              return (
+                'hi'
+                // <ChatRoom 
+                //   buyerName={item.}
+                // />
+              )
+            }
+          })        
+        }
         <ChatRoom
           buyerName="부루스타"
           location='상암동'

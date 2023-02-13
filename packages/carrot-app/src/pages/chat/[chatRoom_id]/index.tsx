@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
@@ -17,7 +16,6 @@ import sendIconActive from '@carrot/core/assets/icon/send-carrot.svg';
 import useChatRoomDetailViewModel from "./chatRoomDetail.viewModel";
 import MyChat from "../../../components/chat/myChat";
 import SellerChat from "../../../components/chat/sellerChat";
-import useWebSocket from "../../../hooks/useWebSocket";
 import { MessageDto } from "../../../api/chat/chatDto";
 
 const ChatRoomDetailPage = () => {
