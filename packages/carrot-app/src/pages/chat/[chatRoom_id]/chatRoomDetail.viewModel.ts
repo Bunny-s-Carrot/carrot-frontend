@@ -9,12 +9,12 @@ const useChatRoomDetailViewModel = () => {
   const params = useParams();
   const queryClient = useQueryClient();
   const [message, setMessage] = useState('');
+  const [receivedMessage, setReceivedMessage] = useState('');
   const [isOpenMore, openMore] = useState(false);
   const [exist, setExist] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const location = useLocation();
-  const { chatRoom_id: roomId } = useParams();
-  const { ws, isReady } = useWebSocket('http://localhost:5000');
+  const { ws, isReady } = useWebSocket('http://localhost:5000', params.uuid);
   const { getId } = useJwtDecode();
   const uuid = location.state?.uuid || params.uuid;
   const seller_id = location.state?.sellerId;
@@ -39,11 +39,11 @@ const useChatRoomDetailViewModel = () => {
 
   useEffect(() => {
     if (isReady) {
-      ws.current?.on('connection', socket => {
-        socket.join(roomId);
+      ws.current?.on(`received message in ${params.uuid}`, message => {
+        console.log(message);
       })
     }
-  }, [isReady, ws, roomId])
+  }, [isReady, ws, params.uuid])
 
   useEffect(() => {
     if (getChatRoomSuccess) {
@@ -71,20 +71,22 @@ const useChatRoomDetailViewModel = () => {
         product_id,
       })
     }
-
-    message !== '' && createMessage.mutate({
-      uuid,
-      message_from: userId,
-      message_to: 0,
-      content: message,
-      created_at: new Date().toLocaleString()
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries();
-        setMessage('');
-      }
-    })
+    if (message !== '') {
+      console.log(params.uuid)
+      ws.current?.emit(`send message in ${params.uuid}`, message);
+      createMessage.mutate({
+        uuid,
+        message_from: userId,
+        content: message,
+        created_at: new Date().toLocaleString()
+      },
+      {
+        onSuccess: () => {
+          queryClient.invalidateQueries();
+          setMessage('');
+        }
+      })
+    }
   }
 
 

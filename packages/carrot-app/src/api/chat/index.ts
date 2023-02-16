@@ -1,5 +1,5 @@
 import { api } from "../../infra/api";
-import { CreateChatRoomDto, GetChatRoomByIdDto, GetChatRoomByBuyerIdDto, MessageDto } from "./chatDto";
+import { CreateChatRoomDto, GetChatRoomByIdDto, GetChatRoomByUserIdDto, MessageDto } from "./chatDto";
 
 const createChatRoom = async ({uuid, seller_id, buyer_id, product_id}: CreateChatRoomDto) => {
   const response = await api.post('chat/chatroom',
@@ -36,9 +36,9 @@ const getChatRoomById = async (chatRoomIds: string) => {
   } 
 }
 
-const getChatRoomByBuyerId = async (user_id: number) => {
+const getChatRoomByUserId = async (user_id: number) => {
   try {
-    const { data } = await api.get<{ payload: GetChatRoomByBuyerIdDto[] }>(`chat/chatroom/${user_id}`)
+    const { data } = await api.get<{ payload: GetChatRoomByUserIdDto[] }>(`chat/chatroom/${user_id}`)
 
     return data.payload;
   } catch (e: any) {
@@ -71,7 +71,6 @@ const getMessages = async (uuid: string) => {
 const createMessage = async ({
   uuid,
   message_from,
-  message_to,
   content,
   created_at
 }: MessageDto) => {
@@ -80,7 +79,6 @@ const createMessage = async ({
     {
       uuid,
       message_from,
-      message_to,
       content,
       created_at
     })
@@ -94,7 +92,7 @@ const createMessage = async ({
 const chatApi = {
   createChatRoom,
   getChatRoomById,
-  getChatRoomByBuyerId,
+  getChatRoomByUserId,
   getChatRoomByUuid,
   getMessages,
   createMessage

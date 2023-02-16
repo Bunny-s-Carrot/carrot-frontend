@@ -13,17 +13,18 @@ export interface GetChatRoomByIdDto {
   product_id: number
 }
 
-export interface GetChatRoomByBuyerIdDto {
+export interface GetChatRoomByUserIdDto {
   chatRoom_id: number
   uuid: string
   seller_id: number
   product_id: number
+  displayName: string
+  displayLoc: string
 }
 
 export interface MessageDto {
   uuid: string
   message_from: number
-  message_to: number
   content: string
   created_at: string
 }

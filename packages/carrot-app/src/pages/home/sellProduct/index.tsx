@@ -137,7 +137,7 @@ const SellProductPage = () => {
             disableBorder
             noBorderBottom={true}
             value={sellProductViewModel.contents}
-            onChangeValue={e => sellProductViewModel.setContents(e)}
+            onChange={e => sellProductViewModel.setContents(e.target.value)}
           />
         </ProductInfoWrapper>
         <AdditionalInfoWrapper>

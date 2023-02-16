@@ -7,12 +7,12 @@ import chatApi from "../../api/chat";
 const useChatViewModel = () => {
   const { getId } = useJwtDecode();
   const userId = useMemo(() => getId(), [getId]);
-  const { data: messageList, isSuccess: getMessageListSuccess } = useQuery([`chat/chatroom/${userId}`], () =>
-    chatApi.getChatRoomByBuyerId(userId));
+  const { data: chatRoomList, isSuccess: getChatRoomListSuccess } = useQuery([`chat/chatroom/${userId}`], () =>
+    chatApi.getChatRoomByUserId(userId));
 
   return {
-    messageList,
-    getMessageListSuccess,
+    chatRooms: chatRoomList,
+    getChatRoomListSuccess,
   }
 }
 
