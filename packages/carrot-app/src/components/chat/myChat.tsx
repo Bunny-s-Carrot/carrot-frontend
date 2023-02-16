@@ -10,10 +10,12 @@ interface MyChatProps {
 }
 
 const MyChat = (props: MyChatProps) => {
+  const time = props.createdAt!.split('.');
+
   return (
     <Wrapper>
       <CreatedAt>
-        {moment(props.createdAt).locale('ko').format('a h:mm') || '오후 7:10'}
+        {time[time.length-1].slice(0,-3)}
       </CreatedAt>
       <Message>
         {props.message || '하이하이하이하이하이하이하이하이하이하이'}

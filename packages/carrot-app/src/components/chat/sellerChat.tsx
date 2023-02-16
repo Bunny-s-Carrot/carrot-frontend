@@ -9,13 +9,15 @@ interface SellerChatProps {
 }
 
 const SellerChat = (props: SellerChatProps) => {
+  const time = props.createdAt!.split('.');
+
   return (
     <Wrapper>
       <Message>
         {props.message || '안녕하세요'}
       </Message>
       <CreatedAt>
-      {moment(props.createdAt).locale('ko').format('a h:mm') || '오후 7:10'}
+      {time[time.length-1].slice(0,-3)}
       </CreatedAt>
     </Wrapper>
   )

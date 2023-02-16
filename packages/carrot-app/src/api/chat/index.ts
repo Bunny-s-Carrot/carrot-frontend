@@ -46,19 +46,30 @@ const getChatRoomByBuyerId = async (user_id: number) => {
   }
 }
 
+// const getMessages = async (uuid: string) => {
+//   try {
+//     const { data } = await api.get<{ payload: MessageDto[] }>(`/chat/chatroom/${uuid}/message`);
+//     console.log('성공' + data)
+//     return data.payload;
+//   } catch (e: any) {
+//     throw Error(e);
+//   }
+// }
+
+
 const getMessages = async (uuid: string) => {
   try {
-    const { data } = await api.get<{ payload: MessageDto[] }>(`/chat/chatroom/${uuid}/message`);
-
+    const { data } = await api.get<{ payload: MessageDto[] }>(
+      `chat/chatroom/${uuid}/message`);
     return data.payload;
   } catch (e: any) {
     throw Error(e);
   }
+  
 }
 
 const createMessage = async ({
-  chatroom_id,
-  message_id,
+  uuid,
   message_from,
   message_to,
   content,
@@ -67,8 +78,7 @@ const createMessage = async ({
   try {
     const result = await api.post('/chat/chatroom/1',
     {
-      chatroom_id,
-      message_id,
+      uuid,
       message_from,
       message_to,
       content,

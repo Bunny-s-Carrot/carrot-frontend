@@ -19,8 +19,7 @@ const useChatRoomDetailViewModel = () => {
   const uuid = location.state?.uuid || params.uuid;
   const seller_id = location.state?.sellerId;
   const product_id = location.state?.productId;
-
-  const userId = useMemo(() => getId(), [getId]);
+  const userId = useMemo(() => getId(), [getId])
   const createChatRoom = useMutation(chatApi.createChatRoom);
   const createMessage = useMutation(chatApi.createMessage);
 
@@ -62,6 +61,7 @@ const useChatRoomDetailViewModel = () => {
     // emojiButtonClick
   }
 
+
   const sendMessage = () => {
     if (!exist) {
       createChatRoom.mutate({
@@ -73,16 +73,16 @@ const useChatRoomDetailViewModel = () => {
     }
 
     message !== '' && createMessage.mutate({
-      chatroom_id: '12-33',
-      message_id: 2,
-      message_from: 33,
-      message_to: 12,
+      uuid,
+      message_from: userId,
+      message_to: 0,
       content: message,
-      created_at: '시간'
+      created_at: new Date().toLocaleString()
     },
     {
       onSuccess: () => {
         queryClient.invalidateQueries();
+        setMessage('');
       }
     })
   }

@@ -17,6 +17,7 @@ import useChatRoomDetailViewModel from "./chatRoomDetail.viewModel";
 import MyChat from "../../../components/chat/myChat";
 import SellerChat from "../../../components/chat/sellerChat";
 import { MessageDto } from "../../../api/chat/chatDto";
+import { useRef, useState } from 'react';
 
 const ChatRoomDetailPage = () => {
 
@@ -54,12 +55,14 @@ const ChatRoomDetailPage = () => {
               if (userId === message.message_from) {
                 return (
                   <MyChat
+                    key={index}
                     message={message.content}
                     createdAt={message.created_at}
                   />
                 )
               } else return (
                 <SellerChat
+                  key={index}
                   message={message.content}
                   createdAt={message.created_at}
                 />
@@ -96,7 +99,8 @@ const ChatRoomDetailPage = () => {
         <SendButton
           src={chatRoomDetailViewModel.message.length === 0 ? sendIcon : sendIconActive}
           alt='sendIcon'
-          onClick={chatRoomDetailViewModel.sendMessage}
+          onClick={() => {
+            chatRoomDetailViewModel.sendMessage();}}
         />
       </BottomWrapper>
     </>
@@ -117,8 +121,10 @@ const MannerTemp = styled.span<{ color: string, rgb: { r: number, g: number, b: 
 const MessageWrapper = styled.div`
   position: relative;
   padding: 1.6rem;
+  margin-bottom: 3.6rem;
 `
 const BottomWrapper = styled.div`
+  background: white;
   width: 100%;
   position: absolute;
   bottom: 0;
