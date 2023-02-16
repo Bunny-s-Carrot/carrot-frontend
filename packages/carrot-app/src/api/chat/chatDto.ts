@@ -21,8 +21,7 @@ export interface GetChatRoomByBuyerIdDto {
 }
 
 export interface MessageDto {
-  chatroom_id: string
-  message_id: number
+  uuid: string
   message_from: number
   message_to: number
   content: string
