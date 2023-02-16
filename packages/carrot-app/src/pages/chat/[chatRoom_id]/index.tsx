@@ -17,7 +17,6 @@ import useChatRoomDetailViewModel from "./chatRoomDetail.viewModel";
 import MyChat from "../../../components/chat/myChat";
 import SellerChat from "../../../components/chat/sellerChat";
 import { MessageDto } from "../../../api/chat/chatDto";
-import { useRef, useState } from 'react';
 
 const ChatRoomDetailPage = () => {
 

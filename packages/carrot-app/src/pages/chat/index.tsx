@@ -15,6 +15,7 @@ const Chat = () => {
     <>
       <img src={notiIcon} alt='notiIcon' />
     </>
+
   return (
     <>
       <HeaderTemplate
@@ -22,25 +23,18 @@ const Chat = () => {
         rightContent={rightContent}
         onClickRight={() => {}}
       >
-        {chatViewModel.getMessageListSuccess &&
-          chatViewModel.messageList?.map((item, index) => {
-            if (chatViewModel.messageList) {
-              return (
-                'hi'
-                // <ChatRoom 
-                //   buyerName={item.}
-                // />
-              )
-            }
-          })        
+        {chatViewModel.getChatRoomListSuccess &&
+          chatViewModel.chatRooms?.map((item, index) => 
+            <ChatRoom
+              key={index}
+              buyerName={item.displayName}
+              location= {item.displayLoc}
+              lastMessageDate="1주 전"
+              lastMessage="하하하하하하"
+              onClick={() => navigate(`chatroom/${item.uuid}`)}
+            />
+          )        
         }
-        <ChatRoom
-          buyerName="부루스타"
-          location='상암동'
-          lastMessageDate="1주 전"
-          lastMessage="하하하하하하"
-          onClick={() => navigate('chatroom/1')}
-        />
       </HeaderTemplate>
       <NavBar pageType='CHAT' />
     </>

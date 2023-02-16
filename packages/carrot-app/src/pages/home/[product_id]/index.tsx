@@ -66,12 +66,15 @@ const ProductDetailPage = () => {
   const bottomRightContent = 
     <ChatButton
       buttonType="CARROT"
-      onClick={() => 
-        navigate(`/chat/chatroom/${uuid}`,
+      onClick={() => {
+        if (productData?.seller_id !== userId) {
+          navigate(`/chat/chatroom/${uuid}`,
         {
           state: { sellerId: productData?.seller_id, productId: productData?.product_id, uuid }
         }
-        )
+          )
+        }
+      }
       }
     >
       {productData?.seller_id === userId ? `대화 중인 채팅방` : '채팅하기'}
