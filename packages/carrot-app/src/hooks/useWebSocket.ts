@@ -1,13 +1,13 @@
 import { useEffect, useRef, useState } from "react";
 import io, { Socket } from "socket.io-client";
 
-const useWebSocket = (url: string, uuid: string | undefined) => {
+const useWebSocket = (url: string) => {
   const [isReady, setIsReady] = useState(false);
 
   const ws = useRef<Socket>();
 
   useEffect(() => {
-    ws.current = io(`${url}?uuid=${uuid}`);
+    ws.current = io(url);
     ws.current?.on('connect', () => {
       setIsReady(true);
       console.log("Connected with ID: ", ws.current?.id);

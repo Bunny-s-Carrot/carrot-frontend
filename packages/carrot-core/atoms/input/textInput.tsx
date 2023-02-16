@@ -12,6 +12,7 @@ interface TextInputProps {
   onFocus?: () => void;
   disabled?: boolean;
   onKeyup?: KeyboardEventHandler;
+  onKeyDown?: KeyboardEventHandler
   className?: string;
   isMultiLine?: boolean;
   required?: boolean;
@@ -36,6 +37,7 @@ const TextInput = forwardRef<HTMLTextAreaElement, TextInputProps>((props, ref) =
           required={props.required}
           onFocus={props.onFocus}
           onKeyUp={props.onKeyup}
+          onKeyDown={props.onKeyDown}
           disabled={props.disabled}
           rows={props.rows}
           ref={ref}
@@ -61,6 +63,7 @@ const TextInput = forwardRef<HTMLTextAreaElement, TextInputProps>((props, ref) =
         required={props.required}
         onFocus={props.onFocus}
         onKeyUp={props.onKeyup}
+        onKeyDown={props.onKeyDown}
         disabled={props.disabled}
       />
     </TextInputWrapper>

@@ -68,6 +68,7 @@ const ChatRoomDetailPage = () => {
               )
             })
           }
+          <div ref={chatRoomDetailViewModel.scrollRef} />
         </MessageWrapper>
       </HeaderTemplate>
       <BottomWrapper>
@@ -87,6 +88,14 @@ const ChatRoomDetailPage = () => {
             disableBorder
             rows={1}
             ref={chatRoomDetailViewModel.textAreaRef}
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                if (!e.shiftKey) {
+                  e.preventDefault()
+                  chatRoomDetailViewModel.sendMessage()
+                }
+              }
+            }}
           />
           <img
             src={smileIcon}
@@ -94,12 +103,12 @@ const ChatRoomDetailPage = () => {
             onClick={() => {}}
           />
         </ChatInputWrapper>
-        
         <SendButton
           src={chatRoomDetailViewModel.message.length === 0 ? sendIcon : sendIconActive}
           alt='sendIcon'
           onClick={() => {
-            chatRoomDetailViewModel.sendMessage();}}
+            chatRoomDetailViewModel.sendMessage()
+          }}
         />
       </BottomWrapper>
     </>
