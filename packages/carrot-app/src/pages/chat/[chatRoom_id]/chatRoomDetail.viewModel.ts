@@ -1,20 +1,22 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 import useWebSocket from '../../../hooks/useWebSocket';
 import chatApi from '../../../api/chat';
 import useJwtDecode from '../../../hooks/auth/useJwtDecode';
+import { MessageDto } from '../../../api/chat/chatDto';
 
 const useChatRoomDetailViewModel = () => {
   const params = useParams();
-  const queryClient = useQueryClient();
   const [message, setMessage] = useState('');
-  const [receivedMessage, setReceivedMessage] = useState('');
+  const [chats, setChats] = useState<MessageDto[]>([]);
+  const [isJoined, setIsJoined] = useState(false);
   const [isOpenMore, openMore] = useState(false);
   const [exist, setExist] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-  const { ws, isReady } = useWebSocket('http://localhost:5000', params.uuid);
+  const { ws, isReady } = useWebSocket('http://localhost:5000');
   const { getId } = useJwtDecode();
   const uuid = location.state?.uuid || params.uuid;
   const seller_id = location.state?.sellerId;
@@ -26,8 +28,38 @@ const useChatRoomDetailViewModel = () => {
   const { data: chatRoomData, isSuccess: getChatRoomSuccess } = useQuery([`chat/chatroom/${uuid}`], () => 
     chatApi.getChatRoomByUuid(uuid))
 
-  const { data: messages, isSuccess: getMessagesSuccess } = useQuery([`chat/chatroom/${uuid}/message`], () => 
-    chatApi.getMessages(uuid))
+  const { data: messages, isSuccess: getMessagesSuccess, refetch } = useQuery([`chat/chatroom/${uuid}/message`], () => 
+    chatApi.getMessages(uuid),
+    {
+      onSuccess: () => { messages && setChats(messages) },
+      refetchInterval: 0
+    })
+
+  useEffect(() => {
+    if (isReady) {
+      ws.current?.emit('join-room', params.uuid);
+      setIsJoined(true);
+    }
+  }, [isReady, ws, params.uuid])
+
+  useEffect(() => {
+    if (isJoined) {
+      ws.current?.on(`receive-message`, ({ message, userId, createdAt }) => {
+        setChats((prev: MessageDto[]) => [
+          ...prev,
+          { message_from: userId, content: message, created_at: createdAt }
+        ])
+        refetch();
+        scrollBottom();
+      })
+    }
+  }, [ws, isJoined, chats, refetch])
+
+  useEffect(() => {
+    if (getChatRoomSuccess) {
+      chatRoomData && setExist(true)
+    }
+  }, [getChatRoomSuccess, setExist, chatRoomData])
 
   useEffect(() => {
     if (textAreaRef.current) {
@@ -38,20 +70,8 @@ const useChatRoomDetailViewModel = () => {
   }, [textAreaRef, message])
 
   useEffect(() => {
-    if (isReady) {
-      ws.current?.on(`received message in ${params.uuid}`, message => {
-        console.log(message);
-      })
-    }
-  }, [isReady, ws, params.uuid])
-
-  useEffect(() => {
-    if (getChatRoomSuccess) {
-      chatRoomData && setExist(true)
-    }
-  }, [getMessagesSuccess, setExist, messages?.length])
-
-
+    scrollRef.current?.scrollIntoView();
+  }, [])
 
   const handleClickMoreButton = () => {
     openMore(!isOpenMore);
@@ -61,6 +81,9 @@ const useChatRoomDetailViewModel = () => {
     // emojiButtonClick
   }
 
+  const scrollBottom = () => {
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+  }
 
   const sendMessage = () => {
     if (!exist) {
@@ -72,18 +95,24 @@ const useChatRoomDetailViewModel = () => {
       })
     }
     if (message !== '') {
-      console.log(params.uuid)
-      ws.current?.emit(`send message in ${params.uuid}`, message);
+      const createdAt = new Date().toLocaleString();
+
+      ws.current?.emit('send-message', { message, userId, uuid, createdAt });
+      setChats((prev: MessageDto[]) => [
+        ...prev,
+        { message_from: userId, content: message, created_at: createdAt }
+      ])
       createMessage.mutate({
         uuid,
         message_from: userId,
         content: message,
-        created_at: new Date().toLocaleString()
+        created_at: createdAt
       },
       {
         onSuccess: () => {
-          queryClient.invalidateQueries();
           setMessage('');
+          refetch();
+          scrollBottom();
         }
       })
     }
@@ -92,8 +121,10 @@ const useChatRoomDetailViewModel = () => {
 
   return {
     textAreaRef,
+    scrollRef,
     message,
     setMessage,
+    chats,
     isOpenMore,
     messages,
     getMessagesSuccess,

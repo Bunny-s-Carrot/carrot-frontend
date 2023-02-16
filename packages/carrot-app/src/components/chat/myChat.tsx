@@ -18,7 +18,7 @@ const MyChat = (props: MyChatProps) => {
         {time[time.length-1].slice(0,-3)}
       </CreatedAt>
       <Message>
-        {props.message || '하이하이하이하이하이하이하이하이하이하이'}
+        {props.message}
       </Message>
     </Wrapper>
   )

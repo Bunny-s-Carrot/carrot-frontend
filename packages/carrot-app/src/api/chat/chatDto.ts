@@ -23,7 +23,7 @@ export interface GetChatRoomByUserIdDto {
 }
 
 export interface MessageDto {
-  uuid: string
+  uuid?: string
   message_from: number
   content: string
   created_at: string
