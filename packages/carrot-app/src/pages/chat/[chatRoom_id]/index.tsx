@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import theme from "@carrot/core/style/theme";
 import { converHexToRGB } from "@carrot/util/color";
@@ -22,6 +22,8 @@ const ChatRoomDetailPage = () => {
 
   const chatRoomDetailViewModel = useChatRoomDetailViewModel();
   const navigate = useNavigate();
+  const location = useLocation();
+  const username = location.state.username;
   const userId = chatRoomDetailViewModel.userId;
   const fontColor = colorAndEmoji(37);
   const rgb = converHexToRGB(fontColor[0]);
@@ -30,7 +32,7 @@ const ChatRoomDetailPage = () => {
     <>
       <img src={backIcon} alt='backIcon' />
       <div>
-        <span>상대방 닉네임</span>
+        <span>{username}</span>
         <MannerTemp color={fontColor[0]} rgb={rgb}>36.5°C</MannerTemp>
       </div>
     </>
@@ -120,7 +122,7 @@ export default ChatRoomDetailPage
 const MannerTemp = styled.span<{ color: string, rgb: { r: number, g: number, b: number } | null }>`
   ${theme.typography.caption1}
   padding: 0.4rem;
-  margin-left: 0.4rem;
+  margin-left: 0.5rem;
   vertical-align: middle;
   color: ${props => props.color};
   border-radius: 1.6rem;
@@ -128,8 +130,8 @@ const MannerTemp = styled.span<{ color: string, rgb: { r: number, g: number, b: 
 `
 const MessageWrapper = styled.div`
   position: relative;
-  padding: 1.6rem;
-  margin-bottom: 3.6rem;
+  padding: 1.6rem 1.6rem 0.5rem 1.6rem;
+  margin-bottom: 5.2rem;
 `
 const BottomWrapper = styled.div`
   background: white;
@@ -176,3 +178,4 @@ const SendButton = styled.img`
   width: 2.6rem;
   height: 2.6rem;
 `
+
