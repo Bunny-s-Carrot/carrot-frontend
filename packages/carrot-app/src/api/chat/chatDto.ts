@@ -20,6 +20,8 @@ export interface GetChatRoomByUserIdDto {
   product_id: number
   displayName: string
   displayLoc: string
+  recentMessage: string
+  recentTime: string
 }
 
 export interface MessageDto {
