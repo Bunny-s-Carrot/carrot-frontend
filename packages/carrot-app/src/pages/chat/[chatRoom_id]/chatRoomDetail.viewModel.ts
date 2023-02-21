@@ -16,7 +16,7 @@ const useChatRoomDetailViewModel = () => {
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const location = useLocation();
-  const { ws, isReady } = useWebSocket('http://localhost:5000');
+  const { ws, isReady } = useWebSocket(process.env.REACT_APP_API_URL as string);
   const { getId } = useJwtDecode();
   const uuid = location.state?.uuid || params.uuid;
   const seller_id = location.state?.sellerId;
