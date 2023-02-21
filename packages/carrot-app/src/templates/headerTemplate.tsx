@@ -20,7 +20,7 @@ const HeaderTemplate = (props: HeaderTemplateProps) => {
   const handleScroll = () => {
     setScrollTop(contentRef.current.scrollTop);
   }
-  
+
   return (
     <Wrapper className={props.className}>
       <Title noBorderBottom={props.noBorderBottom}>
