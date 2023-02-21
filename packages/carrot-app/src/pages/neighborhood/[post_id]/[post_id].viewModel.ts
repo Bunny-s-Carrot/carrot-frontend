@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useQuery } from "@tanstack/react-query";
 import postApi from "../../../api/post";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useJwtDecode from '../../../hooks/auth/useJwtDecode';
 
 
@@ -10,6 +10,7 @@ import useJwtDecode from '../../../hooks/auth/useJwtDecode';
 const usePostDetailViewModel = () => {
   const params = useParams<{ post_id: string, comment_id: string }>();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const [ content, setContent ] = useState("");
   const { getId } = useJwtDecode();
@@ -97,6 +98,11 @@ const usePostDetailViewModel = () => {
     })
   }
 
+  const deletePost = () => {
+    postApi.deletePost(post_id)
+    navigate('/neighborhood')
+  }
+
   return {
     data,
     content,
@@ -110,7 +116,8 @@ const usePostDetailViewModel = () => {
     UpEmpa,
     DownEmpa,
     empanow,
-    setEmpanow
+    setEmpanow,
+    deletePost
   }
 }
 

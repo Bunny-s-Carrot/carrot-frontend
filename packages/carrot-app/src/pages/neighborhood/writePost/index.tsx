@@ -8,7 +8,7 @@ import backIcon from "@carrot/core/assets/icon/back-arrow.svg";
 import cancelIcon from '@carrot/core/assets/icon/cancel.svg';
 import useWritePostViewModel from "./writePost.viewModel";
 import usePostViewModel from "../post.viewModel";
-import Modal from "../../../components/neighborhood/modal";
+import PostModal from "../../../components/neighborhood/modal";
 import FileInput from "@carrot/core/atoms/input/fileInput";
 import { reversePostcategory } from '../../../infra/postcategory/postcategoryList';
 import imageIcon from "@carrot/core/assets/icon/image-black.svg";
@@ -95,7 +95,7 @@ const WritePostPage = () => {
             </ThumbnailsWrapper>
         </form>
       </StyledHeaderTemplate>
-      <Modal
+      <PostModal
         type="CategoryModal"
         openModal={openModal}
         controlModal={controlModal}

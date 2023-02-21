@@ -74,6 +74,16 @@ const createPost = async ({
     }
   }
 
+const deletePost = async (postId: number) => {
+  try {
+    const result = await api.post(`/post/${postId}/delete`);
+  
+    return result;
+  } catch (e: any) {
+    throw Error(e);
+  }
+}
+
 const createComment = async ({
   post_id,
   writer_id,
@@ -164,6 +174,7 @@ const postApi = {
     getPostDetail,
     getPostsByCategory,
     createPost,
+    deletePost,
     createComment,
     createRecomment,
     getImageList,
