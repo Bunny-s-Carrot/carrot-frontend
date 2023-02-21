@@ -40,10 +40,6 @@ const useChatRoomDetailViewModel = () => {
     openMore(!isOpenMore);
   }
 
-  const handleClickEmoji = () => {
-    // emojiButtonClick
-  }
-
   const scrollBottom = (smooth=false) => {
     if (smooth) {
       scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight)
@@ -78,14 +74,15 @@ const useChatRoomDetailViewModel = () => {
         onSuccess: () => {
           setMessage('');
           refetch();
-          scrollBottom(true);
         }
       })
     }
   }
+
   useEffect(() => {
     scrollBottom()
   }, [scrollRef.current?.scrollHeight])
+
   useEffect(() => {
     if (isReady) {
       ws.current?.emit('join-room', params.uuid);
@@ -101,7 +98,6 @@ const useChatRoomDetailViewModel = () => {
           { message_from: userId, content: message, created_at: createdAt }
         ])
         refetch();
-        scrollBottom();
       })
     }
   }, [ws, isJoined, chats, refetch])

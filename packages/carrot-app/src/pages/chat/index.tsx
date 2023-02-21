@@ -1,13 +1,21 @@
 import NavBar from "../../components/navBar";
 import HeaderTemplate from "../../templates/headerTemplate";
 import notiIcon from '@carrot/core/assets/icon/notification.svg';
-import useChatViewModel from "./chat.viewModel";
 import ChatRoom from "../../components/chat/chatRoomList";
 import { useNavigate } from "react-router-dom";
 import { chatDateToSimple } from '@carrot/util/format';
+import useJwtDecode from "../../hooks/auth/useJwtDecode";
+import { useMemo } from "react";
+import chatApi from "../../api/chat";
+import { useQuery } from "@tanstack/react-query";
 
 const Chat = () => {
-  const chatViewModel = useChatViewModel();
+  const { getId } = useJwtDecode();
+  const userId = useMemo(() => getId(), [getId]);
+  const { data: chatRoomList, isSuccess: getChatRoomListSuccess } = useQuery([`chat/chatroom/${userId}`], () =>
+    chatApi.getChatRoomByUserId(userId));
+
+
   const navigate = useNavigate();
   const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
 
@@ -26,8 +34,8 @@ const Chat = () => {
         rightContent={rightContent}
         onClickRight={() => {}}
       >
-        {chatViewModel.getChatRoomListSuccess &&
-          chatViewModel.chatRooms?.map((item, index) => 
+        {getChatRoomListSuccess &&
+          chatRoomList?.map((item, index) => 
             <ChatRoom
               key={index}
               buyerName={item.displayName}              
