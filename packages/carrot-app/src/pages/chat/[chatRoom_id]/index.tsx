@@ -15,8 +15,9 @@ import sendIcon from '@carrot/core/assets/icon/send-grey.svg';
 import sendIconActive from '@carrot/core/assets/icon/send-carrot.svg';
 import useChatRoomDetailViewModel from "./chatRoomDetail.viewModel";
 import MyChat from "../../../components/chat/myChat";
-import SellerChat from "../../../components/chat/sellerChat";
+import OpponentChat from "../../../components/chat/opponentChat";
 import { MessageDto } from "../../../api/chat/chatDto";
+import moment from "moment";
 
 const ChatRoomDetailPage = () => {
 
@@ -43,36 +44,76 @@ const ChatRoomDetailPage = () => {
       <img src={dotsVerticalIcon} alt='dotsVerticalIcon' />
     </>
 
+
   return (
-    <>
-      <HeaderTemplate
-        leftContent={leftContent}
-        rightContent={rightContent}
-        onClickLeft={() => navigate(-1)}
-      >
+
+    <HeaderTemplate
+      leftContent={leftContent}
+      rightContent={rightContent}
+      onClickLeft={() => navigate(-1)}
+    >
+      <Wrapper>
         <MessageWrapper>
           {chatRoomDetailViewModel.getMessagesSuccess &&
-            chatRoomDetailViewModel.messages?.map((message: MessageDto, index: number) => {
+            chatRoomDetailViewModel.messages?.map((message: MessageDto, index: number, messages) => {
+              const previousMessage =
+                index > 1 ? messages[index - 1] : ('' as unknown) as MessageDto
+              const nextMessage = 
+                index < messages.length ? messages[index + 1] : ('' as unknown) as MessageDto
               if (userId === message.message_from) {
                 return (
+                  <>
+                  {previousMessage.created_at?.split('.')[2] !==
+                  (message.created_at.split('.')[2]) && (
+                  <DateSeparator key={index+1}>
+                    <DateWrapper>
+                      <span>
+                        {message.created_at.slice(0, 12)}
+                      </span>
+                    </DateWrapper>
+                  </DateSeparator>
+                  )}
                   <MyChat
                     key={index}
                     message={message.content}
                     createdAt={message.created_at}
+                    hideTime={
+                      nextMessage && nextMessage.message_from === message.message_from && 
+                      nextMessage.created_at?.split(':')[1] ===
+                      message.created_at.split(':')[1]
+                    }
                   />
+                  </>
                 )
               } else return (
-                <SellerChat
-                  key={index}
-                  message={message.content}
-                  createdAt={message.created_at}
-                />
+                <>
+                  {previousMessage.created_at?.split('.')[2] !==
+                  (message.created_at.split('.')[2]) && (
+                  <DateSeparator key={index+1}>
+                    <DateWrapper>
+                      <span>
+                      {message.created_at.slice(0, 12)}
+                      </span>
+                    </DateWrapper>
+                  </DateSeparator>
+                  )}
+                  <OpponentChat
+                    key={index}
+                    message={message.content}
+                    createdAt={message.created_at}
+                    hideTime={
+                      nextMessage && nextMessage.message_from === message.message_from &&
+                      nextMessage.created_at?.split(':')[1] ===
+                      message.created_at.split(':')[1]
+                    }
+                  />
+                </>
               )
             })
           }
           <div ref={chatRoomDetailViewModel.scrollRef} />
         </MessageWrapper>
-      </HeaderTemplate>
+      </Wrapper>
       <BottomWrapper>
         <MoreButton
           src={chatRoomDetailViewModel.isOpenMore ? closeIcon : addIcon}
@@ -105,15 +146,15 @@ const ChatRoomDetailPage = () => {
             onClick={() => {}}
           />
         </ChatInputWrapper>
-        <SendButton
-          src={chatRoomDetailViewModel.message.length === 0 ? sendIcon : sendIconActive}
-          alt='sendIcon'
-          onClick={() => {
-            chatRoomDetailViewModel.sendMessage()
-          }}
-        />
-      </BottomWrapper>
-    </>
+          <SendButton
+            src={chatRoomDetailViewModel.message.length === 0 ? sendIcon : sendIconActive}
+            alt='sendIcon'
+            onClick={() => {
+              chatRoomDetailViewModel.sendMessage()
+            }}
+          />
+        </BottomWrapper>
+    </HeaderTemplate>
   )
 }
 
@@ -128,16 +169,25 @@ const MannerTemp = styled.span<{ color: string, rgb: { r: number, g: number, b: 
   border-radius: 1.6rem;
   background: ${props => `rgba(${props.rgb!.r}, ${props.rgb!.g}, ${props.rgb!.b}, 0.3)`};
 `
-const MessageWrapper = styled.div`
+const Wrapper = styled.div`
+  height: calc(100% - 5.2rem);
   position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+`
+const MessageWrapper = styled.div`
+  height: 100%;
+  overflow-y: scroll;
+  position: relative;
+  flex: 0 0 100%;
   padding: 1.6rem 1.6rem 0.5rem 1.6rem;
-  margin-bottom: 5.2rem;
 `
 const BottomWrapper = styled.div`
+  z-index: 1;
   background: white;
   width: 100%;
-  position: absolute;
-  bottom: 0;
   padding: 0.8rem 1.6rem;
   display: flex;
   align-items: center;
@@ -178,4 +228,22 @@ const SendButton = styled.img`
   width: 2.6rem;
   height: 2.6rem;
 `
-
+const DateSeparator = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0.6rem 0;
+`
+const DateWrapper = styled.div`
+  width: 12rem;
+  height: 3rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: ${theme.colors.grey30};
+  border-radius: 2rem;
+  span {
+    color: white;
+    ${theme.typography.caption1};
+  }
+`

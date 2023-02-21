@@ -35,6 +35,55 @@ const useChatRoomDetailViewModel = () => {
       refetchInterval: 0
     })
 
+
+  const handleClickMoreButton = () => {
+    openMore(!isOpenMore);
+  }
+
+  const handleClickEmoji = () => {
+    // emojiButtonClick
+  }
+
+  const scrollBottom = (smooth=false) => {
+    if (smooth) {
+      scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+    }
+    scrollRef.current?.scrollIntoView()
+  }
+
+  const sendMessage = () => {
+    if (!exist) {
+      createChatRoom.mutate({
+        uuid,
+        seller_id,
+        buyer_id: userId,
+        product_id,
+      })
+    }
+    if (message !== '') {
+      const createdAt = new Date().toLocaleString();
+
+      ws.current?.emit('send-message', { message, userId, uuid, createdAt });
+      setChats((prev: MessageDto[]) => [
+        ...prev,
+        { message_from: userId, content: message, created_at: createdAt }
+      ])
+      createMessage.mutate({
+        uuid,
+        message_from: userId,
+        content: message,
+        created_at: createdAt
+      },
+      {
+        onSuccess: () => {
+          setMessage('');
+          refetch();
+          scrollBottom(true);
+        }
+      })
+    }
+  }
+
   useEffect(() => {
     if (isReady) {
       ws.current?.emit('join-room', params.uuid);
@@ -72,52 +121,6 @@ const useChatRoomDetailViewModel = () => {
   useEffect(() => {
     scrollRef.current?.scrollIntoView();
   }, [])
-
-  const handleClickMoreButton = () => {
-    openMore(!isOpenMore);
-  }
-
-  const handleClickEmoji = () => {
-    // emojiButtonClick
-  }
-
-  const scrollBottom = () => {
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
-
-  const sendMessage = () => {
-    if (!exist) {
-      createChatRoom.mutate({
-        uuid,
-        seller_id,
-        buyer_id: userId,
-        product_id,
-      })
-    }
-    if (message !== '') {
-      const createdAt = new Date().toLocaleString();
-
-      ws.current?.emit('send-message', { message, userId, uuid, createdAt });
-      setChats((prev: MessageDto[]) => [
-        ...prev,
-        { message_from: userId, content: message, created_at: createdAt }
-      ])
-      createMessage.mutate({
-        uuid,
-        message_from: userId,
-        content: message,
-        created_at: createdAt
-      },
-      {
-        onSuccess: () => {
-          setMessage('');
-          refetch();
-          scrollBottom();
-        }
-      })
-    }
-  }
-
 
   return {
     textAreaRef,
