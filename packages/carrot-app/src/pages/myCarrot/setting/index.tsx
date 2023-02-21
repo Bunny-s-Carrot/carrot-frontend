@@ -112,7 +112,9 @@ const SettingPage = () => {
           : '정말 탈퇴하시겠습니까?'}
         onClickLeft={() => settingViewModel.openModal(false)}
         onClickRight={settingViewModel.handleClickModalRight}
-        buttonText="로그아웃"
+        buttonText={settingViewModel.clickOn === 'logout'
+        ? '로그아웃'
+        : '틸퇴하기'}
       />}
     </>
     

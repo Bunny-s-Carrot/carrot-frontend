@@ -112,8 +112,7 @@ const ChatRoomDetailPage = () => {
           }
           <div />
         </MessageWrapper>
-      </Wrapper>
-      <BottomWrapper>
+        <BottomWrapper>
         <MoreButton
           src={chatRoomDetailViewModel.isOpenMore ? closeIcon : addIcon}
           alt='addIcon'
@@ -153,6 +152,7 @@ const ChatRoomDetailPage = () => {
             }}
           />
         </BottomWrapper>
+      </Wrapper>
     </HeaderTemplate>
   )
 }
@@ -169,23 +169,18 @@ const MannerTemp = styled.span<{ color: string, rgb: { r: number, g: number, b: 
   background: ${props => `rgba(${props.rgb!.r}, ${props.rgb!.g}, ${props.rgb!.b}, 0.3)`};
 `
 const Wrapper = styled.div`
-  height: calc(100% - 5.2rem);
-  position: relative;
-  z-index: 1;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 `
 const MessageWrapper = styled.div`
-  height: 100%;
+  flex: 0 1 calc(100% - 5.2rem);
   overflow-y: scroll;
-  position: relative;
-  flex: 0 0 100%;
-  padding: 1.6rem 1.6rem 0.5rem 1.6rem;
+  padding: 1.6rem 1.6rem 0 1.6rem;
   ${theme.option.hiddenScroll}
 `
 const BottomWrapper = styled.div`
-  z-index: 1;
   background: white;
   width: 100%;
   padding: 0.8rem 1.6rem;
