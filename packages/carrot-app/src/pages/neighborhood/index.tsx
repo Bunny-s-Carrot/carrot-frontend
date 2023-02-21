@@ -8,7 +8,7 @@ import HeaderTemplate from "../../templates/headerTemplate";
 import TopicBar from "../../components/neighborhood/topicbar";
 import Post from "../../components/neighborhood/post";
 import FloatingButton from "../../components/floatingButton";
-import Modal from "../../components/neighborhood/modal";
+import PostModal from "../../components/neighborhood/modal";
 
 import backIcon from "@carrot/core/assets/icon/back-arrow.svg";
 import searchIcon from "@carrot/core/assets/icon/search.svg";
@@ -72,7 +72,7 @@ const Neighborhood = () => {
       </HeaderTemplate>
       <FloatingButton pageType="NEIGHBORHOOD" />
       <NavBar pageType="NEIGHBORHOOD" />
-      <Modal
+      <PostModal
         type="TopicModal"
         openModal={openModal}
         controlModal={controlModal}

@@ -13,7 +13,7 @@ interface Props {
   optionClick?: any;
 }
 
-const Modal = ({ type, openModal, controlModal, optionClick }: Props) => {
+const PostModal = ({ type, openModal, controlModal, optionClick }: Props) => {
   const postViewModel = usePostViewModel();
   const navigate = useNavigate();
   const [orange, setOrange] = useState<number>(0);
@@ -62,7 +62,8 @@ const Modal = ({ type, openModal, controlModal, optionClick }: Props) => {
           <List>
             <Topicitem>공유하기</Topicitem>
             <Topicitem>수정</Topicitem>
-            <Topicitem>삭제</Topicitem>
+            <Topicitem 
+              onClick={optionClick}>삭제</Topicitem>
           </List>
         </ContainerPW>
       </Wrapper>
@@ -115,7 +116,7 @@ const Modal = ({ type, openModal, controlModal, optionClick }: Props) => {
   }
 };
 
-export default Modal;
+export default PostModal;
 
 const Wrapper = styled.div`
   .slideup {
@@ -136,7 +137,7 @@ const Background = styled.div<{ open: boolean }>`
   top: 0;
   left: 0;
   z-index: 5;
-  background: rgba(0, 0, 0, 0.4);
+  background: rgba(0, 0, 0, 0.3);
 `
 
 const Container = styled.div`

@@ -16,7 +16,8 @@ import imageIcon from "@carrot/core/assets/icon/image-grey.svg";
 import locationIcon from "@carrot/core/assets/icon/location-grey.svg";
 import uparrowIcon from "@carrot/core/assets/icon/Arrow upward-white.svg";
 import Swiper from "../../../components/swiper/swiper";
-import Modal from "../../../components/neighborhood/modal";
+import PostModal from "../../../components/neighborhood/modal";
+import Modal from "../../../components/modal";
 import useJwtDecode from "../../../hooks/auth/useJwtDecode";
 import { convertDateToSimple } from "@carrot/util/format";
 
@@ -40,6 +41,7 @@ const PostDetailPage = () => {
   };
 
   const [isOpenCommentbox, OpenCommentbox] = useState<boolean>(false);
+  const [isOpenDelete, OpenDelete] = useState<boolean>(false);
   const postcommentRef = useRef<HTMLDivElement>(null);
   const precommentRef = useRef<HTMLDivElement>(null);
   const precommentRef1 = useRef<HTMLDivElement>(null);
@@ -249,11 +251,21 @@ const PostDetailPage = () => {
     </SubmitBtn>
   </div>
   </WriteComment>
-  <Modal
+  <PostModal
         type={results?.user.user_id === getId() ? 'postdetail_w' : 'postdetail'}
         openModal={openModal}
         controlModal={controlModal}
+        optionClick={() => {
+          OpenDelete(true)
+          controlModal(false)}}
   />
+  {isOpenDelete &&
+  <Modal 
+      query='정말 삭제하시겠습니까?'
+      onClickLeft={() => {OpenDelete(false)}}
+      onClickRight={() => {PostDetailViewModel.deletePost()}}
+      buttonText='삭제'
+    />}
 </>
   );
 };
