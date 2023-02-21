@@ -17,7 +17,6 @@ import useChatRoomDetailViewModel from "./chatRoomDetail.viewModel";
 import MyChat from "../../../components/chat/myChat";
 import OpponentChat from "../../../components/chat/opponentChat";
 import { MessageDto } from "../../../api/chat/chatDto";
-import moment from "moment";
 
 const ChatRoomDetailPage = () => {
 
@@ -53,7 +52,9 @@ const ChatRoomDetailPage = () => {
       onClickLeft={() => navigate(-1)}
     >
       <Wrapper>
-        <MessageWrapper>
+        <MessageWrapper
+          ref={chatRoomDetailViewModel.scrollRef}
+        >
           {chatRoomDetailViewModel.getMessagesSuccess &&
             chatRoomDetailViewModel.messages?.map((message: MessageDto, index: number, messages) => {
               const previousMessage =
@@ -62,10 +63,10 @@ const ChatRoomDetailPage = () => {
                 index < messages.length ? messages[index + 1] : ('' as unknown) as MessageDto
               if (userId === message.message_from) {
                 return (
-                  <>
+                  <div key={index}>
                   {previousMessage.created_at?.split('.')[2] !==
                   (message.created_at.split('.')[2]) && (
-                  <DateSeparator key={index+1}>
+                  <DateSeparator>
                     <DateWrapper>
                       <span>
                         {message.created_at.slice(0, 12)}
@@ -74,7 +75,6 @@ const ChatRoomDetailPage = () => {
                   </DateSeparator>
                   )}
                   <MyChat
-                    key={index}
                     message={message.content}
                     createdAt={message.created_at}
                     hideTime={
@@ -83,13 +83,13 @@ const ChatRoomDetailPage = () => {
                       message.created_at.split(':')[1]
                     }
                   />
-                  </>
+                  </div>
                 )
               } else return (
-                <>
+                <div key={index}>
                   {previousMessage.created_at?.split('.')[2] !==
                   (message.created_at.split('.')[2]) && (
-                  <DateSeparator key={index+1}>
+                  <DateSeparator>
                     <DateWrapper>
                       <span>
                       {message.created_at.slice(0, 12)}
@@ -98,7 +98,6 @@ const ChatRoomDetailPage = () => {
                   </DateSeparator>
                   )}
                   <OpponentChat
-                    key={index}
                     message={message.content}
                     createdAt={message.created_at}
                     hideTime={
@@ -107,11 +106,11 @@ const ChatRoomDetailPage = () => {
                       message.created_at.split(':')[1]
                     }
                   />
-                </>
+                </div>
               )
             })
           }
-          <div ref={chatRoomDetailViewModel.scrollRef} />
+          <div />
         </MessageWrapper>
       </Wrapper>
       <BottomWrapper>
@@ -183,6 +182,7 @@ const MessageWrapper = styled.div`
   position: relative;
   flex: 0 0 100%;
   padding: 1.6rem 1.6rem 0.5rem 1.6rem;
+  ${theme.option.hiddenScroll}
 `
 const BottomWrapper = styled.div`
   z-index: 1;

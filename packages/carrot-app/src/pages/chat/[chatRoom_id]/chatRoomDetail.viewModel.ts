@@ -46,9 +46,9 @@ const useChatRoomDetailViewModel = () => {
 
   const scrollBottom = (smooth=false) => {
     if (smooth) {
-      scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
+      scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight)
     }
-    scrollRef.current?.scrollIntoView()
+    scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight)
   }
 
   const sendMessage = () => {
@@ -83,7 +83,9 @@ const useChatRoomDetailViewModel = () => {
       })
     }
   }
-
+  useEffect(() => {
+    scrollBottom()
+  }, [scrollRef.current?.scrollHeight])
   useEffect(() => {
     if (isReady) {
       ws.current?.emit('join-room', params.uuid);
@@ -117,10 +119,6 @@ const useChatRoomDetailViewModel = () => {
       textAreaRef.current.scrollHeight / 10 + 'rem'
     }
   }, [textAreaRef, message])
-
-  useEffect(() => {
-    scrollRef.current?.scrollIntoView();
-  }, [])
 
   return {
     textAreaRef,
