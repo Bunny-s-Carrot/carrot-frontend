@@ -29,7 +29,9 @@ const useProductDetailViewModel = () => {
 
   const { data: imageData, isSuccess: getImageSuccess } = useQuery(['product/image', params.product_id], () =>
     productApi.getImageList(params.product_id as string))
+
   const updateHeart = useMutation(heartApi.updateHeart);
+  
   const deleteProduct = useMutation(productApi.deleteProduct);
 
   const handleOpenPopup = (e: React.MouseEvent) => {

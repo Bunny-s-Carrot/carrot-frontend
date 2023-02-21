@@ -1,13 +1,16 @@
 import { useState } from "react";
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useQuery } from "@tanstack/react-query";
 import postApi from "../../../api/post";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useJwtDecode from '../../../hooks/auth/useJwtDecode';
+
 
 
 const usePostDetailViewModel = () => {
   const params = useParams<{ post_id: string, comment_id: string }>();
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const [ content, setContent ] = useState("");
   const { getId } = useJwtDecode();
@@ -42,7 +45,9 @@ const usePostDetailViewModel = () => {
       mother_id
     },
     {
-      onSuccess: () => window.location.reload()
+      onSuccess: () => {
+        window.location.reload();
+      }
     })
   }
 
@@ -72,6 +77,11 @@ const usePostDetailViewModel = () => {
       user_id: writer_id,
       post_id,
       plus: true
+    }, 
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['post', params.post_id]);
+      }
     })
   }
 
@@ -80,7 +90,17 @@ const usePostDetailViewModel = () => {
       user_id: writer_id,
       post_id,
       plus: false
+    }, 
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['post', params.post_id]);
+      }
     })
+  }
+
+  const deletePost = () => {
+    postApi.deletePost(post_id)
+    navigate('/neighborhood')
   }
 
   return {
@@ -96,7 +116,8 @@ const usePostDetailViewModel = () => {
     UpEmpa,
     DownEmpa,
     empanow,
-    setEmpanow
+    setEmpanow,
+    deletePost
   }
 }
 

@@ -130,7 +130,6 @@ const BottomWrapper = styled.div`
   
 `
 const BottomLeftContent = styled.div`
-  width: 100%;
   display: flex;  
 `
 const HeartWrapper = styled.div`

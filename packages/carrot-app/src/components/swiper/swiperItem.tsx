@@ -19,10 +19,10 @@ const SwiperList = styled.li`
   width: 100%;
   height: 100%;
   flex-shrink: 0;
-  object-fit: cover;
+  overflow: hidden;
 
   img {
-    width: 100%;
-    height: 35rem;
+    min-width: 100%;
+    object-fit: cover;
   }
 `

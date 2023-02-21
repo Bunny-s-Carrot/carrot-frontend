@@ -8,7 +8,7 @@ import HeaderTemplate from "../../templates/headerTemplate";
 import TopicBar from "../../components/neighborhood/topicbar";
 import Post from "../../components/neighborhood/post";
 import FloatingButton from "../../components/floatingButton";
-import Modal from "../../components/neighborhood/modal";
+import PostModal from "../../components/neighborhood/modal";
 
 import backIcon from "@carrot/core/assets/icon/back-arrow.svg";
 import searchIcon from "@carrot/core/assets/icon/search.svg";
@@ -21,6 +21,7 @@ const Neighborhood = () => {
   const navigate = useNavigate();
   const postViewModel = usePostViewModel();
   const results = postViewModel.data?.payload;
+  const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
 
   let LeftContent = (
     <Locationdiv>
@@ -55,11 +56,15 @@ const Neighborhood = () => {
         <PostContainer>
           {results?.map((item, index) => (
             <Post
+              thumbnail={baseUrl + 'post/' + item.post_id.toString() + '/0.jpg'}
               key={index}
               title={item.title}
               category={item.category_name}
               location={item.addr_name}
               created_at={item.created_at}
+              comment={item.chat}
+              thumb={item.empa}
+              image={item.image}
               onClick={() => navigate(`/post/${item.post_id}`)}
             />
           ))}
@@ -67,7 +72,7 @@ const Neighborhood = () => {
       </HeaderTemplate>
       <FloatingButton pageType="NEIGHBORHOOD" />
       <NavBar pageType="NEIGHBORHOOD" />
-      <Modal
+      <PostModal
         type="TopicModal"
         openModal={openModal}
         controlModal={controlModal}

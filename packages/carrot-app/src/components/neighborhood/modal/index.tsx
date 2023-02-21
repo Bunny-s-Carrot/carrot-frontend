@@ -13,12 +13,11 @@ interface Props {
   optionClick?: any;
 }
 
-const Modal = ({ type, openModal, controlModal, optionClick }: Props) => {
+const PostModal = ({ type, openModal, controlModal, optionClick }: Props) => {
   const postViewModel = usePostViewModel();
   const navigate = useNavigate();
   const [orange, setOrange] = useState<number>(0);
   
-
   if (type === "TopicModal") {
     return (
       <Wrapper>
@@ -50,6 +49,39 @@ const Modal = ({ type, openModal, controlModal, optionClick }: Props) => {
             })}
           </List>
         </Container>
+      </Wrapper>
+    );
+  } else if (type === 'postdetail_w') {
+    return (
+      <Wrapper>
+        <Background
+          open={openModal}
+          onClick={() => controlModal(false)}
+        ></Background>
+        <ContainerPW className={openModal ? "slideup" : "slidedown"}>
+          <List>
+            <Topicitem>공유하기</Topicitem>
+            <Topicitem>수정</Topicitem>
+            <Topicitem 
+              onClick={optionClick}>삭제</Topicitem>
+          </List>
+        </ContainerPW>
+      </Wrapper>
+    );
+  } else if (type === 'postdetail') {
+    return (
+      <Wrapper>
+        <Background
+          open={openModal}
+          onClick={() => controlModal(false)}
+        ></Background>
+        <ContainerPW className={openModal ? "slideup" : "slidedown"}>
+          <List>
+            <Topicitem>공유하기</Topicitem>
+            <Topicitem>게시물 신고</Topicitem>
+            <Topicitem>이 사용자의 글 보지 않기</Topicitem>
+          </List>
+        </ContainerPW>
       </Wrapper>
     );
   } else {
@@ -84,7 +116,7 @@ const Modal = ({ type, openModal, controlModal, optionClick }: Props) => {
   }
 };
 
-export default Modal;
+export default PostModal;
 
 const Wrapper = styled.div`
   .slideup {
@@ -95,7 +127,7 @@ const Wrapper = styled.div`
   .slidedown {
     bottom: -77%;
   }
-`;
+`
 
 const Background = styled.div<{ open: boolean }>`
   display: ${(props) => (props.open ? "" : "none")};
@@ -105,8 +137,8 @@ const Background = styled.div<{ open: boolean }>`
   top: 0;
   left: 0;
   z-index: 5;
-  background: rgba(0, 0, 0, 0.4);
-`;
+  background: rgba(0, 0, 0, 0.3);
+`
 
 const Container = styled.div`
   background: white;
@@ -127,7 +159,27 @@ const Container = styled.div`
     font-size: 15px;
     margin-bottom: 5px;
   }
-`;
+`
+
+const ContainerPW = styled.div`
+  background: white;
+  position: absolute;
+  width: 100%;
+  height: 162px;
+  padding-bottom: 1%;
+  transform: translateY(1%);
+  left: 0;
+  z-index: 15;
+  display: flex;
+  flex-direction: column;
+
+  .grey {
+    background: ${theme.colors.grey20};
+    padding: 11px 14px;
+    font-size: 15px;
+    margin-bottom: 5px;
+  }
+`
 
 const Top = styled.div`
   font-size: 15px;
@@ -153,7 +205,7 @@ const Top = styled.div`
     color: ${theme.colors.grey70};
     margin-bottom: 13px;
   }
-`;
+`
 
 const List = styled.div`
   overflow-y: scroll;
@@ -169,16 +221,16 @@ const List = styled.div`
   .black {
     color: black;
   }
-`;
+`
 
 const Topicitem = styled.div`
   font-size: 18px;
   padding: 18px 14px;
-`;
+`
 
 const Topc = styled.div`
   font-weight: 500;
   font-size: 21px;
   padding: 30px 14px 25px 14px;
-`;
+`
 

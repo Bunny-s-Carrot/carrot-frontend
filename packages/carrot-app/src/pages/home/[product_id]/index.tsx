@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import SalesTemplate from "../../../templates/salesTemplate"
@@ -20,18 +21,21 @@ import SmallPopup from "../../../components/popup/small";
 import useJwtDecode from "../../../hooks/auth/useJwtDecode";
 import Modal from "../../../components/modal";
 
-const ProductDetailPage = () => {
 
+const ProductDetailPage = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const { getId } = useJwtDecode();
+  const userId = useMemo(() => getId(), [getId]);
   const productDetailViewModel = useProductDetailViewModel();
+  const productData = useMemo(() => productDetailViewModel.data && productDetailViewModel.data.product, [productDetailViewModel.data]);
+  const sellerData = useMemo(() => productDetailViewModel.data && productDetailViewModel.data.seller, [productDetailViewModel.data]);
   const popupRef = productDetailViewModel.popupRef;
   const dotsRef = productDetailViewModel.dotsRef;
   const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
-  const lat = productDetailViewModel.isSuccess && JSON.parse(productDetailViewModel.data!.product.wanted_location).lat;
-  const lng = productDetailViewModel.isSuccess && JSON.parse(productDetailViewModel.data!.product.wanted_location).lng;
-
+  const lat = useMemo(() => productDetailViewModel.isSuccess && JSON.parse(productData?.wanted_location as string).lat, [productData?.wanted_location, productDetailViewModel.isSuccess]);
+  const lng = useMemo(() => productDetailViewModel.isSuccess && JSON.parse(productData?.wanted_location as string).lng, [productData?.wanted_location, productDetailViewModel.isSuccess]);
+  const uuid = useMemo(() => productData?.product_id.toString()! + productData?.seller_id.toString()! + userId, [productData?.product_id, productData?.seller_id, userId])
   const leftContent = 
     <>
       <img src={backIconWhite} alt='backIcon' />
@@ -60,7 +64,21 @@ const ProductDetailPage = () => {
     </BottomLeftContentWrapper>
 
   const bottomRightContent = 
-    <ChatButton buttonType="CARROT" onClick={() => {}}>채팅하기</ChatButton>
+    <ChatButton
+      buttonType="CARROT"
+      onClick={() => {
+        if (productData?.seller_id !== userId) {
+          navigate(`/chat/chatroom/${uuid}`,
+        {
+          state: { sellerId: productData?.seller_id, productId: productData?.product_id, uuid }
+        }
+          )
+        }
+      }
+      }
+    >
+      {productData?.seller_id === userId ? `대화 중인 채팅방` : '채팅하기'}
+    </ChatButton>
 
   return (
     <>
@@ -78,7 +96,7 @@ const ProductDetailPage = () => {
         <SmallPopup
           ref={popupRef}
           content={
-            productDetailViewModel.data?.product.seller_id === getId()
+            productDetailViewModel.data?.product.seller_id === userId
             ? [{text:'게시글 수정'},
                {text: '끌어올리기'},
                {text: '숨기기'},
@@ -100,41 +118,41 @@ const ProductDetailPage = () => {
           }          
         </ImageWrapper>
         {
-          productDetailViewModel.data &&
+          productData &&
           <ContentWrapper>
             <SellerInfoWrapper>
               <div>
                 <ProfileImage>
                 </ProfileImage>
                 <SellerInfo>
-                  <p>{productDetailViewModel.data?.seller.name}</p>
+                  <p>{sellerData?.name}</p>
                   <span>{location.state?.locationName}</span>
                 </SellerInfo>
               </div>
               <div>
-                {productDetailViewModel.data?.seller.manner_temp &&
-                  <MannerTemp value={productDetailViewModel.data?.seller.manner_temp} type='SMALL'/>}
+                {sellerData?.manner_temp &&
+                  <MannerTemp value={sellerData?.manner_temp} type='SMALL'/>}
               </div>
             </SellerInfoWrapper>
             <div>
               <ContentHeader>
-                <p>{productDetailViewModel.data?.product.title}</p>
+                <p>{productData?.title}</p>
                 <span onClick={() => {}}>
-                  {productDetailViewModel.data?.product.classif_id && 
-                  categoryList(productDetailViewModel.data?.product.classif_id)}
+                  {productData?.classif_id && 
+                  categoryList(productData?.classif_id)}
                 </span>
                 <span>
                   {' · '} 
-                  {convertDateToSimple(productDetailViewModel.data?.product.created_at)}
+                  {convertDateToSimple(productData?.created_at)}
                   </span>
               </ContentHeader>
               <ContentBody>
                 <p>
-                  {productDetailViewModel.data?.product.contents}
+                  {productData?.contents}
                 </p>
                 <span>
-                  {productDetailViewModel.data?.product.chat > 0 
-                    ? `채팅 ${productDetailViewModel.data?.product.chat}`
+                  {productData?.chat > 0 
+                    ? `채팅 ${productData?.chat}`
                     : ''
                   }
                   {(productDetailViewModel.data!.product.chat > 0 &&
@@ -142,17 +160,17 @@ const ProductDetailPage = () => {
                     ? ' · '
                     : ''
                   }
-                  {productDetailViewModel.data?.product.heart > 0 
-                    ? `관심 ${productDetailViewModel.data?.product.heart}`
+                  {productData?.heart > 0 
+                    ? `관심 ${productData?.heart}`
                     : ''
                   }
-                  {(productDetailViewModel.data?.product.heart > 0 &&
-                  productDetailViewModel.data?.product.views > 0)
+                  {(productData?.heart > 0 &&
+                  productData?.views > 0)
                     ? ' · '
                     : ''
                   }
-                  {productDetailViewModel.data?.product.views > 0
-                    ? `조회 ${productDetailViewModel.data?.product.views}`
+                  {productData?.views > 0
+                    ? `조회 ${productData?.views}`
                     : ''
                   }
                 </span>
@@ -175,7 +193,7 @@ const ProductDetailPage = () => {
         : <></>
         }
         <Panel type='REPORT' />
-        <Panel type='SELLING' sellerName={productDetailViewModel.data?.seller.name}/>
+        <Panel type='SELLING' sellerName={sellerData?.name}/>
       </Container>
     </SalesTemplate>
     {productDetailViewModel.isOpenModal &&
@@ -217,9 +235,8 @@ const BottomLeftContentWrapper = styled.div<{ isAbleNego: boolean }>`
   }
 `
 const ChatButton = styled(Button)`
-  width: 8.8rem;
-  height: 3.6rem;
-  ${theme.typography.body3};
+  height: 3.2rem;
+  ${theme.typography.body4};
   font-weight: bold;
   border-radius: 0.4rem;
   align-self: center;

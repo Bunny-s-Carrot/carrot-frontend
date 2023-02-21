@@ -10,14 +10,8 @@ import imageIcon from "@carrot/core/assets/icon/image-grey.svg";
 import locationIcon from "@carrot/core/assets/icon/location-grey.svg";
 import uparrowIcon from "@carrot/core/assets/icon/Arrow upward-white.svg";
 
-
-
-
-
-
 const RecommentPage = () => {
     const commentId = parseInt(useParams().comment_id!);
-
     const navigate = useNavigate();
     const PostDetailViewModel = usePostDetailViewModel();
     const results = PostDetailViewModel.data?.payload;
@@ -52,7 +46,6 @@ const RecommentPage = () => {
       }
     })
 
-    
     const leftContent = (
       <>
         <img src={backIcon} alt="backIcon" />
@@ -80,6 +73,7 @@ const RecommentPage = () => {
                       likes={item.likes}
                       depth={item.depth}
                       mother_id={item.mother_id}
+                      writersame={item.writer_id === results?.user.user_id}
                       isdetailpage={true}
                     />
                 )
@@ -102,7 +96,8 @@ const RecommentPage = () => {
               }}
             >
             <input 
-              type="text" 
+              type="text"
+              value={PostDetailViewModel.content}
               placeholder='댓글을 입력해주세요.' 
               ref={commentinputRef}
               onChange={(e) => {
@@ -133,7 +128,7 @@ export default RecommentPage;
 const Container = styled.div`
 height: 100%;
 overflow: scroll;
-`;
+`
 
 const StyledComment = styled(Comment)`
 .recom {
@@ -157,7 +152,7 @@ img {
   width: 40px;
   height: 40px;
 }
-`;
+`
 
 const Preinput = styled.div<{ commentpreview: boolean }>`
   background: ${theme.colors.grey20};
@@ -208,7 +203,8 @@ input {
 const Img = styled.img`
 width: 40px;
 height: 40px;
-padding: 7px;`
+padding: 7px;
+`
 
 const SubmitBtn = styled.button<{ visible: boolean }>`
   background: #ff6f00;
