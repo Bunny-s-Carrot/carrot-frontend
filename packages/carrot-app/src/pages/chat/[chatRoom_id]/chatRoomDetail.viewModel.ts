@@ -81,7 +81,7 @@ const useChatRoomDetailViewModel = () => {
 
   useEffect(() => {
     scrollBottom()
-  }, [scrollRef.current?.scrollHeight])
+  }, [scrollRef.current?.scrollHeight, scrollBottom])
 
   useEffect(() => {
     if (isReady) {
