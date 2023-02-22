@@ -70,14 +70,16 @@ const ProductDetailPage = () => {
         if (productData?.seller_id !== userId) {
           navigate(`/chat/chatroom/${uuid}`,
         {
-          state: { sellerId: productData?.seller_id, productId: productData?.product_id, uuid }
+          state: { sellerId: productData?.seller_id, productId: productData?.product_id, uuid, username: sellerData?.name }
         }
           )
+        } else {
+          navigate('chatroom')
         }
       }
       }
     >
-      {productData?.seller_id === userId ? `대화 중인 채팅방` : '채팅하기'}
+      {productData?.seller_id === userId ? `대화 중인 채팅방 ${productData?.chat}` : '채팅하기'}
     </ChatButton>
 
   return (
@@ -187,7 +189,7 @@ const ProductDetailPage = () => {
             lng={lng}
             onClick={() => navigate('wantedlocation',
             {
-              state: { lat, lng},
+              state: { lat, lng },
             })}
           />
         : <></>
@@ -211,7 +213,6 @@ const ProductDetailPage = () => {
       buttonText='삭제'
     />}
     </>
-    
   )
 }
 

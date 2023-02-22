@@ -15,7 +15,6 @@ const Chat = () => {
   const { data: chatRoomList, isSuccess: getChatRoomListSuccess } = useQuery([`chat/chatroom/${userId}`], () =>
     chatApi.getChatRoomByUserId(userId));
 
-
   const navigate = useNavigate();
   const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
 
