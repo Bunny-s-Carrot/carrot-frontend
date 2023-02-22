@@ -25,5 +25,4 @@ export interface ProductTypeWithLocation extends ProductType{
 export interface ProductDetailType {
   seller: UserType
   product: ProductType
-  // chatRooms?: { chatRooms: { chatRoom_id: number } } 
 }

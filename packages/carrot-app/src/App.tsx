@@ -23,6 +23,7 @@ import SetLocationPage from "./pages/setLocation";
 import SetWantedLocationPage from "./pages/home/sellProduct/setWantedLocation";
 import SettingPage from "./pages/myCarrot/setting";
 import WantedLocationPage from "./pages/watedLocation";
+import ProductChatPage from "./pages/chat/productChat";
 
 
 const App = () => {
@@ -38,6 +39,7 @@ const App = () => {
               path="/product/:product_id"
               element={<ProductDetailPage />}
             />
+            <Route path='/product/:product_id/chatroom' element={<ProductChatPage />} />
             <Route
               path="/product/:product_id/wantedlocation"
               element={<WantedLocationPage />}
@@ -57,8 +59,7 @@ const App = () => {
             <Route path="/post/:post_id/comment/:comment_id" element={<RecommentPage />} />
             <Route path="/around" element={<AroundPage />} />
             <Route path="/chat" element={<ChatPage />} />
-            
-              <Route path="/chat/chatroom/:uuid" element={<ChatRoomDetailPage />} />
+            <Route path="/chat/chatroom/:uuid" element={<ChatRoomDetailPage />} />
 
             <Route path="/mycarrot" element={<MyCarrotPage />} />
             <Route path="/mycarrot/setting" element={<SettingPage />} />
