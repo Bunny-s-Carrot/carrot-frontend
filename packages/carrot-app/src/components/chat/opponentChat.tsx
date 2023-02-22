@@ -1,15 +1,20 @@
 
 import styled from "styled-components"
 import theme from "@carrot/core/style/theme"
+import { useEffect } from "react"
 
 interface OpponentChatProps {
   message: string
   createdAt: string
   hideTime: boolean
+  scroll?: () => void
 }
 
 const OpponentChat = (props: OpponentChatProps) => {
   const time = props.createdAt!.split('.');
+  useEffect(() => {
+    props.scroll && props.scroll()
+  })
 
   return (
     <Wrapper hideTime={props.hideTime}>
