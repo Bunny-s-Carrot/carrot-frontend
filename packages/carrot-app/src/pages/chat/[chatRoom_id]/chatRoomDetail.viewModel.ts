@@ -12,6 +12,7 @@ const useChatRoomDetailViewModel = () => {
   const [chats, setChats] = useState<MessageDto[]>([]);
   const [isJoined, setIsJoined] = useState(false);
   const [isOpenMore, openMore] = useState(false);
+  const [isScrollSmooth, setScrollSmooth] = useState(false)
   const [exist, setExist] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -40,11 +41,13 @@ const useChatRoomDetailViewModel = () => {
     openMore(!isOpenMore);
   }
 
-  const scrollBottom = (smooth=false) => {
-    if (smooth) {
-      scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight)
+  const scrollBottom = () => {
+    if (!isScrollSmooth) {
+      scrollRef.current?.scrollIntoView()
+      setScrollSmooth(true)
+      return
     }
-    scrollRef.current?.scrollTo(0, scrollRef.current.scrollHeight)
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
   }
 
   const sendMessage = () => {
@@ -78,10 +81,6 @@ const useChatRoomDetailViewModel = () => {
       })
     }
   }
-
-  useEffect(() => {
-    scrollBottom()
-  }, [scrollRef.current?.scrollHeight, scrollBottom])
 
   useEffect(() => {
     if (isReady) {
@@ -127,7 +126,8 @@ const useChatRoomDetailViewModel = () => {
     getMessagesSuccess,
     userId,
     handleClickMoreButton,
-    sendMessage
+    sendMessage,
+    scrollBottom,
   }
 }
 

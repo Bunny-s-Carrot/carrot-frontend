@@ -52,9 +52,7 @@ const ChatRoomDetailPage = () => {
       onClickLeft={() => navigate(-1)}
     >
       <Wrapper>
-        <MessageWrapper
-          ref={chatRoomDetailViewModel.scrollRef}
-        >
+        <MessageWrapper>
           {chatRoomDetailViewModel.getMessagesSuccess &&
             chatRoomDetailViewModel.messages?.map((message: MessageDto, index: number, messages) => {
               const previousMessage =
@@ -82,6 +80,11 @@ const ChatRoomDetailPage = () => {
                       nextMessage.created_at?.split(':')[1] ===
                       message.created_at.split(':')[1]
                     }
+                    scroll={
+                      index === chatRoomDetailViewModel.messages!.length - 1
+                        ? chatRoomDetailViewModel.scrollBottom
+                        : undefined
+                    }
                   />
                   </div>
                 )
@@ -105,12 +108,17 @@ const ChatRoomDetailPage = () => {
                       nextMessage.created_at?.split(':')[1] ===
                       message.created_at.split(':')[1]
                     }
+                    scroll={
+                      index === chatRoomDetailViewModel.messages!.length - 1
+                        ? chatRoomDetailViewModel.scrollBottom
+                        : undefined
+                    }
                   />
                 </div>
               )
             })
           }
-          <div />
+          <div ref={chatRoomDetailViewModel.scrollRef} />
         </MessageWrapper>
         <BottomWrapper>
         <MoreButton
@@ -175,7 +183,7 @@ const Wrapper = styled.div`
   justify-content: space-between;
 `
 const MessageWrapper = styled.div`
-  flex: 0 1 calc(100% - 5.2rem);
+  flex: 1 1 calc(100% - 5.2rem);
   overflow-y: scroll;
   padding: 1.6rem 1.6rem 0 1.6rem;
   ${theme.option.hiddenScroll}
