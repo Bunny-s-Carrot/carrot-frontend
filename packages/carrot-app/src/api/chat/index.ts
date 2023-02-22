@@ -36,9 +36,12 @@ const getChatRoomById = async (chatRoomIds: string) => {
   } 
 }
 
-const getChatRoomByUserId = async (user_id: number) => {
+const getChatRoomByUserId = async (user_id: number, product_id='') => {
   try {
-    const { data } = await api.get<{ payload: GetChatRoomByUserIdDto[] }>(`chat/chatroom/${user_id}`)
+    const { data } = await api.get<{ payload: GetChatRoomByUserIdDto[] }>(`chat/chatroom/${user_id}`,
+    {
+      params: { product_id }
+    })
 
     return data.payload;
   } catch (e: any) {
