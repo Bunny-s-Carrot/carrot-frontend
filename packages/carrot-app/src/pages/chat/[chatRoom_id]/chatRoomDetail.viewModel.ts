@@ -10,6 +10,7 @@ const useChatRoomDetailViewModel = () => {
   const params = useParams();
   const [message, setMessage] = useState('');
   const [chats, setChats] = useState<MessageDto[]>([]);
+  const [receivedMessage, setReceivedMessage] = useState({})
   const [isJoined, setIsJoined] = useState(false);
   const [isOpenMore, openMore] = useState(false);
   const [isScrollSmooth, setScrollSmooth] = useState(false)
@@ -76,7 +77,7 @@ const useChatRoomDetailViewModel = () => {
       {
         onSuccess: () => {
           setMessage('');
-          refetch();
+          refetch()
         }
       })
     }
@@ -92,14 +93,18 @@ const useChatRoomDetailViewModel = () => {
   useEffect(() => {
     if (isJoined) {
       ws.current?.on(`receive-message`, ({ message, userId, createdAt }) => {
+        setReceivedMessage({ message, createdAt })
         setChats((prev: MessageDto[]) => [
           ...prev,
           { message_from: userId, content: message, created_at: createdAt }
         ])
-        alert(message)
       })
     }
-  }, [ws, isJoined, chats, refetch])
+  }, [isJoined, ws])
+
+  useEffect(() => {
+    refetch()
+  }, [receivedMessage])
 
   useEffect(() => {
     if (getChatRoomSuccess) {
