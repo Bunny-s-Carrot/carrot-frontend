@@ -96,7 +96,7 @@ const useChatRoomDetailViewModel = () => {
           ...prev,
           { message_from: userId, content: message, created_at: createdAt }
         ])
-        refetch();
+        alert(message)
       })
     }
   }, [ws, isJoined, chats, refetch])
