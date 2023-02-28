@@ -40,3 +40,11 @@
 
 ### 4. 구현 예
 
+  1. 회원가입
+  <img src='./media/회원가입.gif' />  
+  
+  2. 메인 페이지
+  <img src='./media/home.jpg' />  
+  
+  3. 동네 변경
+  <img src='./media/지역-설정.gif' />
