@@ -27,30 +27,36 @@
 - 상품 등록 및 삭제, 찜하기
 - 동네생활 포스트 작성 및 삭제, 댓글 및 대댓글 작성, 찜하기 및 공감
 - 유저 간 채팅  
+- 웹사이트 호스팅: Netlify  
 
 ---  
 
 ### 3. 사용된 기술 스택
 
-- ReactJs
-- Typescript
-- Context Api / Axios, React Query  
+- **ReactJs**
+- **Typescript**
+- **Context API** / **Axios, React Query**  
 
 ---  
 
 ### 4. 구현 예
 
-  1. 회원가입
+  **1. 회원가입**  
+  
   <img src='./media/회원가입.gif' />  
   
-  2. 메인 페이지
+  **2. 메인 페이지**  
+  
   <img src='./media/home.jpg' />  
   
-  3. 동네 변경
+  **3. 동네 변경**  
+  
   <img src='./media/지역-설정.gif' />
   
-  4. 동네생활 댓글 작성
+  **4. 동네생활 댓글 작성**  
+  
   <img src='./media/동네생활.gif' />
   
-  5. 채팅  
+  **5. 채팅**  
+  
   <img src='./media/채팅.gif' />
