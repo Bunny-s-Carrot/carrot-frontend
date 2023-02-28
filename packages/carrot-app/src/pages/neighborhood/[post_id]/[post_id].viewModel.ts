@@ -28,35 +28,29 @@ const usePostDetailViewModel = () => {
   const writeRecomment = useMutation(postApi.createRecomment);
 
   const commmentSubmit = () => {
-    content !== '' &&
-      writeComment.mutate(
-        {
-          post_id,
-          writer_id,
-          content,
-        },
-        {
-          onSuccess: () => window.location.reload(),
-        },
-      );
-  };
+    content !== '' && writeComment.mutate({
+      post_id,
+      writer_id,
+      content,
+    },
+    {
+      onSuccess: () => queryClient.invalidateQueries(['post', params.post_id])
+    })
+  }
 
   const recommmentSubmit = () => {
-    content !== '' &&
-      writeRecomment.mutate(
-        {
-          post_id,
-          writer_id,
-          content,
-          mother_id,
-        },
-        {
-          onSuccess: () => {
-            window.location.reload();
-          },
-        },
-      );
-  };
+    content !== '' && writeRecomment.mutate({
+      post_id,
+      writer_id,
+      content,
+      mother_id
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries(['post', params.post_id]);
+      }
+    })
+  }
 
   const heart = useMutation(postApi.updateHeart);
 
