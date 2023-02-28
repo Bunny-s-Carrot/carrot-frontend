@@ -10,9 +10,10 @@ const useChatRoomDetailViewModel = () => {
   const params = useParams();
   const [message, setMessage] = useState('');
   const [chats, setChats] = useState<MessageDto[]>([]);
+  const [receivedMessage, setReceivedMessage] = useState({});
   const [isJoined, setIsJoined] = useState(false);
   const [isOpenMore, openMore] = useState(false);
-  const [isScrollSmooth, setScrollSmooth] = useState(false)
+  const [isScrollSmooth, setScrollSmooth] = useState(false);
   const [exist, setExist] = useState(false);
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
@@ -22,33 +23,42 @@ const useChatRoomDetailViewModel = () => {
   const uuid = location.state?.uuid || params.uuid;
   const seller_id = location.state?.sellerId;
   const product_id = location.state?.productId;
-  const userId = useMemo(() => getId(), [getId])
+  const userId = useMemo(() => getId(), [getId]);
   const createChatRoom = useMutation(chatApi.createChatRoom);
   const createMessage = useMutation(chatApi.createMessage);
 
-  const { data: chatRoomData, isSuccess: getChatRoomSuccess } = useQuery([`chat/chatroom/${uuid}`], () => 
-    chatApi.getChatRoomByUuid(uuid))
+  const { data: chatRoomData, isSuccess: getChatRoomSuccess } = useQuery(
+    [`chat/chatroom/${uuid}`],
+    () => chatApi.getChatRoomByUuid(uuid),
+  );
 
-  const { data: messages, isSuccess: getMessagesSuccess, refetch } = useQuery([`chat/chatroom/${uuid}/message`], () => 
-    chatApi.getMessages(uuid),
+  const {
+    data: messages,
+    isSuccess: getMessagesSuccess,
+    refetch,
+  } = useQuery(
+    [`chat/chatroom/${uuid}/message`],
+    () => chatApi.getMessages(uuid),
     {
-      onSuccess: () => { messages && setChats(messages) },
-      refetchInterval: 0
-    })
-
+      onSuccess: () => {
+        messages && setChats(messages);
+      },
+      refetchInterval: 0,
+    },
+  );
 
   const handleClickMoreButton = () => {
     openMore(!isOpenMore);
-  }
+  };
 
   const scrollBottom = () => {
     if (!isScrollSmooth) {
-      scrollRef.current?.scrollIntoView()
-      setScrollSmooth(true)
-      return
+      scrollRef.current?.scrollIntoView();
+      setScrollSmooth(true);
+      return;
     }
-    scrollRef.current?.scrollIntoView({ behavior: 'smooth' })
-  }
+    scrollRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   const sendMessage = () => {
     if (!exist) {
@@ -66,55 +76,61 @@ const useChatRoomDetailViewModel = () => {
       ws.current?.emit('send-message', { message, userId, uuid, createdAt });
       setChats((prev: MessageDto[]) => [
         ...prev,
-        { message_from: userId, content: message, created_at: createdAt }
-      ])
-      createMessage.mutate({
-        uuid,
-        message_from: userId,
-        content: message,
-        created_at: createdAt
-      },
-      {
-        onSuccess: () => {
-          setMessage('');
-          refetch();
-        }
-      })
+        { message_from: userId, content: message, created_at: createdAt },
+      ]);
+      createMessage.mutate(
+        {
+          uuid,
+          message_from: userId,
+          content: message,
+          created_at: createdAt,
+        },
+        {
+          onSuccess: () => {
+            setMessage('');
+            refetch();
+          },
+        },
+      );
     }
-  }
+  };
 
   useEffect(() => {
     if (isReady) {
       ws.current?.emit('join-room', params.uuid);
       setIsJoined(true);
     }
-  }, [isReady, ws, params.uuid])
+  }, [isReady, ws, params.uuid]);
 
   useEffect(() => {
     if (isJoined) {
       ws.current?.on(`receive-message`, ({ message, userId, createdAt }) => {
+        setReceivedMessage({ message, createdAt });
         setChats((prev: MessageDto[]) => [
           ...prev,
-          { message_from: userId, content: message, created_at: createdAt }
-        ])
-        refetch();
-      })
+          { message_from: userId, content: message, created_at: createdAt },
+        ]);
+      });
     }
-  }, [ws, isJoined, chats, refetch])
+  }, [isJoined, ws]);
+
+  useEffect(() => {
+    refetch();
+  }, [receivedMessage]);
 
   useEffect(() => {
     if (getChatRoomSuccess) {
-      chatRoomData && setExist(true)
+      chatRoomData && setExist(true);
     }
-  }, [getChatRoomSuccess, setExist, chatRoomData])
+  }, [getChatRoomSuccess, setExist, chatRoomData]);
 
   useEffect(() => {
     if (textAreaRef.current) {
-      textAreaRef.current.style.height = '0rem'
-      textAreaRef.current.style.height = 
-      textAreaRef.current.scrollHeight / 10 + 'rem'
+      textAreaRef.current.style.height = '0rem';
+      textAreaRef.current.style.height =
+        textAreaRef.current.scrollHeight / 10 + 'rem';
     }
-  }, [textAreaRef, message])
+  }, [textAreaRef, message]);
 
   return {
     textAreaRef,
@@ -129,7 +145,7 @@ const useChatRoomDetailViewModel = () => {
     handleClickMoreButton,
     sendMessage,
     scrollBottom,
-  }
-}
+  };
+};
 
-export default useChatRoomDetailViewModel
+export default useChatRoomDetailViewModel;

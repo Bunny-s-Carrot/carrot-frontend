@@ -1,5 +1,5 @@
-import jwtDecode from 'jwt-decode'
-import { useAuth } from '../../contexts/auth/authProvider'
+import jwtDecode from 'jwt-decode';
+import { useAuth } from '../../contexts/auth/authProvider';
 import { JwtToken } from '../../api/auth/authDto';
 import moment from 'moment';
 
@@ -7,7 +7,7 @@ const useJwtDecode = () => {
   const { auth } = useAuth();
 
   const jwt = auth?.token ?? '';
-  const decodedJwt = jwt && jwtDecode(jwt ?? '') as JwtToken
+  const decodedJwt = jwt && (jwtDecode(jwt ?? '') as JwtToken);
 
   const getId = () => decodedJwt.user_id;
 
@@ -26,9 +26,9 @@ const useJwtDecode = () => {
   const isSigned = () => {
     if (!auth.token) return false;
     if (moment().isAfter(moment(decodedJwt.exp * 1000))) return false;
-    
+
     return true;
-  }
+  };
 
   return {
     getId,
@@ -39,7 +39,7 @@ const useJwtDecode = () => {
     getMannerTemp,
     getToken,
     isSigned,
-  }
-}
+  };
+};
 
 export default useJwtDecode;

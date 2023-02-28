@@ -12,32 +12,31 @@ const useToken = () => {
     });
     setAuth((prev: any) => {
       return { ...prev, token: response.data.token };
-    })
+    });
 
     return response.data.token;
-  }
+  };
 
   const logout = async () => {
     const response = await privateApi.post('/auth/logout');
     setAuth((prev: any) => {
-      return {...prev, token: undefined}
-    })
+      return { ...prev, token: undefined };
+    });
 
     return response;
-  
-  }
+  };
 
   const withdraw = async () => {
     const response = await privateApi.delete(`/user/${user_id}/withdraw`);
     setAuth((prev: any) => {
-      return {...prev, token: undefined}
-    })
+      return { ...prev, token: undefined };
+    });
     localStorage.clear();
 
     return response;
-  }
+  };
 
   return { refreshToken, logout, withdraw };
-}
+};
 
 export default useToken;

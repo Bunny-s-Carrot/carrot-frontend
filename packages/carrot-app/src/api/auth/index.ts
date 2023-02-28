@@ -1,19 +1,20 @@
-import { api } from "../../infra/api";
+import { api } from '../../infra/api';
 
 type SignupData = {
   email: string;
   password: string;
   name: string;
   locationId: string;
-}
+};
 
 type LoginData = {
   email: string;
   password: string;
-}
+};
 
 const signup = async ({ email, password, name, locationId }: SignupData) => {
-  const response = await api.post('/auth/signup', 
+  const response = await api.post(
+    '/auth/signup',
     {
       email,
       password,
@@ -22,41 +23,39 @@ const signup = async ({ email, password, name, locationId }: SignupData) => {
     },
     {
       withCredentials: true,
-    }
-  )
+    },
+  );
 
   return response;
 };
 
-const login = async ({email, password}: LoginData) => {
+const login = async ({ email, password }: LoginData) => {
   const response = await api.post(
-    '/auth/login', 
+    '/auth/login',
     {
-    email,
-    password,
+      email,
+      password,
     },
     {
       withCredentials: true,
-    }
+    },
   );
 
   return response;
-}
-
+};
 
 const refreshToken = async () => {
   const response = await api.get('/auth/refresh', {
     withCredentials: true,
   });
-  
-  return response.data.token;
-}
 
+  return response.data.token;
+};
 
 const authApi = {
   signup,
   login,
   refreshToken,
-}
+};
 
 export default authApi;

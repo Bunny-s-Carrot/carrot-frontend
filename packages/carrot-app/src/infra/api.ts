@@ -1,7 +1,7 @@
-import axios from 'axios'
+import axios from 'axios';
 
 const api = axios.create({
-  baseURL: process.env.REACT_APP_API_URL
+  baseURL: process.env.REACT_APP_API_URL,
 });
 
 const privateApi = axios.create({
@@ -12,11 +12,11 @@ const privateApi = axios.create({
 
 const fileApi = axios.create({
   baseURL: process.env.REACT_APP_API_URL,
-  headers: { 'Content-Type': 'multipart/form-data' }
-})
+  headers: { 'Content-Type': 'multipart/form-data' },
+});
 
 const kakaoDApi = axios.create({
-  baseURL: "https://dapi.kakao.com"
-})
+  baseURL: 'https://dapi.kakao.com',
+});
 
-export { api, fileApi, privateApi, kakaoDApi }
+export { api, fileApi, privateApi, kakaoDApi };
