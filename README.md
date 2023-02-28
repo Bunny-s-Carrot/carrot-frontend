@@ -48,3 +48,9 @@
   
   3. 동네 변경
   <img src='./media/지역-설정.gif' />
+  
+  4. 동네생활 댓글 작성
+  <img src='./media/동네생활.gif' />
+  
+  5. 채팅  
+  <img src='./media/채팅.gif' />
