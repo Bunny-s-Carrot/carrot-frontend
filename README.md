@@ -1,10 +1,16 @@
-## 당근마켓 클론코딩 / [🔗웹사이트](https://app.bunnyscarrot.com) / [🔗APK 다운로드](https://drive.google.com/file/d/1GlTDVVdqjyq5__q2r-og7riKn7pKZDKO/view?usp=share_link)
+## 당근마켓 클론코딩
 <br />
 
 
 ### 1. 개요  
 
 당근마켓의 UI/UX를 빌려 임의로 코드를 작성해 만든 앱입니다. 개인 포트폴리오용으로 작성되었습니다.  
+<br />  
+**웹: [🔗웹사이트](https://app.bunnyscarrot.com)**  
+**Android: [🔗APK 다운로드](https://drive.google.com/file/d/1GlTDVVdqjyq5__q2r-og7riKn7pKZDKO/view?usp=share_link)**  
+**IOS: N/A**
+<br />  
+
 
 *테스트용 아이디 및 비밀번호*
 
