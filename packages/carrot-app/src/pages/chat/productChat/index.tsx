@@ -17,20 +17,19 @@ const ProductChatPage = () => {
   const { data: chatRoomList, isSuccess: getChatRoomListSuccess } = useQuery([`chat/chatroom/${userId}`], () =>
   chatApi.getChatRoomByUserId(userId, product_id));
   const baseUrl = process.env.REACT_APP_FILE_BASE_URL;
-  getChatRoomListSuccess && console.log(chatRoomList)
 
   return (
     <Wrapper>
       {getChatRoomListSuccess && chatRoomList.map((value, index) => 
         <ChatRoom
-        key={index}
-        buyerName={value.displayName}              
-        productImage={baseUrl + 'product/' + value.product_id.toString() + '/0.jpg'}
-        location= {value.displayLoc}
-        lastMessageDate={chatDateToSimple(value.recentTime)}
-        lastMessage={value.recentMessage}
-        onClick={() => navigate(`chatroom/${value.uuid}`, { state: {username: value.displayName} })}
-      />
+          key={index}
+          buyerName={value.displayName}              
+          productImage={baseUrl + 'product/' + value.product_id.toString() + '/0.jpg'}
+          location= {value.displayLoc}
+          lastMessageDate={chatDateToSimple(value.recentTime)}
+          lastMessage={value.recentMessage}
+          onClick={() => navigate(`/chat/chatroom/${value.uuid}`, { state: {username: value.displayName} })}
+        />
       )}
     </Wrapper>
   )
