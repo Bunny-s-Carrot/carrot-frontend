@@ -67,7 +67,7 @@ const useChatRoomDetailViewModel = () => {
         seller_id,
         buyer_id: userId,
         product_id,
-      })
+      });
       setExist(true)
     }
     if (message !== '') {
