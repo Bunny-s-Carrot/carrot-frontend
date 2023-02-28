@@ -7,27 +7,27 @@ const homeOption = [
   {
     emoji: '📗',
     content: '과외/클래스',
-    path: ''
+    path: '',
   },
   {
     emoji: '🍎',
     content: '농수산물',
-    path: ''
+    path: '',
   },
   {
     emoji: '🏠',
     content: '부동산',
-    path: ''
+    path: '',
   },
   {
     emoji: '🚗',
     content: '중고차',
-    path: ''
+    path: '',
   },
   {
     emoji: '🎁',
     content: '내 물건 팔기',
-    path: '/sell-product'
+    path: '/sell-product',
   },
 ];
 
@@ -35,12 +35,12 @@ const neighborhoodOption = [
   {
     emoji: '📆',
     content: '같이해요',
-    path: ''
+    path: '',
   },
   {
     emoji: '📒',
     content: '동네생활',
-    path: '/write-post'
+    path: '/write-post',
   },
 ];
 
@@ -48,32 +48,34 @@ const aroundOption = [
   {
     emoji: '🦺',
     content: '알바 구하기',
-    path: ''
+    path: '',
   },
   {
     emoji: '📗',
     content: '과외/클래스 홍보하기',
-    path: ''
+    path: '',
   },
   {
     emoji: '🍎',
     content: '농수산물 팔기',
-    path: ''
+    path: '',
   },
   {
     emoji: '🏠',
     content: '부동산 매물 내놓기',
-    path: ''
+    path: '',
   },
   {
     emoji: '🚗',
     content: '내 차 팔기',
-    path: ''
+    path: '',
   },
-]
+];
 
 const FABOPtion = {
-  homeOption, neighborhoodOption, aroundOption
-}
+  homeOption,
+  neighborhoodOption,
+  aroundOption,
+};
 
 export default FABOPtion;

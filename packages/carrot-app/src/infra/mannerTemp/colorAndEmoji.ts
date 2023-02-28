@@ -6,4 +6,4 @@ export const colorAndEmoji = (value: number) => {
   else if (value >= 40 && value < 45) return ['#FF8B3A', '😃'];
   else if (value >= 45 && value < 50) return ['#FF6347', '🤩'];
   else return ['#F22D50', '😍'];
-}
+};

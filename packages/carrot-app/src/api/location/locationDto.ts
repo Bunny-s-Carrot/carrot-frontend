@@ -5,4 +5,4 @@ export type LocationDataType = {
   addr_name: string;
   x_coord: string;
   y_coord: string;
-}
+};

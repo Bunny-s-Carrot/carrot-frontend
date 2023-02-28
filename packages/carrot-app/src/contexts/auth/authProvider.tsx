@@ -5,8 +5,6 @@ type AuthType = {
   setAuth: React.Dispatch<React.SetStateAction<any>>
 }
   
-
-
 const AuthContext = createContext<AuthType>({
   auth: {},
   setAuth: () => {},
