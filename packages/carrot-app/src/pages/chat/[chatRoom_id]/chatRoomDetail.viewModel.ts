@@ -68,6 +68,7 @@ const useChatRoomDetailViewModel = () => {
         buyer_id: userId,
         product_id,
       });
+      setExist(true)
     }
     if (message !== '') {
       const createdAt = new Date().toLocaleString();
