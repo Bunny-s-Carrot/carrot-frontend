@@ -33,7 +33,7 @@ const usePostDetailViewModel = () => {
       content,
     },
     {
-      onSuccess: () => window.location.reload()
+      onSuccess: () => queryClient.invalidateQueries(['post', params.post_id])
     })
   }
 
@@ -46,7 +46,7 @@ const usePostDetailViewModel = () => {
     },
     {
       onSuccess: () => {
-        window.location.reload();
+        queryClient.invalidateQueries(['post', params.post_id]);
       }
     })
   }
