@@ -8,6 +8,8 @@ import useJwtDecode from "../../hooks/auth/useJwtDecode";
 import { useMemo } from "react";
 import chatApi from "../../api/chat";
 import { useQuery } from "@tanstack/react-query";
+import styled from "styled-components";
+import theme from "@carrot/core/style/theme";
 
 const Chat = () => {
   const { getId } = useJwtDecode();
@@ -33,19 +35,21 @@ const Chat = () => {
         rightContent={rightContent}
         onClickRight={() => {}}
       >
-        {getChatRoomListSuccess &&
-          chatRoomList?.map((item, index) => 
-            <ChatRoom
-              key={index}
-              buyerName={item.displayName}              
-              productImage={baseUrl + 'product/' + item.product_id.toString() + '/0.jpg'}
-              location= {item.displayLoc}
-              lastMessageDate={chatDateToSimple(item.recentTime)}
-              lastMessage={item.recentMessage}
-              onClick={() => navigate(`chatroom/${item.uuid}`, { state: {username: item.displayName} })}
-            />
-          )        
-        }
+        <Container>
+          {getChatRoomListSuccess &&
+            chatRoomList?.map((item, index) => 
+              <ChatRoom
+                key={index}
+                buyerName={item.displayName}              
+                productImage={baseUrl + 'product/' + item.product_id.toString() + '/0.jpg'}
+                location= {item.displayLoc}
+                lastMessageDate={chatDateToSimple(item.recentTime)}
+                lastMessage={item.recentMessage}
+                onClick={() => navigate(`chatroom/${item.uuid}`, { state: {username: item.displayName} })}
+              />
+            )        
+          }
+        </Container>
       </HeaderTemplate>
       <NavBar pageType='CHAT' />
     </>
@@ -53,3 +57,10 @@ const Chat = () => {
 };
 
 export default Chat;
+
+const Container = styled.div`
+  position: relative;
+  overflow-y: scroll;
+  ${theme.option.hiddenScroll};
+  padding-bottom: 8rem;
+`
