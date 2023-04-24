@@ -8,6 +8,8 @@ import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/auth/authProvider";
 import { CustomProvider } from "./contexts/etc/customProvider";
 import { ToastContainer } from "react-toastify";
+import { setScreenVH } from './infra/screen';
+
 const root = ReactDOM.createRoot(
   document.getElementById("App") as HTMLElement
 );
@@ -30,3 +32,8 @@ root.render(
     </ThemeProvider>
   </React.StrictMode>
 );
+
+window.onresize = () => {
+  setScreenVH()
+}
+setScreenVH()
