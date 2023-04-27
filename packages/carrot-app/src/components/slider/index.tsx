@@ -1,10 +1,10 @@
-import { useRef, useLayoutEffect, useCallback, useMemo } from 'react'
+import { useRef, useLayoutEffect, useMemo } from 'react'
 import theme from "@carrot/core/style/theme";
 import { useState } from 'react';
 import styled from "styled-components";
 import { getTouchEventData } from '../../infra/dom';
 import { getArea1, getArea2, setArea1, setArea2 } from '../../infra/location/locationData';
-import { throttle } from 'lodash';
+import { debounce, throttle } from 'lodash';
 
 
 
@@ -27,7 +27,7 @@ const Slider = (props: SliderProps) => {
   
   const getLeft = useMemo(() => (percentage: number) => `calc(${percentage}% - 1.2rem)`, []);
   
-  const handleSetPosition = useCallback((percentage: number) => {
+  const handleSetPosition = useMemo(() => debounce((percentage: number) => {
     if (percentage >= 0 && percentage < 16) {
       thumbRef.current!.style.left = getLeft(0);
       props.activeLocation === 0 ? getArea1() !== 0 && setArea1(0) : getArea2() !== 0 && setArea2(0);
@@ -42,7 +42,7 @@ const Slider = (props: SliderProps) => {
       props.activeLocation === 0 ? getArea1() !== 3 && setArea1(3) : getArea2() !== 3 && setArea2(3);
     }
     
-  }, [props.activeLocation, getLeft]);
+  }, 300), [props.activeLocation, getLeft]);
 
   const getNewPercentage = useMemo(() => throttle((e: MouseEvent | TouchEvent) => {
     let newX = getTouchEventData(e).clientX - sliderRef.current?.getBoundingClientRect().left!;

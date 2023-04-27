@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { convertUTMKToWgs84 } from '@carrot/util/coords';
 import {
   convertAreaToDistance,
@@ -20,7 +20,6 @@ import {
   setAdmCodes,
   setArea2,
 } from '../../infra/location/locationData';
-import { throttle } from 'lodash';
 
 interface IPath {
   0: any
@@ -54,6 +53,7 @@ const useSetLocationViewModel = () => {
   const { map, drawMap, rendered } = useMap();
 
   const user_id = useMemo(() => getId(), [getId]);
+
   const updateArea = (e: StorageEvent) => {
     setArea(parseInt(e.newValue!));
   };
@@ -215,7 +215,7 @@ const useSetLocationViewModel = () => {
     }
   }, [paths, selectCoords])
 
-  const getArray = throttle(async (area: number) => {
+  const getArray = async (area: number) => {
       if (coordsToRender[area as keyof IPath]) {
         return coordsToRender[area as keyof IPath]
       }
@@ -243,9 +243,9 @@ const useSetLocationViewModel = () => {
       });
       setAdmCodes(admCodes);
       return array
-  }, 700);
+  };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (area === 0 || area === 1 || area === 2 || area === 3) {
       const coords: any =
         isSuccess && convertUTMKToWgs84(selectCoords()[0], selectCoords()[1]);
@@ -254,21 +254,20 @@ const useSetLocationViewModel = () => {
     }
   }, [area, drawMap, isSuccess, selectCoords])
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     if (area === 0 || area === 1 || area === 2 || area === 3) {
       if (rendered) {
-          getArray(area)?.then((array) => {
-            for (let i = 0; i < array.length; i++) {
-              new window.naver.maps.Polygon({
-                map: map.current,
-                paths: array[i],
-                fillColor: theme.colors.carrot,
-                fillOpacity: 0.4,
-                strokeOpacity: 0,
-              });
-            }
-          })
-
+        getArray(area)?.then((array) => {
+          for (let i = 0; i < array.length; i++) {
+            new window.naver.maps.Polygon({
+              map: map.current,
+              paths: array[i],
+              fillColor: theme.colors.carrot,
+              fillOpacity: 0.4,
+              strokeOpacity: 0,
+            });
+          }
+        })
       } 
     }
   // eslint-disable-next-line react-hooks/exhaustive-deps
