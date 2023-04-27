@@ -28,21 +28,21 @@ root.render(
     />
     <ThemeProvider theme={theme}>
       <BrowserRouter basename="/">
-        <AuthProvider>
-          <UserProvider>
-            <ScrollProvider>
-              <AccessTokenProvider>
-                <LatLngProvider>
-                  <AdmCodesProvider>
-                    <ReIssueProvider>
+        <UserProvider>
+          <ScrollProvider>
+            <AccessTokenProvider>
+              <LatLngProvider>
+                <AdmCodesProvider>
+                  <ReIssueProvider>
+                    <AuthProvider>
                       <App />
-                    </ReIssueProvider>
-                  </AdmCodesProvider>
-                </LatLngProvider>
-              </AccessTokenProvider>
-            </ScrollProvider>
-          </UserProvider>
-        </AuthProvider> 
+                    </AuthProvider> 
+                  </ReIssueProvider>
+                </AdmCodesProvider>
+              </LatLngProvider>
+            </AccessTokenProvider>
+          </ScrollProvider>
+        </UserProvider>
       </BrowserRouter>
     </ThemeProvider>
   </React.StrictMode>
