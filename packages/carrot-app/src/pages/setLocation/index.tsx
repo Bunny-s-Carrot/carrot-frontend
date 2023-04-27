@@ -10,7 +10,7 @@ import closeIconWhite from '@carrot/core/assets/icon/close-white.svg';
 import addIcon from '@carrot/core/assets/icon/add.svg';
 import { getFrom } from '../../infra/from';
 import { getArea1, getArea2 } from "../../infra/location/locationData";
-
+import { IPath } from "./setLocation.viewModel";
 
 const SetLocationPage = () => {
   const navigate = useNavigate();
@@ -90,7 +90,7 @@ const SetLocationPage = () => {
             {setLocationViewModel.locationData?.active_location === 0 
               ? locationInfo!.addr_name
               : locationInfo2?.addr_name
-            }과 근처 동네 {setLocationViewModel.count}개 
+            }과 근처 동네 {setLocationViewModel.count[setLocationViewModel.area as keyof IPath]}개 
           </NeighborhoodLocation>
         <Slider
           initial={setLocationViewModel.activeLocationAsNumber === 0
