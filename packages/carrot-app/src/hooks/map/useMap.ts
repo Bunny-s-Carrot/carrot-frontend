@@ -34,7 +34,7 @@ const useMap = () => {
   );
 
   const destroyMap = useCallback(() => {
-    map.current = null
+    map.current.destroy()
   }, [])
 
   return {

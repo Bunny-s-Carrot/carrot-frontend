@@ -261,13 +261,13 @@ const useSetLocationViewModel = () => {
 
   useLayoutEffect(() => {
     if (area === 0 || area === 1 || area === 2 || area === 3) {
-      destroyMap()
+      map && destroyMap()
       const coords: any =
         isSuccess && convertUTMKToWgs84(selectCoords()[0], selectCoords()[1]);
       drawMap(coords[1], coords[0], convertAreaToLevel(area), false);
 
     }
-  }, [area, destroyMap, drawMap, isSuccess, selectCoords])
+  }, [area, destroyMap, drawMap, isSuccess, map, selectCoords])
 
   useLayoutEffect(() => {
     if (area === 0 || area === 1 || area === 2 || area === 3) {
@@ -291,6 +291,7 @@ const useSetLocationViewModel = () => {
         
       } 
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [area, isSuccess, map, rendered]);
 
   return {
