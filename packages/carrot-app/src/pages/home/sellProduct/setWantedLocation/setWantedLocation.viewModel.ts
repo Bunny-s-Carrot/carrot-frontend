@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useCustomContext } from '../../../../contexts/etc/customProvider';
+import { useLatLngContext } from '../../../../contexts/latLngProvider';
 import useGeolocation from '../../../../hooks/location/useGeolocation';
 import useMap from '../../../../hooks/map/useMap';
 
 const useSetWantedLocationViewModel = () => {
   const geolocation = useGeolocation();
-  const { setUserLatLng } = useCustomContext();
+  const { setUserLatLng } = useLatLngContext();
   const { map, drawMap } = useMap();
   const navigate = useNavigate();
   const location = useLocation();

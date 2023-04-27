@@ -1,6 +1,6 @@
 import { useMemo, useRef, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useCustomContext } from '../../../contexts/etc/customProvider';
+import { useLatLngContext } from '../../../contexts/latLngProvider';
 import {
   getActiveLocation,
   getActiveLocationId,
@@ -29,7 +29,7 @@ const useSellProductViewModel = () => {
   const [share, setShare] = useState(data ? data.share : false);
   const [classifId, setClassifId] = useState<number>(data ? data.classifId : 0);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
-  const { userLatLng } = useCustomContext();
+  const { userLatLng } = useLatLngContext();
   const { getId } = useJwtDecode();
 
   const seller_id = useMemo(() => getId(), [getId]);

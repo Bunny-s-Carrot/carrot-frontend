@@ -6,9 +6,14 @@ import theme from "@carrot/core/style/theme";
 import GlobalStyle from "@carrot/core/style/globalStyle";
 import { BrowserRouter } from "react-router-dom";
 import { AuthProvider } from "./contexts/auth/authProvider";
-import { CustomProvider } from "./contexts/etc/customProvider";
 import { ToastContainer } from "react-toastify";
 import { setScreenVH } from './infra/screen';
+import { UserProvider } from "./contexts/userProvider";
+import { ScrollProvider } from "./contexts/scrollProvider";
+import { AccessTokenProvider } from "./contexts/auth/accessTokenProvider";
+import { LatLngProvider } from "./contexts/latLngProvider";
+import { AdmCodesProvider } from "./contexts/admCodesProvider";
+import { ReIssueProvider } from "./contexts/auth/reIssueProvider";
 
 const root = ReactDOM.createRoot(
   document.getElementById("App") as HTMLElement
@@ -24,9 +29,19 @@ root.render(
     <ThemeProvider theme={theme}>
       <BrowserRouter basename="/">
         <AuthProvider>
-          <CustomProvider>
-            <App />
-          </CustomProvider>
+          <UserProvider>
+            <ScrollProvider>
+              <AccessTokenProvider>
+                <LatLngProvider>
+                  <AdmCodesProvider>
+                    <ReIssueProvider>
+                      <App />
+                    </ReIssueProvider>
+                  </AdmCodesProvider>
+                </LatLngProvider>
+              </AccessTokenProvider>
+            </ScrollProvider>
+          </UserProvider>
         </AuthProvider> 
       </BrowserRouter>
     </ThemeProvider>

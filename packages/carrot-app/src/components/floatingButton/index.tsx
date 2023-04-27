@@ -6,7 +6,7 @@ import addIcon from '@carrot/core/assets/icon/add-white.svg';
 import closeIcon from '@carrot/core/assets/icon/close.svg'
 import theme from "@carrot/core/style/theme";
 import { NavType } from "../navBar";
-import { useCustomContext } from "../../contexts/etc/customProvider";
+import { useScrollContext } from "../../contexts/scrollProvider";
 
 interface FloatingButtonProps {
   pageType: NavType;
@@ -15,7 +15,7 @@ interface FloatingButtonProps {
 const FloatingButton = (props: FloatingButtonProps) => {
 
   const [open, setOpen] = useState(false);
-  const { scrollTop } = useCustomContext();
+  const { scrollTop } = useScrollContext();
 
   if (props.pageType === 'HOME') {
     return (

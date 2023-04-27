@@ -35,8 +35,7 @@ const login = async ({ email, password }: LoginData) => {
     {
       email,
       password,
-    },
-    {
+    }, {
       withCredentials: true,
     },
   );

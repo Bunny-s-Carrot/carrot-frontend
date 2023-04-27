@@ -1,11 +1,12 @@
-import {useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Outlet } from 'react-router-dom';
 
 import useToken from '../../hooks/auth/useToken';
 import { useAuth } from '../../contexts/auth/authProvider';
+import { useReIssueContext } from '../../contexts/auth/reIssueProvider';
 
 const PersistLogin = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const { reloading, setReloading } = useReIssueContext();
   const { refreshToken } = useToken();
   const { auth } = useAuth();
 
@@ -19,17 +20,17 @@ const PersistLogin = () => {
         console.error(err);
       }
       finally {
-        isMounted && setIsLoading(false);
+        isMounted && setReloading(false);
       }
     }
-    !auth?.token ? verifyRefreshToken() : setIsLoading(false);
+    !auth?.token ? verifyRefreshToken() : setReloading(false);
 
     return () => { isMounted = false }
-  }, [auth?.token, refreshToken])
+  }, [auth?.token, refreshToken, setReloading])
 
   return (
     <>
-      {isLoading
+      {reloading
         ? <p>Loading ...</p>
         : <Outlet />}
     </>
