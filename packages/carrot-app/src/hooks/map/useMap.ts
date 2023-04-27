@@ -33,9 +33,14 @@ const useMap = () => {
     [naver.maps.LatLng, naver.maps.Map],
   );
 
+  const destroyMap = useCallback(() => {
+    map.current = null
+  }, [])
+
   return {
     map,
     drawMap,
+    destroyMap,
     rendered,
   };
 };

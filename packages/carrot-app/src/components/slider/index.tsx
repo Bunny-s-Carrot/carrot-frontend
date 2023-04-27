@@ -1,39 +1,38 @@
-import { useRef, useLayoutEffect, useMemo } from 'react'
+import { ChangeEventHandler, useRef, useLayoutEffect, useCallback, useMemo } from 'react'
 import theme from "@carrot/core/style/theme";
 import { useState } from 'react';
 import styled from "styled-components";
 import { getTouchEventData } from '../../infra/dom';
 import { getArea1, getArea2, setArea1, setArea2 } from '../../infra/location/locationData';
-import { debounce, throttle } from 'lodash';
+import { debounce } from 'lodash';
 
+const getPercentage = (current: number, min: number, max: number) => 
+((current - min) / (max - min)) * 100;
 
+const getLeft = (percentage: number) => `calc(${percentage}% - 1.2rem)`;
 
 interface SliderProps {
   initial: number
   min: number
   max: number
+  onChange?: ChangeEventHandler<HTMLDivElement>
   activeLocation: number
 }
+
 const Slider = (props: SliderProps) => {
   const [isTouching, setIsTouching] = useState(false);
-  
+  const initialPercentage = getPercentage(props.initial, props.min, props.max);
   const dotRef = useRef<HTMLDivElement>(null);
   const sliderRef = useRef<HTMLDivElement>(null);
   const thumbRef = useRef<HTMLDivElement>(null);
-  const getPercentage = useMemo(() => (current: number, min: number, max: number) => 
-  ((current - min) / (max - min)) * 100, []);
-  
-  const initialPercentage = getPercentage(props.initial, props.min, props.max);
-  
-  const getLeft = useMemo(() => (percentage: number) => `calc(${percentage}% - 1.2rem)`, []);
-  
+
   const handleSetPosition = useMemo(() => debounce((percentage: number) => {
     if (percentage >= 0 && percentage < 16) {
       thumbRef.current!.style.left = getLeft(0);
       props.activeLocation === 0 ? getArea1() !== 0 && setArea1(0) : getArea2() !== 0 && setArea2(0);
     } else if (percentage >= 16 && percentage < 50) {
       thumbRef.current!.style.left = getLeft(33);
-      props.activeLocation === 0 ? getArea1() !== 1 && setArea1(1) : getArea2() !== 1 &&setArea2(1);
+      props.activeLocation === 0 ? getArea1() !== 1 &&setArea1(1) : getArea2() !== 1 &&setArea2(1);
     } else if (percentage >= 50 && percentage < 83) {
       thumbRef.current!.style.left = getLeft(66);
       props.activeLocation === 0 ? getArea1() !== 2 && setArea1(2) : getArea2() !== 2 && setArea2(2);
@@ -42,10 +41,11 @@ const Slider = (props: SliderProps) => {
       props.activeLocation === 0 ? getArea1() !== 3 && setArea1(3) : getArea2() !== 3 && setArea2(3);
     }
     
-  }, 300), [props.activeLocation, getLeft]);
+  }, 200), [props.activeLocation]);
 
-  const getNewPercentage = useMemo(() => throttle((e: MouseEvent | TouchEvent) => {
+  const getNewPercentage = useCallback((e: MouseEvent | TouchEvent) => {
     let newX = getTouchEventData(e).clientX - sliderRef.current?.getBoundingClientRect().left!;
+
     const end = sliderRef.current!.offsetWidth - thumbRef.current!.offsetWidth;
     const start = 0;
     if (newX < start) {
@@ -56,22 +56,22 @@ const Slider = (props: SliderProps) => {
     }
 
     return getPercentage(newX, start, end);
-  }, 1000), [getPercentage]);
+  }, []);
 
   const handleClickThumbMove = (e: any) => {
-    handleSetPosition(getNewPercentage(e)!)
+    handleSetPosition(getNewPercentage(e))
   }
 
   const handleMouseMove = (e: MouseEvent | TouchEvent) => {
     const newPercentage = getNewPercentage(e);
-    thumbRef.current!.style.left = getLeft(newPercentage!);
+    thumbRef.current!.style.left = getLeft(newPercentage);
     setIsTouching(true);
   };
 
   const handleMouseUp = (e: MouseEvent | TouchEvent) => {
     const newPercentage = getNewPercentage(e);
 
-    handleSetPosition(newPercentage!);
+    handleSetPosition(newPercentage);
     window.removeEventListener('touchmove', handleMouseMove);
     window.removeEventListener('touchend', handleMouseUp);
     setIsTouching(false);
@@ -139,6 +139,7 @@ const SliderThumb = styled.div<{ getLeft: any, initialPercentage: number, isTouc
   border-radius: 50%;
   position: relative;
   top: -0.9rem;
+  left: ${props => props.getLeft(props.initialPercentage)};
   transition: ${props => props.isTouching ? '' : 'left 0.7s ease'};
   background: ${theme.colors.carrot};
   cursor: pointer;
