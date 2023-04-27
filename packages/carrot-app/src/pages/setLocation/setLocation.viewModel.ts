@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useMemo, useState } from 'react';
 import { convertUTMKToWgs84 } from '@carrot/util/coords';
 import {
   convertAreaToDistance,
@@ -51,7 +51,7 @@ const useSetLocationViewModel = () => {
     2: null,
     3: null,
   });
-  const polygonRef = useRef<any>(null)
+
   const navigate = useNavigate();
   const { getId } = useJwtDecode();
   const queryClient = useQueryClient();
@@ -261,9 +261,7 @@ const useSetLocationViewModel = () => {
 
   useLayoutEffect(() => {
     if (area === 0 || area === 1 || area === 2 || area === 3) {
-      if (map.current) {
-        map.current.destroy()
-      }
+      map.current?.destroy()
       const coords: any =
         isSuccess && convertUTMKToWgs84(selectCoords()[0], selectCoords()[1]);
       drawMap(coords[1], coords[0], convertAreaToLevel(area), false);
@@ -273,26 +271,24 @@ const useSetLocationViewModel = () => {
 
   useLayoutEffect(() => {
     if (area === 0 || area === 1 || area === 2 || area === 3) {
-      polygonRef.current = null
-      if (rendered && !polygonRef.current) {
-        const paths: any[] = []
-        getArray(area)?.then((array) => {
-          for (const item of array) {
-            for (const path of item) {
-              paths.push(path)
-            }
+      const paths: any[] = []
+      getArray(area)?.then((array) => {
+        for (const item of array) {
+          for (const path of item) {
+            paths.push(path)
           }
-          polygonRef.current = new window.naver.maps.Polygon({
-              map: map.current,
-              paths,
-              fillColor: theme.colors.carrot,
-              fillOpacity: 0.4,
-              strokeOpacity: 0,
-            });
-        })
-        
-      } 
-    }
+        }
+        if (rendered) {
+          new window.naver.maps.Polygon({
+            map: map.current,
+            paths,
+            fillColor: theme.colors.carrot,
+            fillOpacity: 0.4,
+            strokeOpacity: 0,
+          });
+        }
+      })
+    } 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [area, isSuccess, map, rendered]);
 
