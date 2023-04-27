@@ -21,7 +21,7 @@ import {
   setArea2,
 } from '../../infra/location/locationData';
 
-interface IPath {
+export interface IPath {
   0: any
   1: any
   2: any
@@ -33,7 +33,12 @@ const useSetLocationViewModel = () => {
   const [area, setArea] = useState(
     activeLocationAsNumber === 0 ? getArea1() : getArea2(),
   );
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState<IPath>({
+    0: null,
+    1: null,
+    2: null,
+    3: null,
+  });
   const [paths, setPaths] = useState<IPath>({
     0: null,
     1: null,
@@ -185,10 +190,7 @@ const useSetLocationViewModel = () => {
     locationData?.location_info2?.y_coord,
   ]);
 
-  const handlePaths = useCallback(async (area: number) => {
-    if (paths[area as keyof IPath]) {
-      return paths[area as keyof IPath]
-    }
+  const handlePathsAsync = async (area: number) => {
     const [xCoord, yCoord] = selectCoords();
     const minX = String(xCoord - convertAreaToDistance(area));
     const maxX = String(xCoord + convertAreaToDistance(area));
@@ -208,42 +210,53 @@ const useSetLocationViewModel = () => {
       const pathList = response?.data.features.map((item: any) => {
         return item;
       });
-      setPaths((prev: any) => {return { ...prev, [area]: pathList}})
-      setCount(pathList.length);
+      const newPaths = {
+        ...paths
+      }
+      newPaths[area as keyof IPath] = pathList
+      setPaths(newPaths)
+      const newCount = { ...count }
+      newCount[area as keyof IPath] = pathList.length
+      setCount(newCount)
       return pathList
     } catch (e: any) {
       throw Error(e)
     }
-  }, [paths, selectCoords])
+  }
 
   const getArray = async (area: number) => {
-      if (coordsToRender[area as keyof IPath]) {
-        return coordsToRender[area as keyof IPath]
-      }
-      const array: any = [];
-      const admCodes: string[] = [];
-      const pathList = await handlePaths(area)
-      pathList.map((item: any) => {
-        admCodes.push("'" + item.properties?.adm_cd + "'");
-    
-        array.push(
-          item.geometry.coordinates.map((coordList: any) =>
-            coordList.map((coords: any) => {
-              coords[0] = coords[0].length > 1 ? coords[0][0] : coords[0];
-              coords[1] = coords[1].length > 1 ? coords[1][1] : coords[1];
-              const [lng, lat] = convertUTMKToWgs84(
-                parseFloat(coords[0].toFixed(6)),
-                parseFloat(coords[1].toFixed(6)),
-              );
-              return [lng, lat];
-            }),
-          ),
-        );
-        setCoordsToRender((prev) => ({ ...prev, [area]: array }))
-        return array
-      });
-      setAdmCodes(admCodes);
+    if (coordsToRender[area as keyof IPath]) {
+      return coordsToRender[area as keyof IPath]
+    }
+    const array: any = [];
+    const admCodes: string[] = [];
+    let pathList
+    if (paths[area as keyof IPath]) {
+      pathList = paths[area as keyof IPath]
+    } else {
+      pathList = await handlePathsAsync(area)
+    }
+    pathList.map((item: any) => {
+      admCodes.push("'" + item.properties?.adm_cd + "'");
+  
+      array.push(
+        item.geometry.coordinates.map((coordList: any) =>
+          coordList.map((coords: any) => {
+            coords[0] = coords[0].length > 1 ? coords[0][0] : coords[0];
+            coords[1] = coords[1].length > 1 ? coords[1][1] : coords[1];
+            const [lng, lat] = convertUTMKToWgs84(
+              parseFloat(coords[0].toFixed(6)),
+              parseFloat(coords[1].toFixed(6)),
+            );
+            return [lng, lat];
+          }),
+        ),
+      );
+      setCoordsToRender((prev) => ({ ...prev, [area]: array }))
       return array
+    });
+    setAdmCodes(admCodes);
+    return array
   };
 
   useLayoutEffect(() => {
@@ -278,7 +291,6 @@ const useSetLocationViewModel = () => {
         
       } 
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [area, isSuccess, map, rendered]);
 
   return {
