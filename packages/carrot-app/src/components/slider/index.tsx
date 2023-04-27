@@ -4,6 +4,7 @@ import { useState } from 'react';
 import styled from "styled-components";
 import { getTouchEventData } from '../../infra/dom';
 import { getArea1, getArea2, setArea1, setArea2 } from '../../infra/location/locationData';
+import { throttle } from 'lodash';
 
 
 
@@ -140,7 +141,7 @@ const SliderThumb = styled.div<{ getLeft: any, initialPercentage: number, isTouc
   border-radius: 50%;
   position: relative;
   top: -0.9rem;
-  left: ${props => props.getLeft(props.initialPercentage)};
+  left: ${throttle(props => props.getLeft(props.initialPercentage), 500)};
   transition: ${props => props.isTouching ? '' : 'left 0.7s ease'};
   background: ${theme.colors.carrot};
   cursor: pointer;
