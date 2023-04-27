@@ -56,7 +56,7 @@ const useSetLocationViewModel = () => {
   const { getId } = useJwtDecode();
   const queryClient = useQueryClient();
 
-  const { map, drawMap, destroyMap, rendered } = useMap();
+  const { map, drawMap, rendered } = useMap();
 
   const user_id = useMemo(() => getId(), [getId]);
 
@@ -261,13 +261,15 @@ const useSetLocationViewModel = () => {
 
   useLayoutEffect(() => {
     if (area === 0 || area === 1 || area === 2 || area === 3) {
-      map && destroyMap()
+      if (map.current) {
+        map.current.destroy()
+      }
       const coords: any =
         isSuccess && convertUTMKToWgs84(selectCoords()[0], selectCoords()[1]);
       drawMap(coords[1], coords[0], convertAreaToLevel(area), false);
 
     }
-  }, [area, destroyMap, drawMap, isSuccess, map, selectCoords])
+  }, [area, drawMap, isSuccess, map, selectCoords])
 
   useLayoutEffect(() => {
     if (area === 0 || area === 1 || area === 2 || area === 3) {
