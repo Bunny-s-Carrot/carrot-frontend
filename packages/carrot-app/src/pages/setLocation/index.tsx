@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { memo, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import styled, {css} from "styled-components"
 import useSetLocationViewModel from "./setLocation.viewModel";
@@ -99,7 +99,6 @@ const SetLocationPage = () => {
           activeLocation={setLocationViewModel.activeLocationAsNumber}
           min={0}
           max={3}
-          onChange={value => console.log(value)}
         />
         <InfoWrapper>
           🥕
@@ -118,7 +117,7 @@ const SetLocationPage = () => {
   )
 }
 
-export default SetLocationPage
+export default memo(SetLocationPage)
 
 const Map = styled.div<{ bottomHeight: number | undefined }>`
   width: 100%;

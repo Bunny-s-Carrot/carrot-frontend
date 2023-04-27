@@ -1,7 +1,8 @@
-import { useCallback, useRef } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 const useMap = () => {
   const { naver } = window;
+  const [rendered, setRendered] = useState(false)
   const map = useRef<any>(null);
 
   const drawMap = useCallback(
@@ -13,6 +14,7 @@ const useMap = () => {
       scrollWheel = true,
     ) => {
       try {
+        setRendered(false)
         map.current = new naver.maps.Map('map', {
           center: new naver.maps.LatLng(lat, lng),
           zoom,
@@ -24,6 +26,8 @@ const useMap = () => {
         });
       } catch (e: any) {
         throw Error(e);
+      } finally {
+        setRendered(true)
       }
     },
     [naver.maps.LatLng, naver.maps.Map],
@@ -32,6 +36,7 @@ const useMap = () => {
   return {
     map,
     drawMap,
+    rendered,
   };
 };
 

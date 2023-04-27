@@ -1,7 +1,7 @@
-import { useCustomContext } from '../../contexts/etc/customProvider';
+import { useLatLngContext } from '../../contexts/latLngProvider';
 
 const useGeolocation = () => {
-  const { setUserLatLng } = useCustomContext();
+  const { setUserLatLng } = useLatLngContext();
 
   const geolocation = (callBack: Function) => {
     if (navigator.geolocation) {

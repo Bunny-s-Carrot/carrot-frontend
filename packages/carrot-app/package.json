@@ -5,18 +5,10 @@
   "dependencies": {
     "@carrot/core": "*",
     "@tanstack/react-query": "^4.20.4",
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "@types/jest": "^27.5.2",
-    "@types/node": "^16.11.65",
-    "@types/proj4": "^2.5.2",
-    "@types/react": "^18.0.21",
-    "@types/react-dom": "^18.0.6",
-    "@types/socket.io-client": "^3.0.0",
     "axios": "1.2.2",
     "cross-env": "^7.0.3",
     "jwt-decode": "^3.1.2",
+    "lodash": "^4.17.21",
     "lottie-react": "^2.3.1",
     "moment": "^2.29.4",
     "proj4": "^2.8.1",
@@ -26,10 +18,9 @@
     "react-app-rewired": "^2.2.1",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.4.3",
-    "react-scripts": "^5.0.1",
     "react-toastify": "^9.1.1",
     "socket.io-client": "^4.6.0",
-    "typescript": "^4.8.4",
+    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
@@ -61,6 +52,16 @@
     "timers": false
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^13.4.0",
+    "@testing-library/user-event": "^13.5.0",
+    "@types/jest": "^27.5.2",
+    "@types/lodash": "^4.14.194",
+    "@types/node": "^16.11.65",
+    "@types/proj4": "^2.5.2",
+    "@types/react": "^18.0.21",
+    "@types/react-dom": "^18.0.6",
+    "@types/socket.io-client": "^3.0.0",
     "prettier": "^2.8.4"
   }
 }

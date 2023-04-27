@@ -13,7 +13,7 @@ interface SliderProps {
   initial: number
   min: number
   max: number
-  onChange: ChangeEventHandler<HTMLDivElement>
+  onChange?: ChangeEventHandler<HTMLDivElement>
   activeLocation: number
 }
 const Slider = (props: SliderProps) => {
@@ -138,7 +138,7 @@ const SliderThumb = styled.div<{ getLeft: any, initialPercentage: number, isTouc
   position: relative;
   top: -0.9rem;
   left: ${props => props.getLeft(props.initialPercentage)};
-  transition: ${props => props.isTouching ? '' : 'left 0.3s ease'};
+  transition: ${props => props.isTouching ? '' : 'left 0.7s ease'};
   background: ${theme.colors.carrot};
   cursor: pointer;
   box-shadow: 0.1rem 0.1rem 0.5rem rgba(0, 0, 0, 0.3);

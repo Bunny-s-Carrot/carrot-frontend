@@ -20,6 +20,14 @@ import {
   setAdmCodes,
   setArea2,
 } from '../../infra/location/locationData';
+import { throttle } from 'lodash';
+
+interface IPath {
+  0: any
+  1: any
+  2: any
+  3: any
+}
 
 const useSetLocationViewModel = () => {
   const [activeLocationAsNumber, setActiveLocationAsNumber] = useState(0);
@@ -27,11 +35,23 @@ const useSetLocationViewModel = () => {
     activeLocationAsNumber === 0 ? getArea1() : getArea2(),
   );
   const [count, setCount] = useState(0);
+  const [paths, setPaths] = useState<IPath>({
+    0: null,
+    1: null,
+    2: null,
+    3: null,
+  })
+  const [coordsToRender, setCoordsToRender] = useState<IPath>({
+    0: null,
+    1: null,
+    2: null,
+    3: null,
+  });
   const navigate = useNavigate();
   const { getId } = useJwtDecode();
   const queryClient = useQueryClient();
 
-  const { map, drawMap } = useMap();
+  const { map, drawMap, rendered } = useMap();
 
   const user_id = useMemo(() => getId(), [getId]);
   const updateArea = (e: StorageEvent) => {
@@ -164,9 +184,11 @@ const useSetLocationViewModel = () => {
     locationData?.location_info2?.y_coord,
   ]);
 
-  const getArray = useCallback(async () => {
+  const handlePaths = useCallback(async (area: number) => {
+    if (paths[area as keyof IPath]) {
+      return paths[area as keyof IPath]
+    }
     const [xCoord, yCoord] = selectCoords();
-
     const minX = String(xCoord - convertAreaToDistance(area));
     const maxX = String(xCoord + convertAreaToDistance(area));
     const minY = String(yCoord - convertAreaToDistance(area));
@@ -185,14 +207,25 @@ const useSetLocationViewModel = () => {
       const pathList = response?.data.features.map((item: any) => {
         return item;
       });
-
+      setPaths((prev: any) => {return { ...prev, [area]: pathList}})
       setCount(pathList.length);
+      return pathList
+    } catch (e: any) {
+      throw Error(e)
+    }
+  }, [paths, selectCoords])
+
+  const getArray = throttle(async (area: number) => {
+      if (coordsToRender[area as keyof IPath]) {
+        return coordsToRender[area as keyof IPath]
+      }
       const array: any = [];
       const admCodes: string[] = [];
+      const pathList = await handlePaths(area)
       pathList.map((item: any) => {
         admCodes.push("'" + item.properties?.adm_cd + "'");
-
-        return array.push(
+    
+        array.push(
           item.geometry.coordinates.map((coordList: any) =>
             coordList.map((coords: any) => {
               coords[0] = coords[0].length > 1 ? coords[0][0] : coords[0];
@@ -205,41 +238,41 @@ const useSetLocationViewModel = () => {
             }),
           ),
         );
+        setCoordsToRender((prev) => ({ ...prev, [area]: array }))
+        return array
       });
       setAdmCodes(admCodes);
-      return array;
-    } catch (e: any) {
-      throw Error(e);
-    }
-  }, [area, selectCoords]);
+      return array
+  }, 700);
 
   useEffect(() => {
     if (area === 0 || area === 1 || area === 2 || area === 3) {
       const coords: any =
         isSuccess && convertUTMKToWgs84(selectCoords()[0], selectCoords()[1]);
       drawMap(coords[1], coords[0], convertAreaToLevel(area), false);
-      isSuccess &&
-        getArray().then((array) => {
-          for (let i = 0; i < array.length; i++) {
-            new window.naver.maps.Polygon({
-              map: map.current,
-              paths: array[i],
-              fillColor: theme.colors.carrot,
-              fillOpacity: 0.4,
-              strokeOpacity: 0,
-            });
-          }
-        });
+
     }
-  }, [
-    area,
-    activeLocationAsNumber,
-    isSuccess,
-    selectCoords,
-    drawMap,
-    getArray,
-    map,
-  ]);
+  }, [area, drawMap, isSuccess, selectCoords])
+
+  useEffect(() => {
+    if (area === 0 || area === 1 || area === 2 || area === 3) {
+      if (rendered) {
+          getArray(area)?.then((array) => {
+            for (let i = 0; i < array.length; i++) {
+              new window.naver.maps.Polygon({
+                map: map.current,
+                paths: array[i],
+                fillColor: theme.colors.carrot,
+                fillOpacity: 0.4,
+                strokeOpacity: 0,
+              });
+            }
+          })
+
+      } 
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [area, isSuccess, map, rendered]);
 
   return {
     locationData,
