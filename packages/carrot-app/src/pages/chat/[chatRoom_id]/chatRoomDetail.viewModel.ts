@@ -116,7 +116,7 @@ const useChatRoomDetailViewModel = () => {
 
   useEffect(() => {
     refetch();
-  }, [receivedMessage]);
+  }, [receivedMessage, refetch]);
 
   useEffect(() => {
     if (getChatRoomSuccess) {

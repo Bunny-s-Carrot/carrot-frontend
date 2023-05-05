@@ -259,6 +259,12 @@ const useSetLocationViewModel = () => {
     return array
   };
 
+  useEffect(() => {
+    setCount({ 0: null, 1: null, 2: null, 3: null })
+    setPaths({ 0: null, 1: null, 2: null, 3: null })
+    setCoordsToRender({ 0: null, 1: null, 2: null, 3: null })
+  }, [activeLocationAsNumber])
+
   useLayoutEffect(() => {
     if (area === 0 || area === 1 || area === 2 || area === 3) {
       map.current?.destroy()
@@ -278,7 +284,7 @@ const useSetLocationViewModel = () => {
             paths.push(path)
           }
         }
-        if (rendered) {
+        if (rendered && paths.length) {
           new window.naver.maps.Polygon({
             map: map.current,
             paths,
@@ -290,7 +296,7 @@ const useSetLocationViewModel = () => {
       })
     } 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [area, isSuccess, map, rendered]);
+  }, [area, isSuccess, map, rendered, activeLocationAsNumber]);
 
   return {
     locationData,
