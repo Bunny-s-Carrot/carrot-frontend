@@ -96,5 +96,8 @@ const LoginSession = styled.p`
   span {
     color: ${theme.colors.carrot};
     font-weight: bold;
+    &:hover {
+      cursor: pointer;
+    }
   }
 `
